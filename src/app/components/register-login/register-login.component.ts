@@ -25,9 +25,9 @@ export class RegisterLoginComponent implements OnInit {
   registrationEmail!: string;
   registrationPassword!: string;
   confirmPassword!: string;
-  registrationUsername!:string;
-  registrationFirstname!:string;
-  registrationLastname!:string;
+  registrationUsername!: string;
+  registrationFirstname!: string;
+  registrationLastname!: string;
 
   images: string[] = ["https://th.bing.com/th/id/R.3699ea3784dabc21d71f52a6019637b3?rik=ZAuWPTIsHDzgOA&riu=http%3a%2f%2fyesofcorsa.com%2fwp-content%2fuploads%2f2018%2f04%2fBanqueting-Hall-Wallpaper-Full-HD.jpg&ehk=KLeuFdp%2fa9jQwYUIFIFLEM4eSUgJ559r6hrSWDMxwcw%3d&risl=&pid=ImgRaw&r=0",
     "https://d1zpvjny0s6omk.cloudfront.net/media/fileupload/2015/06/05/00_Pate_1741-2.jpeg",
@@ -47,7 +47,6 @@ export class RegisterLoginComponent implements OnInit {
   constructor(private authService: AuthorizationService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
-    this.initForms();
     this.startSlideshow();
   }
 
@@ -61,95 +60,13 @@ export class RegisterLoginComponent implements OnInit {
     this.registrationEmailError = '';
     this.registrationPasswordError = '';
     this.confirmPasswordError = '';
-    this.initForms();
   }
 
   proceed() {
     this.showLoginForm = true;
   }
 
-  initForms() {
-    this.loginForm = this.fb.group({
-      loginEmail: ['', [Validators.required, Validators.email]],
-      loginPassword: ['', [Validators.required, Validators.minLength(6)]]
-    });
-
-    this.registrationForm = this.fb.group({
-      registrationEmail: ['', [Validators.required, Validators.email]],
-      registrationPassword: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
-    });
-  }
-
   allFieldsFilled = false;
-  
-
-  onLogin() {
-    const email = this.loginForm.get('loginEmail')?.value;
-    const password = this.loginForm.get('loginPassword')?.value;
-
-    this.authService.signIn(this.selectedAccountType, email, password)
-      .then(() => {
-        // Redirect user to appropriate dashboard
-      })
-      .catch((error: any) => {
-        switch (error.code) {
-          case 'auth/user-not-found':
-            this.loginEmailError = 'Account Not Found, please register first';
-            break;
-          case 'auth/wrong-password':
-            this.loginPasswordError = 'Incorrect Password, please try again';
-            break;
-          default:
-            this.loginEmailError = 'An error occurred, please try again later';
-          // Handle other errors
-        }
-      });
-    // Redirect to the respective dashboard
-    if (this.selectedAccountType === 'user') {
-      this.router.navigate(['user-dashboard/party-hall-list']);
-    } else if (this.selectedAccountType === 'owner') {
-      this.router.navigate(['/owner-dashboard']);
-    } else if (this.selectedAccountType === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
-    }
-  }
-
-
-  onRegistration() {
-    const email = this.registrationForm.get('registrationEmail')?.value;
-    const password = this.registrationForm.get('registrationPassword')?.value;
-    const confirmPassword = this.registrationForm.get('confirmPassword')?.value;
-    const username = this.registrationForm.get('registrationUsername')?.value;
-    const firstname = this.registrationForm.get('registrationFirstname')?.value;
-    const lastname = this.registrationForm.get('registrationLastname')?.value;
-
-    if (password !== confirmPassword) {
-      this.confirmPasswordError = 'Passwords do not match, please try again';
-      return;
-    }
-
-    this.authService.signUp(this.selectedAccountType, email, password)
-      .then(() => {
-        // Show success message or redirect user to appropriate dashboard
-      })
-      .catch((error: any) => {
-        if (error.code === 'auth/email-already-in-use') {
-          this.registrationEmailError = 'Email already exists, please login or use a different email';
-        } else {
-          this.registrationEmailError = 'An error occurred, please try again later';
-          // Handle other errors
-        }
-      });
-    // Redirect to the respective dashboard
-    if (this.selectedAccountType === 'user') {
-      this.router.navigate(['user-dashboard/party-hall-list']);
-    } else if (this.selectedAccountType === 'owner') {
-      this.router.navigate(['/owner-dashboard']);
-    } else if (this.selectedAccountType === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
-    }
-  }
 
   goBack() {
     this.showLoginForm = false;

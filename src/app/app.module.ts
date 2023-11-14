@@ -19,6 +19,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material/input';
 import {HttpClientModule} from '@angular/common/http';
 import { UserHistoryComponent } from './components/user-history/user-history.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { UserHistoryComponent } from './components/user-history/user-history.com
     RegisterLoginComponent,
     OwnerDashboardComponent,
     AdminDashboardComponent,
-    UserHistoryComponent
+    UserHistoryComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

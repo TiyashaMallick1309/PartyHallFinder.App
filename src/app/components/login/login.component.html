@@ -1,0 +1,22 @@
+<form  (ngSubmit)="onLogin()" #loginForm="ngForm">
+    <div class="form-group mt-3">
+      <label for="loginEmail">Email Address</label>
+      <input type="email" class="form-control" id="loginEmail" name="loginEmail" [(ngModel)]="loginEmail" placeholder="e.g. john.doe@mail.com" required #loginEmailInput="ngModel">
+      <div *ngIf="loginEmailInput.invalid && (loginEmailInput.dirty || loginEmailInput.touched)" class="invalid-feedback d-block">
+        <ng-container *ngIf="loginEmailInput.errors?.['required']">Email is required.</ng-container>
+        <ng-container *ngIf="loginEmailInput.errors?.['email']">Email is invalid.</ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="loginPassword">Password</label>
+      <input type="password" class="form-control" id="loginPassword" name="loginPassword" [(ngModel)]="loginPassword" required #loginPasswordInput="ngModel">
+      <div *ngIf="loginPasswordInput.invalid && (loginPasswordInput.dirty || loginPasswordInput.touched)" class="invalid-feedback d-block">
+        Password is required.
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3" routerLink="" [disabled]="loginForm.invalid">
+      <ng-container *ngIf="loginActive">Log In</ng-container>
+    </button>
+    
+    <div class="text-danger mt-3" *ngIf="loginForm.submitted && loginForm.invalid">Please fill all the required fields.</div>
+  </form>
