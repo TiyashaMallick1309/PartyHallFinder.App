@@ -1,0 +1,125 @@
+.carousel-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+}
+
+img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .img {
+    height: 50vh;
+  }
+}
+
+h1{
+  color: white;
+  padding: 1rem;
+  margin: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 10px;
+  color: linear-gradient(to right, #ff9a9e, #fecfef);
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-shadow: 2px 1px black;
+  text-align: justify;
+}
+
+h4{
+  color: white;
+  padding: 1rem;
+  margin: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: 10px;
+  color: linear-gradient(to right, #ff9a9e, #fecfef);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  text-shadow: 1px 0.5px black;
+  text-align: justify;
+}
+
+.card {
+  margin-top: 10px;
+}
+
+.form-group {
+  margin-bottom: 8px;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.button-group {
+  text-align: center;
+}
+
+button[type="submit"] {
+  display: inline-block;
+  background-color: rgb(74, 93, 179);
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #033f7e;
+}
+
+.text-danger {
+  font-size: 12px;
+  color: red;
+}
+
+.nav-tabs{
+  cursor: pointer;
+}
+
+.nav-tabs .nav-link.active {
+  color: #fff;
+  background-color: rgb(74, 93, 179);
+}
+
+.invalid-feedback {
+  animation: fade-in-out 0.5s ease-in-out;
+  animation-iteration-count: 1;
+  opacity: 1;
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.nav-link {
+  transition: 0.3s ease-out;
+}

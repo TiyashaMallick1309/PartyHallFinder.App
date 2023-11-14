@@ -1,0 +1,18 @@
+<div class="dashboard-container">
+  <div class="dashboard-tabs">
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" routerLink="party-hall-list">Party Halls</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="user-history">History and Details</a>
+      </li>
+      <button class="logout-btn" (click)="logout()">Logout</button>
+    </ul>
+    
+
+    <div class="tab-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

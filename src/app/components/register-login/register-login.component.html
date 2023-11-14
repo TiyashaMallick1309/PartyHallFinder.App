@@ -1,0 +1,137 @@
+<div class="container">
+    <h1 class="text-center mt-5">Welcome to Party Hall Finder</h1>
+    <hr>
+    <h4 class="text-center mb-4">Find the perfect party hall for any occasion with our charming app! 
+      Browse through a wide variety of venues, filter by location, capacity, and amenities, 
+      and book in just a few taps. Make your next big bash unforgettable with ease!</h4>
+  
+   <!-- Account Selection -->
+<div id="accountBox" class="row justify-content-center mt-4" *ngIf="!showLoginForm">
+  <div class="col-md-4">
+    <div class="card bg-light">
+      <div class="card-body">
+        <h5 class="card-title text-center">Please choose your account type</h5>
+        <div class="form-group">
+          <label for="accountType">I am:</label>
+          <select class="form-select" id="accountType" (change)="selectAccountType($event)">
+            <option value="user">A User</option>
+            <option value="owner">An Owner</option>
+            <option value="admin">An Admin</option>
+          </select>
+        </div>
+        <div class="text-center mt-4">
+          <button class="btn btn-primary" (click)="proceed()">Proceed</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Registration/Login Forms -->
+<div id="loginBox" class="row justify-content-center mt-4">
+  <div class="col-md-6">
+    <div *ngIf="showLoginForm" class="card">
+      <div class="card-body">
+        <h5 class="card-title text-center">
+          <ng-container *ngIf="selectedAccountType === 'user'">User Login/Register</ng-container>
+          <ng-container *ngIf="selectedAccountType === 'owner'">Owner Login/Register</ng-container>
+          <ng-container *ngIf="selectedAccountType === 'admin'">Admin Login/Register</ng-container>
+        </h5>
+        <button type="button" class="btn btn-light mb-3" (click)="goBack()">
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a [class.active]="loginActive" (click)="loginActive = true; registrationActive = false" class="nav-link">Login</a>
+          </li>
+          <li class="nav-item" *ngIf="selectedAccountType !== 'admin'">
+            <a [class.active]="registrationActive" (click)="registrationActive = true; loginActive = false" class="nav-link">Register</a>
+          </li>
+        </ul>
+        <form *ngIf="loginActive" (ngSubmit)="onLogin()" #loginForm="ngForm">
+          <div class="form-group mt-3">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" class="form-control" id="loginEmail" name="loginEmail" [(ngModel)]="loginEmail" placeholder="e.g. john.doe@mail.com" required #loginEmailInput="ngModel">
+            <div *ngIf="loginEmailInput.invalid && (loginEmailInput.dirty || loginEmailInput.touched)" class="invalid-feedback d-block">
+              <ng-container *ngIf="loginEmailInput.errors?.['required']">Email is required.</ng-container>
+              <ng-container *ngIf="loginEmailInput.errors?.['email']">Email is invalid.</ng-container>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" class="form-control" id="loginPassword" name="loginPassword" [(ngModel)]="loginPassword" required #loginPasswordInput="ngModel">
+            <div *ngIf="loginPasswordInput.invalid && (loginPasswordInput.dirty || loginPasswordInput.touched)" class="invalid-feedback d-block">
+              Password is required.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3" routerLink="" [disabled]="loginForm.invalid">
+            <ng-container *ngIf="loginActive">Log In</ng-container>
+          </button>
+          
+          <div class="text-danger mt-3" *ngIf="loginForm.submitted && loginForm.invalid">Please fill all the required fields.</div>
+        </form>
+
+
+        <form *ngIf="registrationActive" (ngSubmit)="onRegistration()" #registrationForm="ngForm">
+          <div class="form-group mt-3">
+            <label for="registrationUsername">Username</label>
+            <input type="text" class="form-control" id="registrationUsername" name="registrationUsername" [(ngModel)]="registrationUsername" required #registrationUsernameInput="ngModel">
+            <div *ngIf="registrationUsernameInput.invalid && (registrationUsernameInput.dirty || registrationUsernameInput.touched)" class="invalid-feedback d-block">
+              Username is required.
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label for="registrationFirstname">First Name</label>
+            <input type="text" class="form-control" id="registrationFirstname" name="registrationFirstname" [(ngModel)]="registrationFirstname" required #registrationFirstnameInput="ngModel">
+            <div *ngIf="registrationFirstnameInput.invalid && (registrationFirstnameInput.dirty || registrationFirstnameInput.touched)" class="invalid-feedback d-block">
+              First Name is required.
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label for="registrationLastname">Last Name</label>
+            <input type="text" class="form-control" id="registrationLastname" name="registrationLastname" [(ngModel)]="registrationLastname" required #registrationLastnameInput="ngModel">
+            <div *ngIf="registrationLastnameInput.invalid && (registrationLastnameInput.dirty || registrationLastnameInput.touched)" class="invalid-feedback d-block">
+              Last Name is required.
+            </div>
+          </div>
+          <div class="form-group mt-3">
+            <label for="registrationEmail">Email Address</label>
+            <input type="email" class="form-control" id="registrationEmail" name="registrationEmail" [(ngModel)]="registrationEmail" required #registrationEmailInput="ngModel">
+            <div *ngIf="registrationEmailInput.invalid && (registrationEmailInput.dirty || registrationEmailInput.touched)" class="invalid-feedback d-block">
+              <ng-container *ngIf="registrationEmailInput.errors?.['required']">Email is required.</ng-container>
+              <ng-container *ngIf="registrationEmailInput.errors?.['email']">Email is invalid.</ng-container>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="registrationPassword">Password</label>
+            <input type="password" class="form-control" id="registrationPassword" name="registrationPassword" [(ngModel)]="registrationPassword" required #registrationPasswordInput="ngModel">
+            <div *ngIf="registrationPasswordInput.invalid && (registrationPasswordInput.dirty || registrationPasswordInput.touched)" class="invalid-feedback d-block">
+              Password is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" [(ngModel)]="confirmPassword" required #confirmPasswordInput="ngModel">
+            <div *ngIf="confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched)" class="invalid-feedback d-block">
+              Confirm Password is required.
+            </div>
+            <div *ngIf="(registrationPasswordInput.dirty || registrationPasswordInput.touched) && (confirmPasswordInput.value != registrationPasswordInput.value)" class="invalid-feedback d-block">
+              Passwords don't match.
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary mt-3" [disabled]="registrationForm.invalid">
+            <ng-container *ngIf="registrationActive">Create Account</ng-container>
+          </button>
+          
+          <div class="text-danger mt-3" *ngIf="registrationForm.submitted && registrationForm.invalid">Please fill all the required fields.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Carousel -->
+<div class="carousel-container">
+    <img [src]="src" alt=""/>
+  </div> 
+</div>
