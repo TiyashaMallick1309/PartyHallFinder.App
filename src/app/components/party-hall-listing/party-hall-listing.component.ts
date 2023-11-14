@@ -114,4 +114,28 @@ export class PartyHallListingComponent {
     return pages;
   }
 
+  applyFilter(filterType: string, filterValue: string): void {
+    this.currentPage = 1;
+  
+    switch (filterType) {
+      case 'location':
+        this.filterOptions.location = filterValue.toLowerCase();
+        break;
+      case 'capacity':
+        this.filterOptions.capacity = filterValue.toLowerCase();
+        break;
+      case 'amenities':
+        this.filterOptions.amenities = filterValue.toLowerCase();
+        break;
+      case 'availability':
+        this.filterOptions.availability = filterValue.toLowerCase();
+        break;
+      case 'budget':
+        this.filterOptions.budget = filterValue.toLowerCase();
+        break;
+    }
+  
+    this.filterPartyHalls();
+  }
+
 }
