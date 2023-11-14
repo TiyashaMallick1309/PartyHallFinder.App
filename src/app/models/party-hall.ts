@@ -37,58 +37,95 @@ export class PartyHall {
     images: string[] = [];
 }
 
-// _id
-// 617dd2cd66b7973d40263d4a
-// name
-// "The Glasshouse"
+<!-- Location Dropdown -->
+<div class="dropdown mr-3">
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+    Location
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" (click)="applyFilter('location', 'Edinburgh')">Edinburgh</a>
+    <a class="dropdown-item" (click)="applyFilter('location', 'Scotland')">Scotland</a>
+    <a class="dropdown-item" (click)="applyFilter('location', 'United Kingdom')">United Kingdom</a>
+  </div>
+</div>
 
-// address
-// Object
-// street
-// "2 Greenside Place"
-// city
-// "Edinburgh"
-// state
-// "Scotland"
-// country
-// "United Kingdom"
-// postalcode
-// "EH1 3AA"
-// capacity
-// 520
+<!-- Capacity Dropdown -->
+<div class="dropdown mr-3">
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+    Capacity
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" (click)="applyFilter('capacity', 'Small (0-200)')">Small (0-200)</a>
+    <a class="dropdown-item" (click)="applyFilter('capacity', 'Medium (201-500)')">Medium (201-500)</a>
+    <a class="dropdown-item" (click)="applyFilter('capacity', 'Large (501+)')">Large (501+)</a>
+  </div>
+</div>
 
-// amenities
-// Array (5)
-// 0
-// "Wifi"
-// 1
-// "State-of-the-art audiovisual equipment"
-// 2
-// "Dedicated events team"
-// 3
-// "Onsite catering"
-// 4
-// "Accessible facilities"
+<!-- Amenities Dropdown -->
+<div class="dropdown mr-3">
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+    Amenities
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" (click)="applyFilter('amenities', 'WiFi')">WiFi</a>
+    <a class="dropdown-item" (click)="applyFilter('amenities', 'Audiovisual Equipment')">Audiovisual Equipment</a>
+    <a class="dropdown-item" (click)="applyFilter('amenities', 'Dedicated Events Team')">Dedicated Events Team</a>
+    <a class="dropdown-item" (click)="applyFilter('amenities', 'Onsite Catering')">Onsite Catering</a>
+    <a class="dropdown-item" (click)="applyFilter('amenities', 'Accessible Facilities')">Accessible Facilities</a>
+  </div>
+</div>
 
-// pricing
-// Object
-// perHour
-// 300
-// perDay
-// 2000
-// perWeek
-// 8000
+<!-- Availability Dropdown -->
+<div class="dropdown mr-3">
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+    Availability
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" (click)="applyFilter('availability', 'Weekdays')">Weekdays</a>
+    <a class="dropdown-item" (click)="applyFilter('availability', 'Weekends')">Weekends</a>
+    <a class="dropdown-item" (click)="applyFilter('availability', 'Anytime')">Anytime</a>
+  </div>
+</div>
 
-// availability
-// Object
-// startDateTime
-// 2022-01-02T12:00:00.000+00:00
-// endDateTime
-// 2022-01-02T22:00:00.000+00:00
+<!-- Budget Dropdown -->
+<div class="dropdown mr-3">
+  <button class="btn btn-outline-primary dropdown-toggle" type="button" data-toggle="dropdown">
+    Budget
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" (click)="applyFilter('budget', 'Low (0-500)')">Low (0-500)</a>
+    <a class="dropdown-item" (click)="applyFilter('budget', 'Medium (501-2000)')">Medium (501-2000)</a>
+    <a class="dropdown-item" (click)="applyFilter('budget', 'High (2001+)')">High (2001+)</a>
+  </div>
+</div>
 
-// images
-// Array (2)
-// 0
-// "https://yourscottishwedding.co.uk/wp-content/uploads/2022/09/Brasserie…"
-// 1
-// "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/35/5f/aa/ex…"
+
+
+
+
+
+
+
+applyFilter(filterType: string, filterValue: string): void {
+  this.currentPage = 1;
+
+  switch (filterType) {
+    case 'location':
+      this.filterOptions.location = filterValue.toLowerCase();
+      break;
+    case 'capacity':
+      this.filterOptions.capacity = filterValue.toLowerCase();
+      break;
+    case 'amenities':
+      this.filterOptions.amenities = filterValue.toLowerCase();
+      break;
+    case 'availability':
+      this.filterOptions.availability = filterValue.toLowerCase();
+      break;
+    case 'budget':
+      this.filterOptions.budget = filterValue.toLowerCase();
+      break;
+  }
+
+  this.filterPartyHalls();
+}
