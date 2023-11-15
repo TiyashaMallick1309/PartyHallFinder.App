@@ -2,64 +2,77 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   selectedAccountType = 'user';
   showLoginForm = false;
   loginActive = true;
-  registrationActive = false;
   loginForm!: FormGroup;
-  registrationForm!: FormGroup;
-  loginEmailError = '';
-  loginPasswordError = '';
-  registrationEmailError = '';
-  registrationPasswordError = '';
-  confirmPasswordError = '';
-  loginEmail!: string;
-  loginPassword!: string;
-  registrationEmail!: string;
-  registrationPassword!: string;
-  confirmPassword!: string;
-  registrationUsername!:string;
-  registrationFirstname!:string;
-  registrationLastname!:string;
+  loginFailed = false;
+  submitted = false; // add new property here
 
-  constructor(private authService: AuthorizationService, private fb: FormBuilder, private router: Router) { }
+  constructor(
+    private authService: AuthorizationService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
 
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      loginEmail: ['', [Validators.required, Validators.email]],
+      loginPassword: ['', [Validators.required, Validators.minLength(6)]],
+    });
+    this.submitted = false; // set the property to false in ngOnInit
+  }
 
-  onLogin() {
+  selectAccountType(event: Event) {
+    this.selectedAccountType = (event.target as HTMLSelectElement).value;
+    this.showLoginForm = true;
+    this.loginFailed = false;
+    this.loginForm.reset();
+    this.submitted = false; // reset the property when selecting a new account type
+  }
+
+  async onLogin() {
+    this.submitted = true; // set the property to true when the form is submitted
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     const email = this.loginForm.get('loginEmail')?.value;
     const password = this.loginForm.get('loginPassword')?.value;
 
-    this.authService.signIn(this.selectedAccountType, email, password)
-      .then(() => {
-        // Redirect user to appropriate dashboard
-      })
-      .catch((error: any) => {
-        switch (error.code) {
-          case 'auth/user-not-found':
-            this.loginEmailError = 'Account Not Found, please register first';
+    try {
+      const success = await this.authService.signIn(
+        this.selectedAccountType,
+        email,
+        password
+      );
+
+      if (success) {
+        switch (this.selectedAccountType) {
+          case 'user':
+            this.router.navigate(['user-dashboard/party-hall-list']);
             break;
-          case 'auth/wrong-password':
-            this.loginPasswordError = 'Incorrect Password, please try again';
+          case 'owner':
+            this.router.navigate(['/owner-dashboard']);
             break;
-          default:
-            this.loginEmailError = 'An error occurred, please try again later';
-          // Handle other errors
+          case 'admin':
+            this.router.navigate(['/admin-dashboard']);
+            break;
         }
-      });
-    // Redirect to the respective dashboard
-    if (this.selectedAccountType === 'user') {
-      this.router.navigate(['user-dashboard/party-hall-list']);
-    } else if (this.selectedAccountType === 'owner') {
-      this.router.navigate(['/owner-dashboard']);
-    } else if (this.selectedAccountType === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
+      } else {
+        this.loginFailed = true;
+      }
+    } catch (error: any) {
+      console.error('LOGIN ERROR:', error);
+      this.loginFailed = true;
     }
   }
-
 }

@@ -1,28 +1,51 @@
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthorizationService {
-  constructor() {}
+  private baseURL = environment.apiUrl;
 
-  async signIn(accountType: string, email: string, password: string): Promise<void> {
-    try {
-      // You can implement your own authentication logic here
-      // and optionally handle account type and user data
-    } catch (error) {
-      throw error;
-    }
+  constructor(private http: HttpClient) {}
+
+  signIn(selectedAccountType: string, email: string, password: string) {
+    const url = `${this.baseURL}/auth/login`;
+    const requestBody = {
+      accountType: selectedAccountType,
+      email,
+      password,
+    };
+
+    return this.http
+      .post(url, requestBody)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError('Error while authenticating user');
+        })
+      );
   }
 
-  async signUp(accountType: string, email: string, password: string): Promise<void> {
-    try {
-      // You can implement your own authentication logic here
-      // and optionally handle account type and user data
-    } catch (error) {
-      throw error;
-    }
+
+  signUp(selectedAccountType: string, email: string, password: string, username: string, firstname: string, lastname: string){
+      const url = `${this.baseURL}/auth/register`;
+      const requestBody = {
+        accountType: selectedAccountType,
+        email,
+        password,
+        username,
+        firstname,
+        lastname,
+      };
+
+      return this.http
+      .post(url, requestBody)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError('Error while authenticating user');
+        })
+      );
   }
-  
 }

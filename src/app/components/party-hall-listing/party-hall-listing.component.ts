@@ -55,6 +55,15 @@ export class PartyHallListingComponent {
     if (searchText) {
       this.filteredPartyHalls = this.partyHalls.filter((partyHall) => {
         return Object.values(partyHall).some((value) => {
+          if (typeof value === 'object') {
+            if (Object.values(partyHall.availability).includes(value)) {
+              const range = partyHall.availability.range.toString().toLowerCase();
+              return range.includes(searchText);
+            }
+            return Object.values(value).some((subValue:any) => 
+              subValue.toString().toLowerCase().includes(searchText)
+            );
+          }
           return value.toString().toLowerCase().includes(searchText);
         });
       });
@@ -71,12 +80,21 @@ export class PartyHallListingComponent {
     const budget = this.filterOptions.budget.toLowerCase();
 
     this.filteredPartyHalls = this.partyHalls.filter((partyHall) => {
-      return (location ? partyHall.address.state.toLowerCase().includes(location) || 
-                          partyHall.address.country.toLowerCase().includes(location) : true) &&
+      return (location ? 
+             Object.values(partyHall.address).some((value) => 
+              value.toString().toLowerCase().includes(location)
+            ) : true) &&
              (capacity ? partyHall.capacity.toString().toLowerCase().includes(capacity) : true) &&
              (amenities ? partyHall.amenities.some((amenity) => amenity.toLowerCase().includes(amenities)) : true) && 
-             (availability ? partyHall.availability.range.toLowerCase().includes(availability) : true) &&
-             (budget ? partyHall.pricing.perHour.toString().toLowerCase().includes(budget) : true);
+             (availability ? {
+              toString: function() {
+                return partyHall.availability.range.toString().toLowerCase();
+              }
+            }
+            .toString().includes(availability) : true) &&
+             (budget ? Object.values(partyHall.pricing).some((value) => 
+              value.toString().toLowerCase().includes(budget)
+            ) : true);
     });
   }
 

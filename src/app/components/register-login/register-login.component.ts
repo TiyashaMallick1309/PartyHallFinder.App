@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import {FormBuilder} from '@angular/forms';
 
 @Component({
   selector: 'app-register-login',
@@ -13,21 +13,11 @@ export class RegisterLoginComponent implements OnInit {
   showLoginForm = false;
   loginActive = true;
   registrationActive = false;
-  loginForm!: FormGroup;
-  registrationForm!: FormGroup;
   loginEmailError = '';
   loginPasswordError = '';
   registrationEmailError = '';
   registrationPasswordError = '';
   confirmPasswordError = '';
-  loginEmail!: string;
-  loginPassword!: string;
-  registrationEmail!: string;
-  registrationPassword!: string;
-  confirmPassword!: string;
-  registrationUsername!: string;
-  registrationFirstname!: string;
-  registrationLastname!: string;
 
   images: string[] = ["https://th.bing.com/th/id/R.3699ea3784dabc21d71f52a6019637b3?rik=ZAuWPTIsHDzgOA&riu=http%3a%2f%2fyesofcorsa.com%2fwp-content%2fuploads%2f2018%2f04%2fBanqueting-Hall-Wallpaper-Full-HD.jpg&ehk=KLeuFdp%2fa9jQwYUIFIFLEM4eSUgJ559r6hrSWDMxwcw%3d&risl=&pid=ImgRaw&r=0",
     "https://d1zpvjny0s6omk.cloudfront.net/media/fileupload/2015/06/05/00_Pate_1741-2.jpeg",
@@ -90,6 +80,4 @@ export class RegisterLoginComponent implements OnInit {
       this.onNextClick();
     }, 5000);
   }
-
-
 }

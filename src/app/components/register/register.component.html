@@ -1,72 +1,39 @@
-<form (ngSubmit)="onRegistration()" #registrationForm="ngForm">
-  <div class="form-group mt-3">
-    <label for="registrationUsername">Username</label>
-    <input type="text" class="form-control" id="registrationUsername" name="registrationUsername"
-      [(ngModel)]="registrationUsername" required #registrationUsernameInput="ngModel">
-    <div
-      *ngIf="registrationUsernameInput.invalid && (registrationUsernameInput.dirty || registrationUsernameInput.touched)"
-      class="invalid-feedback d-block">
-      Username is required.
-    </div>
-  </div>
-  <div class="form-group mt-3">
-    <label for="registrationFirstname">First Name</label>
-    <input type="text" class="form-control" id="registrationFirstname" name="registrationFirstname"
-      [(ngModel)]="registrationFirstname" required #registrationFirstnameInput="ngModel">
-    <div
-      *ngIf="registrationFirstnameInput.invalid && (registrationFirstnameInput.dirty || registrationFirstnameInput.touched)"
-      class="invalid-feedback d-block">
-      First Name is required.
-    </div>
-  </div>
-  <div class="form-group mt-3">
-    <label for="registrationLastname">Last Name</label>
-    <input type="text" class="form-control" id="registrationLastname" name="registrationLastname"
-      [(ngModel)]="registrationLastname" required #registrationLastnameInput="ngModel">
-    <div
-      *ngIf="registrationLastnameInput.invalid && (registrationLastnameInput.dirty || registrationLastnameInput.touched)"
-      class="invalid-feedback d-block">
-      Last Name is required.
-    </div>
-  </div>
-  <div class="form-group mt-3">
-    <label for="registrationEmail">Email Address</label>
-    <input type="email" class="form-control" id="registrationEmail" name="registrationEmail"
-      [(ngModel)]="registrationEmail" required #registrationEmailInput="ngModel">
-    <div *ngIf="registrationEmailInput.invalid && (registrationEmailInput.dirty || registrationEmailInput.touched)"
-      class="invalid-feedback d-block">
-      <ng-container *ngIf="registrationEmailInput.errors?.['required']">Email is required.</ng-container>
-      <ng-container *ngIf="registrationEmailInput.errors?.['email']">Email is invalid.</ng-container>
-    </div>
+<form [formGroup]="registrationForm" (ngSubmit)="onRegistration()">
+  <br><div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" formControlName="username" id="username" required>
+    <div *ngIf="registrationForm.controls?.['username']?.errors?.['required']" class="invalid-feedback d-block">Username is required.</div>
   </div>
   <div class="form-group">
-    <label for="registrationPassword">Password</label>
-    <input type="password" class="form-control" id="registrationPassword" name="registrationPassword"
-      [(ngModel)]="registrationPassword" required #registrationPasswordInput="ngModel">
-    <div
-      *ngIf="registrationPasswordInput.invalid && (registrationPasswordInput.dirty || registrationPasswordInput.touched)"
-      class="invalid-feedback d-block">
-      Password is required.
-    </div>
+    <label for="firstname">First Name</label>
+    <input type="text" class="form-control" formControlName="firstname" id="firstname" required>
+    <div *ngIf="registrationForm.controls?.['firstname']?.errors?.['required']" class="invalid-feedback d-block">First Name is required.</div>
+  </div>
+  <div class="form-group">
+    <label for="lastname">Last Name</label>
+    <input type="text" class="form-control" formControlName="lastname" id="lastname" required>
+    <div *ngIf="registrationForm.controls?.['lastname']?.errors?.['required']" class="invalid-feedback d-block">Last Name is required.</div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" formControlName="email" id="email" required>
+    <div *ngIf="registrationForm.controls?.['email']?.errors?.['emailNotUnique']" class="invalid-feedback d-block">Email already exists, please login or use a different email.</div>
+    <div *ngIf="registrationForm.controls?.['email']?.errors?.['required']" class="invalid-feedback d-block">Email is required.</div>
+    <div *ngIf="registrationForm.controls?.['email']?.errors?.['email']" class="invalid-feedback d-block">Email is invalid.</div>
+
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" formControlName="password" id="password" required>
+    <div *ngIf="registrationForm.controls?.['password']?.errors?.['required']" class="invalid-feedback d-block">Password is required.</div>
+    <div *ngIf="registrationForm.controls?.['password']?.errors?.['minlength']" class="invalid-feedback d-block">Password should be atleast 6 characters long.</div>
   </div>
   <div class="form-group">
     <label for="confirmPassword">Confirm Password</label>
-    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
-      [(ngModel)]="confirmPassword" required #confirmPasswordInput="ngModel">
-    <div *ngIf="confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched)"
-      class="invalid-feedback d-block">
-      Confirm Password is required.
-    </div>
-    <div
-      *ngIf="(registrationPasswordInput.dirty || registrationPasswordInput.touched) && (confirmPasswordInput.value != registrationPasswordInput.value)"
-      class="invalid-feedback d-block">
-      Passwords don't match.
-    </div>
+    <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword" required>
+    <div *ngIf="registrationForm.controls?.['confirmPassword']?.errors?.['required']" class="invalid-feedback d-block">Confirm Password is required.</div>
+    <div *ngIf="registrationForm.errors?.['passwordMatch']" class="invalid-feedback d-block">Passwords don't match.</div>
   </div>
-  <button type="submit" class="btn btn-primary mt-3" [disabled]="registrationForm.invalid">
-    <ng-container>Create Account</ng-container>
-  </button>
-
-  <div class="text-danger mt-3" *ngIf="registrationForm.submitted && registrationForm.invalid">Please fill all the
-    required fields.</div>
+  
+  <button type="submit" class="btn btn-primary" (click)="onRegistration()" [disabled]="!registrationForm.valid">Create Account</button>
 </form>

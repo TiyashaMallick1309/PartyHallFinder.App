@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
@@ -9,73 +9,76 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  accountTypes = ['user', 'owner', 'admin'];
   selectedAccountType = 'user';
-  showLoginForm = false;
-  loginActive = true;
-  registrationActive = false;
-  loginForm!: FormGroup;
   registrationForm!: FormGroup;
-  loginEmailError = '';
-  loginPasswordError = '';
-  registrationEmailError = '';
-  registrationPasswordError = '';
-  confirmPasswordError = '';
-  loginEmail!: string;
-  loginPassword!: string;
-  registrationEmail!: string;
-  registrationPassword!: string;
-  confirmPassword!: string;
-  registrationUsername!:string;
-  registrationFirstname!:string;
-  registrationLastname!:string;
-
-  constructor(private authService: AuthorizationService, private fb: FormBuilder, private router: Router) { }
+  registrationFailed = false;
+  submitted = false;
   
-  initForms() {
-    this.loginForm = this.fb.group({
-      loginEmail: ['', [Validators.required, Validators.email]],
-      loginPassword: ['', [Validators.required, Validators.minLength(6)]]
-    });
-
+  constructor(private authService: AuthorizationService, private fb: FormBuilder, private router: Router) { 
+    this.createRegistrationForm();
+  }  
+  
+  createRegistrationForm() {
     this.registrationForm = this.fb.group({
-      registrationEmail: ['', [Validators.required, Validators.email]],
-      registrationPassword: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
+      username: ['', Validators.required],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+    }, {
+      validator: this.passwordMatchValidator
     });
   }
-  
-  onRegistration() {
-    const email = this.registrationForm.get('registrationEmail')?.value;
-    const password = this.registrationForm.get('registrationPassword')?.value;
-    const confirmPassword = this.registrationForm.get('confirmPassword')?.value;
-    const username = this.registrationForm.get('registrationUsername')?.value;
-    const firstname = this.registrationForm.get('registrationFirstname')?.value;
-    const lastname = this.registrationForm.get('registrationLastname')?.value;
 
-    if (password !== confirmPassword) {
-      this.confirmPasswordError = 'Passwords do not match, please try again';
+  passwordMatchValidator(form: FormGroup) {
+    const password = form.get('password');
+    const confirmPassword = form.get('confirmPassword');
+    return password && confirmPassword && password.value === confirmPassword.value ? null : { passwordMatch: true };
+  }
+
+  async onRegistration() {
+    this.submitted = true; // set the property to true when the form is submitted
+  
+    if (this.registrationForm.invalid) {
       return;
     }
-
-    this.authService.signUp(this.selectedAccountType, email, password)
-      .then(() => {
-        // Show success message or redirect user to appropriate dashboard
-      })
-      .catch((error: any) => {
-        if (error.code === 'auth/email-already-in-use') {
-          this.registrationEmailError = 'Email already exists, please login or use a different email';
-        } else {
-          this.registrationEmailError = 'An error occurred, please try again later';
-          // Handle other errors
+  
+    const email = this.registrationForm.get('email')?.value;
+    const password = this.registrationForm.get('password')?.value;
+    const username = this.registrationForm.get('username')?.value;
+    const firstname = this.registrationForm.get('firstname')?.value;
+    const lastname = this.registrationForm.get('lastname')?.value;
+  
+    try {
+      const success = await this.authService.signUp(
+        this.selectedAccountType,
+        email,
+        password,
+        username,
+        firstname,
+        lastname
+      );
+  
+      if (success) {
+        switch (this.selectedAccountType) {
+          case 'user':
+            this.router.navigate(['user-dashboard/party-hall-list']);
+            break;
+          case 'owner':
+            this.router.navigate(['/owner-dashboard']);
+            break;
+          case 'admin':
+            this.router.navigate(['/admin-dashboard']);
+            break;
         }
-      });
-    // Redirect to the respective dashboard
-    if (this.selectedAccountType === 'user') {
-      this.router.navigate(['user-dashboard/party-hall-list']);
-    } else if (this.selectedAccountType === 'owner') {
-      this.router.navigate(['/owner-dashboard']);
-    } else if (this.selectedAccountType === 'admin') {
-      this.router.navigate(['/admin-dashboard']);
+      } else {
+        this.registrationFailed = true;
+      }
+    } catch (error: any) {
+      console.error('REGISTRATION ERROR:', error);
+      this.registrationFailed = true;
     }
   }
 }
