@@ -1,78 +1,98 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
+import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { Subscription } from 'rxjs';
+import { PasswordHashService } from 'src/app/services/password-hash.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   selectedAccountType = 'user';
   showLoginForm = false;
   loginActive = true;
   loginForm!: FormGroup;
   loginFailed = false;
   submitted = false; // add new property here
+  userData: User[] = [];
+
+  userSubscription: Subscription | undefined;
 
   constructor(
     private authService: AuthorizationService,
     private fb: FormBuilder,
-    private router: Router
-  ) {}
-
-  ngOnInit() {
+    private router: Router,
+    private apiService: ApiService
+  ) {
     this.loginForm = this.fb.group({
+      loginUsername: ['', Validators.required],
       loginEmail: ['', [Validators.required, Validators.email]],
-      loginPassword: ['', [Validators.required, Validators.minLength(6)]],
+      loginPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}$/)]]
     });
     this.submitted = false; // set the property to false in ngOnInit
   }
 
-  selectAccountType(event: Event) {
-    this.selectedAccountType = (event.target as HTMLSelectElement).value;
-    this.showLoginForm = true;
-    this.loginFailed = false;
-    this.loginForm.reset();
-    this.submitted = false; // reset the property when selecting a new account type
-  }
-
-  async onLogin() {
-    this.submitted = true; // set the property to true when the form is submitted
+  onLogin() {
+    this.submitted = true;
 
     if (this.loginForm.invalid) {
       return;
     }
 
-    const email = this.loginForm.get('loginEmail')?.value;
-    const password = this.loginForm.get('loginPassword')?.value;
+    const enteredUsername = this.loginForm.value.loginUsername;
+    const enteredPassword = this.loginForm.value.loginPassword;
 
-    try {
-      const success = await this.authService.signIn(
-        this.selectedAccountType,
-        email,
-        password
-      );
+    console.log('inside login onsubmit');
+    console.log(enteredUsername);
+    console.log(enteredPassword);
 
-      if (success) {
-        switch (this.selectedAccountType) {
-          case 'user':
-            this.router.navigate(['user-dashboard/party-hall-list']);
-            break;
-          case 'owner':
-            this.router.navigate(['/owner-dashboard']);
-            break;
-          case 'admin':
-            this.router.navigate(['/admin-dashboard']);
-            break;
+    this.userSubscription = this.apiService.getAllUsers().subscribe({
+      next: (users: User[]) => {
+        const user = users.find((u) => u.username === enteredUsername);
+
+        if (
+          user &&
+          this.apiService.comparePasswords(
+            enteredPassword,
+            user.password
+          )
+        ) {
+          console.log('Authentication successful');
+          this.authService.signIn(user.role);
+
+          switch (user.role) {
+            case 'user':
+              this.router.navigate(['user-dashboard/party-hall-list']);
+              break;
+            case 'owner':
+              this.router.navigate(['/owner-dashboard']);
+              break;
+            case 'admin':
+              this.router.navigate(['/admin-dashboard']);
+              break;
+          }
+        } else {
+          console.log('Authentication Failed');
+          this.loginFailed = true;
+          this.loginForm.reset();
         }
-      } else {
-        this.loginFailed = true;
-      }
-    } catch (error: any) {
-      console.error('LOGIN ERROR:', error);
-      this.loginFailed = true;
+      },
+      error: (error: any) => {
+        console.error(error);
+      },
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
     }
+
   }
 }
+
