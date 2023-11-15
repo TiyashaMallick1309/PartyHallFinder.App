@@ -19,7 +19,6 @@ export class LoginComponent {
   loginForm!: FormGroup;
   loginFailed = false;
   submitted = false; // add new property here
-  userData: User[] = [];
 
   userSubscription: Subscription | undefined;
 
@@ -50,21 +49,17 @@ export class LoginComponent {
     console.log('inside login onsubmit');
     console.log(enteredUsername);
     console.log(enteredPassword);
+    
 
     this.userSubscription = this.apiService.getAllUsers().subscribe({
       next: (users: User[]) => {
-        const user = users.find((u) => u.username === enteredUsername);
-
-        if (
-          user &&
-          this.apiService.comparePasswords(
-            enteredPassword,
-            user.password
-          )
-        ) {
+        const user = users.find(u => u.username === enteredUsername);
+        
+        if (user && this.apiService.comparePasswords(enteredPassword, user.password)) {
+          // authentication successful
           console.log('Authentication successful');
           this.authService.signIn(user.role);
-
+    
           switch (user.role) {
             case 'user':
               this.router.navigate(['user-dashboard/party-hall-list']);
@@ -77,6 +72,7 @@ export class LoginComponent {
               break;
           }
         } else {
+          // authentication failed
           console.log('Authentication Failed');
           this.loginFailed = true;
           this.loginForm.reset();
@@ -84,7 +80,7 @@ export class LoginComponent {
       },
       error: (error: any) => {
         console.error(error);
-      },
+      }
     });
   }
 
