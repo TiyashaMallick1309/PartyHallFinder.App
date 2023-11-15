@@ -19,8 +19,8 @@ export class UserDashboardComponent {
 
   logout(){
     this.auth.isAuthenticatedSubject.next(false);
-    this.auth.userTypeSubject.next('');
-    this.auth.usernameSubject.next('');
+    this.auth.TypeSubject.next('');
+    this.auth.nameSubject.next('');
     this.router.navigate(['/'])
   }
 

@@ -1,25 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user';
+import { Subscription } from 'rxjs';
+import { Owner } from 'src/app/models/owner';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
-import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'app-owner-login',
+  templateUrl: './owner-login.component.html',
+  styleUrls: ['./owner-login.component.css']
 })
-export class LoginComponent {
-  selectedAccountType = 'user';
+export class OwnerLoginComponent {
+  selectedAccountType = 'owner';
   showLoginForm = false;
   loginActive = true;
   loginForm!: FormGroup;
   loginFailed = false;
   submitted = false; // add new property here
-  data: User[] = [];
-  userSubscription: Subscription | undefined;
+  data:Owner[]=[];
+  ownerSubscription: Subscription | undefined;
 
   constructor(
     private authService: AuthorizationService,
@@ -48,16 +48,16 @@ export class LoginComponent {
     console.log('inside login onsubmit');
     console.log(enteredUsername);
     console.log(enteredPassword);
-
-
-    this.userSubscription = this.apiService.getUsers().subscribe({
-      next: (users: User[]) => {
-        const user = users.find(u => u.userName == enteredUsername);
-        if (user && this.apiService.comparePasswords(enteredPassword, user.password)) {
+    
+    
+    this.ownerSubscription = this.apiService.getOwners().subscribe({
+      next: (owners: Owner[]) => {
+        const owner = owners.find(o =>o.username == enteredUsername);
+        if (owner && this.apiService.comparePasswords(enteredPassword, owner.password)) {
           // authentication successful
           console.log('Authentication successful');
-          this.authService.signInUser(user.role);
-          this.router.navigate(['user-dashboard/party-hall-list']);
+          this.authService.signInOwner(owner.role);
+              this.router.navigate(['/owner-dashboard']);
         } else {
           // authentication failed
           console.log('Authentication Failed');
@@ -72,10 +72,11 @@ export class LoginComponent {
   }
 
   ngOnDestroy() {
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
+    if (this.ownerSubscription) {
+      this.ownerSubscription.unsubscribe();
     }
 
   }
 }
+
 

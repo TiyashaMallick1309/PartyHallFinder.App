@@ -1,22 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Owner } from 'src/app/models/owner';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
-import { Owner } from 'src/app/models/owner';
-import { User } from 'src/app/models/user';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-owner-register',
+  templateUrl: './owner-register.component.html',
+  styleUrls: ['./owner-register.component.css']
 })
-export class RegisterComponent implements OnInit {
-  selectedAccountType = 'user';
-  
+export class OwnerRegisterComponent {
   registrationForm!: FormGroup;
   registrationFailed = false;
   submitted = false;
+  selectedAccountType = 'owner';
   
   constructor(private authService: AuthorizationService, private fb: FormBuilder, private router: Router, private apiService: ApiService) { }
   
@@ -55,41 +53,36 @@ export class RegisterComponent implements OnInit {
       return;
     }
   
-    const userData: User = {
-      _id: this.registrationForm.get('username')?.value,
-      userName: this.registrationForm.get('username')?.value,
+    const ownerData: Owner = {
+      _id: this.registrationForm.get('id')?.value,
+      username: this.registrationForm.get('username')?.value,
       firstname: this.registrationForm.get('firstname')?.value,
       lastname: this.registrationForm.get('lastname')?.value,
-      address: {
-        street: this.registrationForm.get('address.street')?.value,
-        city: this.registrationForm.get('address.city')?.value,
-        state: this.registrationForm.get('address.state')?.value,
-        country: this.registrationForm.get('address.country')?.value,
-        postalcode: this.registrationForm.get('address.postalcode')?.value,
-      },
       email: this.registrationForm.get('email')?.value,
       password: this.registrationForm.get('password')?.value,
       role: this.registrationForm.get('role')?.value,
       phonenumber: this.registrationForm.get('phonenumber')?.value,
+      ownedHall:this.registrationForm.get('ownedHall')?.value,
     };
   
     try {
-      this.apiService.addUser(userData).subscribe(response => {
+      this.apiService.addOwner(ownerData).subscribe(response => {
         console.log(response);
       });
       
       const success = await this.authService.signUp(
         this.selectedAccountType,
-        userData.email,
-        userData.password,
-        userData.firstname,
-        userData.lastname,
-        userData.role
+        ownerData.email,
+        ownerData.password,
+        ownerData.firstname,
+        ownerData.lastname,
+        ownerData.role
       );
   
       if (success) {
-            this.router.navigate(['user-dashboard/party-hall-list']);
-      } else {
+            this.router.navigate(['/owner-dashboard']);
+        }
+       else {
         this.registrationFailed = true;
       }
     } catch (error: any) {

@@ -1,43 +1,50 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { catchError, switchMap, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { ApiService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
-import {first, withLatestFrom } from 'rxjs/operators';
+import {first} from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
-
+import { Owner } from '../models/owner';
 
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthorizationService {
-  private baseURL = environment.apiUrl;
+  private baseUrl='https://localhost:7091/api';
    isAuthenticatedSubject :BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-   usernameSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-   userTypeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-   userIdSubject : BehaviorSubject<string> = new BehaviorSubject<string>('');
-   userEmailSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+   nameSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+   TypeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+   IdSubject : BehaviorSubject<string> = new BehaviorSubject<string>('');
+   EmailSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   
   constructor(private apiService: ApiService, private router: Router, private http:HttpClient) {}
 
-  signIn(selectedAccountType: string) {
-    console.log(this.isAuthenticatedSubject + " beforethe apiservice call")
+  signInUser(selectedAccountType: string) {
     this.apiService.user$.pipe(first()).subscribe((users:User[])=>{
       const latestUser = users[users.length-1];
       this.isAuthenticatedSubject.next(true);
-      this.usernameSubject.next(latestUser.username);
-      this.userTypeSubject.next(latestUser.role);
-      this.userIdSubject.next(latestUser._id);
-      this.router.navigate(['']);
+      this.nameSubject.next(latestUser.userName);
+      this.TypeSubject.next(latestUser.role);
+      this.IdSubject.next(latestUser._id);
+
     });
-    console.log(this.isAuthenticatedSubject+" after");
   }
 
+  signInOwner(selectedAccountType: string) {
+    this.apiService.owner$.pipe(first()).subscribe((owners:Owner[])=>{
+      const latestOwner = owners[owners.length-1];
+      this.isAuthenticatedSubject.next(true);
+      this.nameSubject.next(latestOwner.username);
+      this.TypeSubject.next(latestOwner.role);
+      this.IdSubject.next(latestOwner._id);
+    });
+  }
 
   signUp(selectedAccountType: string, email: string, password: string, username: string, firstname: string, lastname: string){
-      const url = `${this.baseURL}/auth/register`;
+      const url = `${this.baseUrl}/auth/register`;
       const requestBody = {
         accountType: selectedAccountType,
         email,
@@ -51,7 +58,7 @@ export class AuthorizationService {
       .post(url, requestBody)
       .pipe(
         catchError((error: HttpErrorResponse) => {
-          return throwError('Error while authenticating user');
+          return throwError('Error while authenticating');
         })
       );
   }

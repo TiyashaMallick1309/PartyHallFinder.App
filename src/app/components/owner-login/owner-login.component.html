@@ -1,0 +1,36 @@
+<form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <div class="form-group mt-3">
+      <label for="loginUsername">Username</label>
+      <input type="text" class="form-control" id="loginUsername" formControlName="loginUsername" placeholder="e.g. johndoe">
+      <div class="invalid-feedback d-block" *ngIf="loginForm.get('loginUsername')?.invalid && (loginForm.get('loginUsername')?.dirty || loginForm.get('loginUsername')?.touched)">
+        <ng-container *ngIf="loginForm.get('loginUsername')?.errors?.['required']">Username is required.</ng-container>
+      </div>
+    </div>
+    <div class="form-group mt-3">
+      <label for="loginEmail">Email Address</label>
+      <input type="email" class="form-control" id="loginEmail" formControlName="loginEmail" placeholder="e.g. john.doe@mail.com">
+      <div class="invalid-feedback d-block" *ngIf="loginForm.get('loginEmail')?.invalid && (loginForm.get('loginEmail')?.dirty || loginForm.get('loginEmail')?.touched)">
+        <ng-container *ngIf="loginForm.get('loginEmail')?.errors?.['required']">Email is required.</ng-container>
+        <ng-container *ngIf="loginForm.get('loginEmail')?.errors?.['email']">Email is invalid.</ng-container>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="loginPassword">Password</label>
+      <input type="password" class="form-control" id="loginPassword" formControlName="loginPassword">
+      <div class="invalid-feedback d-block" *ngIf="loginForm.get('loginPassword')?.invalid && (loginForm.get('loginPassword')?.dirty || loginForm.get('loginPassword')?.touched)">
+        <ng-container *ngIf="loginForm.get('loginPassword')?.errors?.['required']">Password is required.</ng-container>
+        <ng-container *ngIf="loginForm.get('loginPassword')?.errors?.['minlength']">Password must be at least 8 characters long.</ng-container>
+        <ng-container *ngIf="loginForm.get('loginPassword')?.errors?.['pattern']">Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.</ng-container>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="!loginForm.valid || submitted">
+      <ng-container *ngIf="loginActive">Log In</ng-container>
+    </button>
+  
+    <div class="text-danger mt-3" *ngIf="submitted && loginForm.invalid">
+      Please fill in all required fields.
+    </div>
+    <div class="text-danger mt-3" *ngIf="loginFailed">
+      Email or password is incorrect.
+    </div>
+  </form>

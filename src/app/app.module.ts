@@ -21,6 +21,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { UserHistoryComponent } from './components/user-history/user-history.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
+import { OwnerLoginComponent } from './components/owner-login/owner-login.component';
+import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +38,10 @@ import { LoginComponent } from './components/login/login.component';
     AdminDashboardComponent,
     UserHistoryComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    OwnerLoginComponent,
+    OwnerRegisterComponent,
+    AdminLoginComponent
   ],
   imports: [
     BrowserModule,

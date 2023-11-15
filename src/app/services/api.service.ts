@@ -2,37 +2,47 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { PasswordHashService } from './password-hash.service';
+import { Owner } from '../models/owner';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
   user$!: Observable<User[]>;
+  owner$!: Observable<Owner[]>;
 
   enteredPassword: string = '';
-  hashedPassword: string = '';
+  existingPassword: string = '';
 
-  constructor(private database: HttpClient, private passwordHashService: PasswordHashService) { }
+  constructor(private http: HttpClient) { }
 
   addUser(userdata: any) {
-    const hashedPassword = this.passwordHashService.hashPassword(userdata.password);
-    userdata.password = hashedPassword;
-    console.log(userdata);
-    return this.database.post('https://localhost:7091/api/Users', userdata);
+    userdata.password = userdata.password;
+    return this.http.post('https://localhost:7091/api/Users', userdata);
+  }
+  addOwner(ownerdata: any) {
+    ownerdata.password = ownerdata.password;
+    return this.http.post('https://localhost:7091/api/Owners', ownerdata);
   }
 
-  getAllUsers(): Observable<User[]> {
-    this.user$ = this.database.get<User[]>('https://localhost:7091/api/Users');
+
+  getUsers(): Observable<User[]> {
+    this.user$ = this.http.get<User[]>('https://localhost:7091/api/Users');
     return this.user$;
   }
+  getOwners(): Observable<Owner[]> {
+    this.owner$ = this.http.get<Owner[]>('https://localhost:7091/api/Owners');
+    return this.owner$;
+  }
 
+  
   getUser(userId: string): Observable<User> {
-    return this.database.get<User>(`https://localhost:7091/api/Users/${userId}`);
+    return this.http.get<User>(`https://localhost:7091/api/Users/${userId}`);
   }
 
-  comparePasswords(enteredPassword:string,hashedPassword:string):boolean{
-    const hashedEnteredPassword = this.passwordHashService.hashPassword(enteredPassword);
-    return hashedEnteredPassword === hashedPassword;
+  comparePasswords(enteredPassword: string, storedPassword: string): boolean {
+    return enteredPassword === storedPassword;
   }
+
+
 }
