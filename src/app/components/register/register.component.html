@@ -85,10 +85,9 @@
   <div class="form-group">
     <label for="role">Role</label>
     <select class="form-control" formControlName="role" id="role" required>
-      <option value="user" *ngIf="registrationForm.controls?.['role']?.errors?.['required']" class="invalid-feedback d-block">User</option>
+      <option value="user">User</option>
     </select>
-      
-  </div>
+</div>
 
-  <button type="submit" class="btn btn-primary" [disabled]="!registrationForm.valid">Create Account</button>
+  <button type="submit" class="btn btn-primary">Create Account</button>
 </form>

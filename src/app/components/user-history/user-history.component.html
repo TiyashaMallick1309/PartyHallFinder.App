@@ -1,18 +1,12 @@
-<!-- <table>
-    <thead>
-      <tr>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let user of users">
-        <td>{{ user.firstname }}</td>
-        <td>{{ user.lastname }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.phonenumber }}</td>
-      </tr>
-    </tbody>
-  </table> -->
+<div class="user-details"><br>
+  <h2> Personal Details</h2><br><br>
+  <p class="user-info">
+    Name: {{ name }} <br><br>
+    Email: {{ email }} <br><br>
+    Phone: {{ phonenumber  }} <br><br>
+    Address:
+    <span *ngFor="let addr of address">
+      {{ addr.street }}, {{ addr.city }}, {{ addr.state }}, {{ addr.country }}, {{ addr.postalcode }}
+    </span>
+    </p>
+</div>

@@ -15,6 +15,7 @@ export class UserDashboardComponent {
 
   ngOnInit() {
     this.router.navigate(['user-dashboard/party-hall-list']);
+    this.router.navigate(['user-dashboard/user-history']);
   }
 
   logout(){

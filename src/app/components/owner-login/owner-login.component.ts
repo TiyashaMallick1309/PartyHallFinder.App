@@ -57,7 +57,7 @@ export class OwnerLoginComponent {
           // authentication successful
           console.log('Authentication successful');
           this.authService.signInOwner(owner.role);
-              this.router.navigate(['/owner-dashboard']);
+              this.router.navigate(['owner-dashboard']);
         } else {
           // authentication failed
           console.log('Authentication Failed');

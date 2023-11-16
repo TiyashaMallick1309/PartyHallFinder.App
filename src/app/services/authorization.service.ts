@@ -5,8 +5,16 @@ import { ApiService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
 import {first} from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { User } from '../models/user';
+import { Address, User } from '../models/user';
 import { Owner } from '../models/owner';
+
+interface AddressDetails {
+  street: string;
+  city: string;
+  state: string;
+  country: string;
+  postalcode: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -19,27 +27,42 @@ export class AuthorizationService {
    TypeSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
    IdSubject : BehaviorSubject<string> = new BehaviorSubject<string>('');
    EmailSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+   AddressSubject: BehaviorSubject<Address[]> = new BehaviorSubject<Address[]>([]);
+   PhoneNumberSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   
   constructor(private apiService: ApiService, private router: Router, private http:HttpClient) {}
 
-  signInUser(selectedAccountType: string) {
-    this.apiService.user$.pipe(first()).subscribe((users:User[])=>{
-      const latestUser = users[users.length-1];
+  signInUser() {
+    this.apiService.user$.pipe(first()).subscribe((users: User[]) => {
+      const latestUser = users[users.length - 1];
       this.isAuthenticatedSubject.next(true);
       this.nameSubject.next(latestUser.userName);
       this.TypeSubject.next(latestUser.role);
       this.IdSubject.next(latestUser._id);
-
+      this.EmailSubject.next(latestUser.email);
+      this.PhoneNumberSubject.next(latestUser.phonenumber  ?? '');
+      const addressDetails: AddressDetails = {
+        street: latestUser.address?.street ?? '',
+        city: latestUser.address?.city ?? '',
+        state: latestUser.address?.state ?? '',
+        country: latestUser.address?.country ?? '',
+        postalcode: latestUser.address?.postalcode ?? ''
+      };
+      const address: Address[] = [addressDetails as Address];
+      this.AddressSubject.next(address);
     });
   }
 
+
   signInOwner(selectedAccountType: string) {
-    this.apiService.owner$.pipe(first()).subscribe((owners:Owner[])=>{
-      const latestOwner = owners[owners.length-1];
+    this.apiService.owner$.pipe(first()).subscribe((owners: Owner[]) => {
+      const latestUser = owners[owners.length - 1];
       this.isAuthenticatedSubject.next(true);
-      this.nameSubject.next(latestOwner.username);
-      this.TypeSubject.next(latestOwner.role);
-      this.IdSubject.next(latestOwner._id);
+      this.nameSubject.next(latestUser.username);
+      this.TypeSubject.next(latestUser.role);
+      this.IdSubject.next(latestUser._id);
+      this.EmailSubject.next(latestUser.email);
+      this.PhoneNumberSubject.next(latestUser.phonenumber  ?? '')
     });
   }
 
@@ -61,5 +84,6 @@ export class AuthorizationService {
           return throwError('Error while authenticating');
         })
       );
+      
   }
 }

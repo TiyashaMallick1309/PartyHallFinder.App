@@ -31,6 +31,7 @@ export class AdminLoginComponent {
   ) {
     this.loginForm = this.fb.group({
       loginUsername: ['', Validators.required],
+      loginEmail: ['', Validators.required],
       loginPassword: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{6,}$/)]]
     });
   }

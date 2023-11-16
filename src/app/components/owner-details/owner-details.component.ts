@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Address } from 'src/app/models/user';
-import { AuthorizationService } from 'src/app/services/authorization.service';
+import { filter } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
-import { filter} from 'rxjs';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
-  selector: 'app-user-history',
-  templateUrl: './user-history.component.html',
-  styleUrls: ['./user-history.component.css']
+  selector: 'app-owner-details',
+  templateUrl: './owner-details.component.html',
+  styleUrls: ['./owner-details.component.css']
 })
-export class UserHistoryComponent implements OnInit {
+export class OwnerDetailsComponent implements OnInit{
   name!: string;
   email!: string;
   phonenumber :string = '';
-  address: Address[] = [];
 
   constructor(private authService: AuthorizationService, private apiService: ApiService) { }
 
@@ -33,9 +31,6 @@ export class UserHistoryComponent implements OnInit {
       this.authService.PhoneNumberSubject.subscribe(phonenumber  => {
         console.log('phonenumber: ', phonenumber );
         this.phonenumber  = phonenumber ;
-      });
-      this.authService.AddressSubject.subscribe(address => {
-        this.address = address;
       });
     });
   }

@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
-import { Owner } from 'src/app/models/owner';
 import { User } from 'src/app/models/user';
 
 @Component({
@@ -13,13 +12,13 @@ import { User } from 'src/app/models/user';
 })
 export class RegisterComponent implements OnInit {
   selectedAccountType = 'user';
-  
+
   registrationForm!: FormGroup;
   registrationFailed = false;
   submitted = false;
-  
+
   constructor(private authService: AuthorizationService, private fb: FormBuilder, private router: Router, private apiService: ApiService) { }
-  
+
   ngOnInit() {
     this.registrationForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,18 +42,19 @@ export class RegisterComponent implements OnInit {
   }
 
   passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password');
-    const confirmPassword = form.get('confirmPassword');
-    return password && confirmPassword && password.value === confirmPassword.value ? null : { passwordMatch: true };
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    console.log(password, confirmPassword);
+
+    return password === confirmPassword ? null : { passwordMatch: true };
   }
 
   async onRegistration() {
     this.submitted = true; // set the property to true when the form is submitted
-  
-    if (this.registrationForm.invalid) {
+    if (this.registrationForm.errors !== null) {
       return;
     }
-  
+
     const userData: User = {
       _id: this.registrationForm.get('username')?.value,
       userName: this.registrationForm.get('username')?.value,
@@ -72,12 +72,12 @@ export class RegisterComponent implements OnInit {
       role: this.registrationForm.get('role')?.value,
       phonenumber: this.registrationForm.get('phonenumber')?.value,
     };
-  
+
     try {
       this.apiService.addUser(userData).subscribe(response => {
         console.log(response);
       });
-      
+
       const success = await this.authService.signUp(
         this.selectedAccountType,
         userData.email,
@@ -86,9 +86,10 @@ export class RegisterComponent implements OnInit {
         userData.lastname,
         userData.role
       );
-  
+
       if (success) {
-            this.router.navigate(['user-dashboard/party-hall-list']);
+        window.location.reload();
+        console.log("Registration successful!")
       } else {
         this.registrationFailed = true;
       }

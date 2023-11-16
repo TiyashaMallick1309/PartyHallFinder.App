@@ -24,6 +24,9 @@ import { LoginComponent } from './components/login/login.component';
 import { OwnerLoginComponent } from './components/owner-login/owner-login.component';
 import { OwnerRegisterComponent } from './components/owner-register/owner-register.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { OwnerDetailsComponent } from './components/owner-details/owner-details.component';
+import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { AdminOwnersComponent } from './components/admin-owners/admin-owners.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +44,10 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
     LoginComponent,
     OwnerLoginComponent,
     OwnerRegisterComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    OwnerDetailsComponent,
+    AdminUsersComponent,
+    AdminOwnersComponent
   ],
   imports: [
     BrowserModule,

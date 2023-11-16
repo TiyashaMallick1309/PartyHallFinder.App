@@ -56,7 +56,7 @@ export class LoginComponent {
         if (user && this.apiService.comparePasswords(enteredPassword, user.password)) {
           // authentication successful
           console.log('Authentication successful');
-          this.authService.signInUser(user.role);
+          this.authService.signInUser();
           this.router.navigate(['user-dashboard/party-hall-list']);
         } else {
           // authentication failed

@@ -7,7 +7,7 @@ export interface User {
     email: string;
     password: string;
     role: string;
-    phonenumber: string;
+    phonenumber : string;
 }
 
 export interface Address {
