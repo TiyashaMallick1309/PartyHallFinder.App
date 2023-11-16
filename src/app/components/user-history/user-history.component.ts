@@ -23,15 +23,12 @@ export class UserHistoryComponent implements OnInit {
         // console.log('name: ', name); 
         this.name = name;
       });
-      this.authService.TypeSubject.subscribe(role => {
-        // console.log('role: ', role); this.role = role; 
-      });
       this.authService.EmailSubject.subscribe(email => {
         // console.log('email: ', email); 
         this.email = email;
       });
       this.authService.PhoneNumberSubject.subscribe(phonenumber  => {
-        console.log('phonenumber: ', phonenumber );
+        // console.log('phonenumber: ', phonenumber );
         this.phonenumber  = phonenumber ;
       });
       this.authService.AddressSubject.subscribe(address => {

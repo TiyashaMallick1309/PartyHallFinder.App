@@ -35,7 +35,7 @@ export class ApiService {
     return this.owner$;
   }
 
-  
+
   getUser(userId: string): Observable<User> {
     return this.http.get<User>(`https://localhost:7091/api/Users/${userId}`);
   }

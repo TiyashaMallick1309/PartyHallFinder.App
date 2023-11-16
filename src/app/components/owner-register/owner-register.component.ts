@@ -54,7 +54,7 @@ export class OwnerRegisterComponent {
     }
   
     const ownerData: Owner = {
-      _id: this.registrationForm.get('id')?.value,
+      id: this.registrationForm.get('id')?.value,
       username: this.registrationForm.get('username')?.value,
       firstname: this.registrationForm.get('firstname')?.value,
       lastname: this.registrationForm.get('lastname')?.value,

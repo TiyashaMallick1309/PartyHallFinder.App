@@ -46,13 +46,13 @@ export class AdminUsersComponent {
 
     if (searchText) {
       this.filteredUsers = this.users.filter((user) => {
-        return Object.values(user).some((value) => {
-          if (typeof value == 'object') {
+        return user && Object.values(user).some((value) => {
+          if (typeof value == 'object' && value !== null) {
             return Object.values(value).some((subValue: any) =>
               subValue.toString().toLowerCase().includes(searchText)
             );
           }
-          return value.toString().toLowerCase().includes(searchText);
+          return value && value.toString().toLowerCase().includes(searchText);
         });
       });
     } else {

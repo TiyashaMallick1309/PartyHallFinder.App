@@ -56,7 +56,7 @@ export class RegisterComponent implements OnInit {
     }
 
     const userData: User = {
-      _id: this.registrationForm.get('username')?.value,
+      id: this.registrationForm.get('username')?.value,
       userName: this.registrationForm.get('username')?.value,
       firstname: this.registrationForm.get('firstname')?.value,
       lastname: this.registrationForm.get('lastname')?.value,

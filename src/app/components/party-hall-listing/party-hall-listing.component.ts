@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { PartyHall } from 'src/app/models/party-hall';
 import { PartyHallService } from 'src/app/services/party-hall.service';
 
@@ -21,10 +22,10 @@ export class PartyHallListingComponent {
     budget: ''
   };
 
-  constructor(public partyhallService: PartyHallService) { }
+  constructor(public partyhallService: PartyHallService, private router: Router) { }
 
   ngOnInit(): void {
-    this.partyhallService.getPartyHalls().subscribe((result:PartyHall[]) => {
+    this.partyhallService.getPartyHalls().subscribe((result: PartyHall[]) => {
       this.partyHalls = result.map(partyHall => {
         const range = this.partyhallService.convertAvailabilityToRange(partyHall.availability);
         return {
@@ -43,9 +44,9 @@ export class PartyHallListingComponent {
   filterPartyHalls() {
     this.currentPage = 1;
 
-    if (this.filterOptions.location || this.filterOptions.capacity || 
-        this.filterOptions.amenities || this.filterOptions.availability || 
-        this.filterOptions.budget) {
+    if (this.filterOptions.location || this.filterOptions.capacity ||
+      this.filterOptions.amenities || this.filterOptions.availability ||
+      this.filterOptions.budget) {
       this.filterPartyHallsWithFilterOptions();
       return;
     }
@@ -60,7 +61,7 @@ export class PartyHallListingComponent {
               const range = partyHall.availability.range.toString().toLowerCase();
               return range.includes(searchText);
             }
-            return Object.values(value).some((subValue:any) => 
+            return Object.values(value).some((subValue: any) =>
               subValue.toString().toLowerCase().includes(searchText)
             );
           }
@@ -80,26 +81,26 @@ export class PartyHallListingComponent {
     const budget = this.filterOptions.budget.toLowerCase();
 
     this.filteredPartyHalls = this.partyHalls.filter((partyHall) => {
-      return (location ? 
-             Object.values(partyHall.address).some((value) => 
-              value.toString().toLowerCase().includes(location)
-            ) : true) &&
-             (capacity ? partyHall.capacity.toString().toLowerCase().includes(capacity) : true) &&
-             (amenities ? partyHall.amenities.some((amenity) => amenity.toLowerCase().includes(amenities)) : true) && 
-             (availability ? {
-              toString: function() {
-                return partyHall.availability.range.toString().toLowerCase();
-              }
-            }
-            .toString().includes(availability) : true) &&
-             (budget ? Object.values(partyHall.pricing).some((value) => 
-              value.toString().toLowerCase().includes(budget)
-            ) : true);
+      return (location ?
+        Object.values(partyHall.address).some((value) =>
+          value.toString().toLowerCase().includes(location)
+        ) : true) &&
+        (capacity ? partyHall.capacity.toString().toLowerCase().includes(capacity) : true) &&
+        (amenities ? partyHall.amenities.some((amenity) => amenity.toLowerCase().includes(amenities)) : true) &&
+        (availability ? {
+          toString: function () {
+            return partyHall.availability.range.toString().toLowerCase();
+          }
+        }
+          .toString().includes(availability) : true) &&
+        (budget ? Object.values(partyHall.pricing).some((value) =>
+          value.toString().toLowerCase().includes(budget)
+        ) : true);
     });
   }
 
   // Method to handle errors when loading party hall images
-  handleImageError(event: Event): void { 
+  handleImageError(event: Event): void {
     console.error("Image error: ", event);
   }
 
@@ -134,7 +135,7 @@ export class PartyHallListingComponent {
 
   applyFilter(filterType: string, filterValue: string): void {
     this.currentPage = 1;
-  
+
     switch (filterType) {
       case 'location':
         this.filterOptions.location = filterValue.toLowerCase();
@@ -152,8 +153,15 @@ export class PartyHallListingComponent {
         this.filterOptions.budget = filterValue.toLowerCase();
         break;
     }
-  
+
     this.filterPartyHalls();
   }
 
+  openPartyHallDetails(partyHall: PartyHall) {
+    console.log(partyHall);
+    console.log(partyHall.id);
+    if (partyHall && partyHall.id) {
+      this.router.navigate(['party-halls', partyHall.id]);
+    }
+  }
 }

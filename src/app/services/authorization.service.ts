@@ -38,7 +38,7 @@ export class AuthorizationService {
       this.isAuthenticatedSubject.next(true);
       this.nameSubject.next(latestUser.userName);
       this.TypeSubject.next(latestUser.role);
-      this.IdSubject.next(latestUser._id);
+      this.IdSubject.next(latestUser.id);
       this.EmailSubject.next(latestUser.email);
       this.PhoneNumberSubject.next(latestUser.phonenumber  ?? '');
       const addressDetails: AddressDetails = {
@@ -60,7 +60,7 @@ export class AuthorizationService {
       this.isAuthenticatedSubject.next(true);
       this.nameSubject.next(latestUser.username);
       this.TypeSubject.next(latestUser.role);
-      this.IdSubject.next(latestUser._id);
+      this.IdSubject.next(latestUser.id);
       this.EmailSubject.next(latestUser.email);
       this.PhoneNumberSubject.next(latestUser.phonenumber  ?? '')
     });

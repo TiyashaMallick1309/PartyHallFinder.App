@@ -9,6 +9,7 @@ import { UserHistoryComponent } from './components/user-history/user-history.com
 import { OwnerDetailsComponent } from './components/owner-details/owner-details.component';
 import { AdminOwnersComponent } from './components/admin-owners/admin-owners.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
+import { PartyHallDetailsComponent } from './components/party-hall-details/party-hall-details.component';
 
 const routes: Routes = [
   { path: "", component: RegisterLoginComponent },
@@ -34,7 +35,7 @@ const routes: Routes = [
       { path: 'admin-users', component: AdminUsersComponent },
     ]
   },
-
+  { path: 'party-halls/:id', component: PartyHallDetailsComponent }
 ];
 
 @NgModule({

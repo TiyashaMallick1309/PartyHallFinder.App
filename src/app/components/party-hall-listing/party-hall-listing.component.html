@@ -1,3 +1,4 @@
+<!-- Search-Bar -->
 <div class="search-bar">
   <i class="fa fa-search" aria-hidden="true"></i>
   <input [(ngModel)]="searchText" (input)="filterPartyHalls()" placeholder="Search party halls..." />
@@ -6,7 +7,7 @@
 <!-- Party Hall Cards -->
 <div class="party-hall-card-grid">
   <!-- Party Halls Card for each party hall in the filtered party hall list -->
-  <div class="party-hall-card"
+  <div class="party-hall-card" (click)="openPartyHallDetails(partyHall)"
     *ngFor="let partyHall of filteredPartyHalls | slice: (currentPage - 1) * pageSize : (currentPage * pageSize)">
     <img [src]="partyhallService.getImageUrl(partyHall.images)" (error)="handleImageError($event)"
       alt="{{ partyHall.name }} image">
