@@ -30,6 +30,7 @@ import { AdminOwnersComponent } from './components/admin-owners/admin-owners.com
 import { SavedHallsComponent } from './components/saved-halls/saved-halls.component';
 import { HelpComponent } from './components/help/help.component';
 import { UploadHallsComponent } from './components/upload-halls/upload-halls.component';
+import { UpdateHallsComponent } from './components/update-halls/update-halls.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { UploadHallsComponent } from './components/upload-halls/upload-halls.com
     AdminOwnersComponent,
     SavedHallsComponent,
     HelpComponent,
-    UploadHallsComponent
+    UploadHallsComponent,
+    UpdateHallsComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +66,8 @@ import { UploadHallsComponent } from './components/upload-halls/upload-halls.com
     AngularFireAuthModule,
     BrowserAnimationsModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -221,3 +221,19 @@ ul li{
 .add-to-wishlist-button:hover {
   background-color: #367a55;
 }
+
+@import "~leaflet/dist/leaflet.css";
+
+.map-container {
+  position: absolute;
+  margin: 30px;
+}
+
+.map-frame {
+  border: 2px solid black;
+  height: 60vh;
+}
+
+#map {
+  height: 59vh;
+}

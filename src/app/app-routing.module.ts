@@ -13,6 +13,7 @@ import { PartyHallDetailsComponent } from './components/party-hall-details/party
 import { SavedHallsComponent } from './components/saved-halls/saved-halls.component';
 import { HelpComponent } from './components/help/help.component';
 import { UploadHallsComponent } from './components/upload-halls/upload-halls.component';
+import { UpdateHallsComponent } from './components/update-halls/update-halls.component';
 
 const routes: Routes = [
   { path: "", component: RegisterLoginComponent },
@@ -35,7 +36,8 @@ const routes: Routes = [
     path: 'owner-dashboard', component: OwnerDashboardComponent,
     children: [
       { path: 'owner-details', component: OwnerDetailsComponent },
-      {path:'upload',component:UploadHallsComponent}
+      {path:'upload',component:UploadHallsComponent},
+      {path:'update',component:UpdateHallsComponent}
     ]
   },
   //Admin

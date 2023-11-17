@@ -41,14 +41,12 @@
       is required.</div>
   </div>
 
-  <div class="form-group">
-    <label>Amenities:</label>
-    <div formArrayName="amenities">
-      <div *ngFor="let amenity of amenities.controls; let i=index">
-        <input type="text" [formControlName]="i">
-        <button type="button" (click)="removeAmenity(i)">Remove</button>
-      <button type="button" (click)="addAmenity()">Add Amenity</button>
-      </div>
+  <div formArrayName="amenities">
+    <label for="amenities">Amenity</label>
+    <div *ngFor="let amenity of amenities.controls; let i=index">
+      <input type="text" [formControlName]="i" id="amenity{{i}}">
+      <button type="button" (click)="removeAmenity(i)">Remove</button>
+      <button type="button" (click)="addAmenity()" *ngIf="i === amenities.controls.length - 1">Add Amenity</button>
     </div>
     <div *ngIf="uploadForm.controls?.['amenities']?.errors?.['required']" class="invalid-feedback d-block">At least one
       amenity is required.</div>
@@ -73,14 +71,12 @@
       required.</div>
   </div>
 
-  <div class="form-group">
-    <label>Images:</label>
-    <div formArrayName="images">
-      <div *ngFor="let image of images.controls; let i=index">
-        <input type="link" [formControlName]="i">
-        <button type="button" (click)="removeImage(i)">Remove</button>
-        <button type="button" (click)="addImage()">Add Image</button>
-      </div>
+  <div formArrayName="images">
+    <label for="images">Image</label>
+    <div *ngFor="let image of images.controls; let i=index">
+      <input type="link" [formControlName]="i" id="image{{i}}">
+      <button type="button" (click)="removeImage(i)">Remove</button>
+      <button type="button" (click)="addImage()" *ngIf="i === images.controls.length - 1">Add Image</button>
     </div>
     <div *ngIf="uploadForm.controls?.['images']?.errors?.['required']" class="invalid-feedback d-block">At least one
       image is required.</div>

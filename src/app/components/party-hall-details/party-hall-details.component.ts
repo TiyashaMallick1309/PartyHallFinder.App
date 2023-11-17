@@ -1,26 +1,37 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { PartyHallService } from 'src/app/services/party-hall.service';
-import { } from 'googlemaps';
-
-declare var google: any;
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-party-hall-details',
   templateUrl: './party-hall-details.component.html',
   styleUrls: ['./party-hall-details.component.css']
 })
-export class PartyHallDetailsComponent implements AfterViewInit{
+export class PartyHallDetailsComponent implements OnInit {
   partyHall: any;
   currentImageIndex = 0;
   src: any;
   images: any;
-  @ViewChild('map', { static: false }) mapElement!: ElementRef;
-  map!: google.maps.Map;
-  beachMarker!: google.maps.Marker;
-  image: string = "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
-  
+
+  private map!: L.Map;
+  private centroid: L.LatLngExpression = [0, 0]; 
+
+  private initMap(): void {
+    this.map = L.map('map', {
+      center: this.centroid,
+      zoom: 12
+    });
+
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 18,
+      minZoom: 10,
+      attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+
+    tiles.addTo(this.map);
+  }
 
   constructor(public partyHallService: PartyHallService, private route: ActivatedRoute, private auth: AuthorizationService, private router: Router) { }
 
@@ -31,11 +42,31 @@ export class PartyHallDetailsComponent implements AfterViewInit{
       console.log(partyHallId);
       if (partyHallId) {
         this.partyHallService.getPartyHall(partyHallId).subscribe((res: any) => {
-          console.log(res);
           this.partyHall = res;
           this.images = this.partyHall.images;
           this.currentImageIndex = Math.floor(Math.random() * this.images.length);
           this.src = this.images[this.currentImageIndex];
+
+          // Update the centroid with the latitude and longitude from the party hall data
+          this.centroid = [this.partyHall.geolocation.latitude, this.partyHall.geolocation.longitude];
+
+          // Initialize the map after the centroid has been updated
+          this.initMap();
+
+          // Define your icon 
+          const icon = L.icon({
+            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',  // Change this to the location of marker-icon.png in your project if needed
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', // Change this to the location of marker-shadow.png in your project if needed
+            iconSize: [25, 41], // size of the icon
+            shadowSize: [41, 41], // size of the shadow
+            iconAnchor: [12, 41], // point of the icon which will correspond to marker's location
+            shadowAnchor: [14, 41],  // the same for the shadow
+            popupAnchor: [0, -41] // point from which the popup should open relative to the iconAnchor
+          });
+
+          // Add a marker to the map using the latitude and longitude from the party hall data
+          const marker = L.marker(this.centroid);
+          marker.addTo(this.map);
         });
       } else {
         console.error("Invalid Party Hall ID");
@@ -43,25 +74,6 @@ export class PartyHallDetailsComponent implements AfterViewInit{
     } else {
       console.error("Party Hall ID id missing");
     }
-  }
-
-  ngAfterViewInit(): void {
-    this.initMap();
-  }
-
-  initMap(): void {
-    const mapProperties = {
-      center: new google.maps.LatLng(17.433412099500895, 78.38158316758812),
-      zoom: 16,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapProperties);
-    this.beachMarker = new google.maps.Marker({
-      position: { lat: 17.433412099500895, lng: 78.38158316758812 },
-      map: this.map,
-      icon: this.image,
-    });
   }
 
   logout() {
@@ -85,5 +97,4 @@ export class PartyHallDetailsComponent implements AfterViewInit{
     this.partyHallService.savedHalls(partyHall);
     alert("Party Hall saved!");
   }
-
 }

@@ -15,8 +15,6 @@ export class AdminDashboardComponent {
 
   ngOnInit() {
     this.router.navigate(['admin-dashboard/party-halls']);
-    this.router.navigate(['admin-dashboard/admin-owners']);
-    this.router.navigate(['admin-dashboard/admin-users']);
   }
 
   logout(){

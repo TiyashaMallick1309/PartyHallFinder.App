@@ -1,20 +1,65 @@
 .owner-details {
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #fff;
-  }
-  
-  .owner-details h2 {
-    font-size: 24px;
-    margin-top: 0;
-  }
-  
-  .owner-details .owner-info {
-    font-size: 16px;
-    margin-bottom: 0;
-  }
-  
-  .owner-details .owner-info span {
-    font-weight: bold;
-  }
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.owner-details h2 {
+  font-size: 24px;
+  margin-top: 0;
+}
+
+.owner-details .owner-info {
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.owner-details .owner-info span {
+  font-weight: bold;
+}
+
+/* Display the artwork card grid */
+.party-hall-card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+/* Control the artwork card styles */
+.party-hall-card {
+  width: 18rem;
+  margin: 2rem;
+  border: 0.2rem solid #ccc;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+/* Style the artwork card on hover state */
+.party-hall-card:hover {
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Control the size of the artwork card image */
+.party-hall-card img {
+  width: 100%;
+  height: 20rem;
+}
+
+/* Control the artwork card details */
+.party-hall-details {
+  padding: 1rem;
+  text-align: left;
+}
+
+
+
+/* Control the font and margin for the titles */
+h3, h5 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  padding: 1rem;
+  text-align: center;
+}

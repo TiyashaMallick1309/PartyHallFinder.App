@@ -1,66 +1,31 @@
-<div class="formbold-main-wrapper">
-  <div class="formbold-form-wrapper">
-    <form action="https://formbold.com/s/FORM_ID" method="POST" (submit)="Send()">
-        <div class="formbold-input-flex">
-          <div>
-              <input
-              type="text"
-              name="firstname"
-              id="firstname"
-              placeholder="First Name"
-              class="formbold-form-input"
-              />
-              <label for="firstname" class="formbold-form-label"> First name </label>
-          </div>
-          <div>
-              <input
-              type="text"
-              name="lastname"
-              id="lastname"
-              placeholder="Last Name"
-              class="formbold-form-input"
-              />
-              <label for="lastname" class="formbold-form-label"> Last name </label>
-          </div>
-        </div>
-
-        <div class="formbold-input-flex">
-          <div>
-              <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
-              class="formbold-form-input"
-              />
-              <label for="email" class="formbold-form-label"> Mail </label>
-          </div>
-          <div>
-              <input
-              type="text"
-              name="phone"
-              id="phone"
-              placeholder="Phn. No."
-              class="formbold-form-input"
-              />
-              <label for="phone" class="formbold-form-label"> Phone </label>
-          </div>
-        </div>
-
-        <div class="formbold-textarea">
-            <textarea
-                rows="6"
-                name="message"
-                id="message"
-                placeholder="Write your message..."
-                class="formbold-form-input"
-            ></textarea>
-            <label for="message" class="formbold-form-label"> Message </label>
-        </div>
-
-        <button class="formbold-btn" type="submit">
-            Send Message
-        </button>
-    </form>
-  </div>
+<div class="container">
+  <form>
+    <div class="field" tabindex="1">
+      <label for="username">
+        <i class="far fa-user"></i>Your Name
+      </label>
+      <input name="username" type="text" placeholder="e.g. john doe" required>
+    </div>
+    <div class="field" tabindex="2">
+      <label for="email">
+        <i class="far fa-envelope"></i>Your Email
+      </label>
+      <input name="email" type="text" placeholder="email@domain.com" required>
+    </div>
+    <div class="field" tabindex="3">
+      <label for="message">
+        <i class="far fa-edit"></i>Your Message
+      </label>
+      <textarea name="message" placeholder="type here" required></textarea>
+    </div>
+    <button type="submit" (click)="Send()">Send Me Message</button>
+    <div class="social-media">
+      <span>
+        Get In Touch<i class="fas fa-long-arrow-alt-right"></i>
+      </span>
+      <a class="fab fa-facebook-f" href="https://facebook.com/" target="blank_"></a>
+      <a class="fab fa-twitter" href="https://twitter.com/" target="blank_"></a>
+      <a class="fab fa-instagram" href="https://www.instagram.com/" target="blank_"></a>
+    </div>
+  </form>
 </div>

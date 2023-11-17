@@ -39,16 +39,14 @@ export class PartyHallService {
     return this.http.post('https://localhost:7091/api/PartyHalls', partyHallData);
   }
 
-  // Method to convert availability date objects to string range
-  convertAvailabilityToRange(availability: { startDateTime: Date, endDateTime: Date }): string {
-    const startDateTime = availability.startDateTime.toLocaleString();
-    const endDateTime = availability.endDateTime.toLocaleString();
-    return `${startDateTime} - ${endDateTime}`;
-  }
-
     // Adding item to savedHalls
-    savedHalls(item : any) {
+    savedHalls(item: any) {
+      const index = this.partyHall.findIndex((i) => i.id === item.id);
+      if (index === -1) {
         this.partyHall.push(item);
+      } else {
+        console.log('Item is already in the wishlist');
+      }
     }
 
     // Method to remove item from savedHalls

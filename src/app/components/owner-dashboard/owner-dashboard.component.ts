@@ -15,7 +15,6 @@ export class OwnerDashboardComponent {
 
   ngOnInit() {
     this.router.navigate(['owner-dashboard/owner-details']);
-
   }
 
   logout(){
