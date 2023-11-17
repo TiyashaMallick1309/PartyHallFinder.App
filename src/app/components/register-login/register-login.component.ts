@@ -78,6 +78,6 @@ export class RegisterLoginComponent implements OnInit {
   startSlideshow() {
     setInterval(() => {
       this.onNextClick();
-    }, 5000);
+    }, 2000);
   }
 }

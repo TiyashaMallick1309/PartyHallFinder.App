@@ -1,62 +1,34 @@
 <div class="container">
-    <div class="tabs">
-      <ul class="nav nav-tabs">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="party-hall-list">Party Halls </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="owner-details">Details</a>
-        </li>
-        <button class="logout-btn" (click)="logout()">Logout</button>
-      </ul>
-      <div class="tab-content">
-        <div class="party-hall-details">
-            <h2>{{name}}</h2>
-            <div class="details">
-                <div class="address">
-                    <span>Address:</span>
-                    <ul>
-                        <li *ngFor="let addr of address">{{addr.street}}, {{addr.city}}, {{addr.state}}, {{addr.country}} -
-                            {{addr.postalcode}}</li>
-                    </ul>
-                </div>
-                <div class="capacity">
-                    <span>Capacity:</span> {{capacity}}
-                </div>
-                <div class="amenities">
-                    <span>Amenities:</span>
-                    <ul>
-                        <li *ngFor="let amenity of amenities">{{amenity}}</li>
-                    </ul>
-                </div>
-                <div class="pricing">
-                    <span>Pricing:</span>
-                    <ul>
-                        <li *ngFor="let price of pricing">
-                            per Hour: {{ price.perHour }}
-                            per Day: {{ price.perDay }}
-                            per Week: {{ price.perWeek }}
-                        </li>
-                    </ul>
-                </div>
-                <div class="availability">
-                    <span>Availability:</span>
-                    <ul>
-                        <li *ngFor="let avail of availability">
-                            {{ avail.startDateTime | date }} - {{ avail.endDateTime | date }} - {{ avail.range }}
-                        </li>
-                    </ul>
-                </div>
-                <div class="images">
-                    <span>Images:</span>
-                    <ul>
-                        <li *ngFor="let image of images"><img [src]="image"></li>
-                    </ul>
-                </div>
-            </div>
+  <div class="partyHall-info">
+    <div class="image-carousel" *ngIf="partyHall && partyHall.images && partyHall.images.length > 0">
+
+      <div class="carousel-buttons">
+        <div class="carousel-slide" *ngFor="let image of partyHall.images; let i = index"
+          [style.background-image]="'url(' + image + ')'" [class.active]="i === currentImageIndex">
+          <button class="prev-button" (click)="onPrevClick()">‹</button>
+          <button class="next-button" (click)="onNextClick()">›</button>
         </div>
-        <router-outlet></router-outlet>
       </div>
     </div>
-<!-- Party Hall Details Section-->
+    <h1><b>{{ partyHall?.name }}</b></h1>
+    <p><b>Address:</b> {{ partyHall?.address?.street }}, {{ partyHall?.address?.city }}, {{ partyHall?.address?.state
+      }},
+      {{ partyHall?.address?.country }}, {{ partyHall?.address?.postalcode }}</p>
+    <p><b>Capacity:</b> {{ partyHall?.capacity }}</p>
+    <p><b>Amenities:</b></p>
+    <ul>
+      <li *ngFor="let amenity of partyHall?.amenities">{{ amenity }}</li>
+    </ul>
+
+    <div class="pricing">
+      <p><b>Price per hour:</b> ${{partyHall?.pricing?.perHour}}</p>
+      <p><b>Price per day:</b> ${{partyHall?.pricing?.perDay}}</p>
+      <p><b>Price per week:</b> ${{partyHall?.pricing?.perWeek}}</p>
+    </div>
+    <div class="availability">
+      <p>Available from: {{partyHall?.availability?.startDateTime}}</p>
+      <p>Available until: {{partyHall?.availability?.endDateTime}}</p>
+    </div>
+    <button (click)="savedHalls(partyHall)" class="add-to-wishlist-button">Add to Saved Halls</button>
+  </div>
 </div>

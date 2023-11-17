@@ -31,8 +31,10 @@ h1{
   border-radius: 10px;
   color: linear-gradient(to right, #ff9a9e, #fecfef);
   font-family: Georgia, 'Times New Roman', Times, serif;
-  text-shadow: 2px 1px black;
+  text-shadow: 3px 2px black;
   text-align: justify;
+  font-size: 3rem;
+  font-weight: bold;
 }
 
 h4{

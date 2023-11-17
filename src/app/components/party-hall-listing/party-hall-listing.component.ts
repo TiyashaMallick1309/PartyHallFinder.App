@@ -161,7 +161,8 @@ export class PartyHallListingComponent {
     console.log(partyHall);
     console.log(partyHall.id);
     if (partyHall && partyHall.id) {
-      this.router.navigate(['party-halls', partyHall.id]);
+      this.router.navigate(['/user-dashboard/party-hall-list', partyHall.id]);
     }
   }
+
 }

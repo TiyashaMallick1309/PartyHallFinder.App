@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { filter } from 'rxjs';
-import { Availability, Pricing } from 'src/app/models/party-hall';
-import { Address } from 'src/app/models/user';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { PartyHallService } from 'src/app/services/party-hall.service';
+// import {} from 'googlemaps';
 
 @Component({
   selector: 'app-party-hall-details',
@@ -12,50 +10,54 @@ import { PartyHallService } from 'src/app/services/party-hall.service';
   styleUrls: ['./party-hall-details.component.css']
 })
 export class PartyHallDetailsComponent {
-  name!: string;
-  address: Address[] = [];
-  capacity!: number;
-  amenities: string[] = [];
-  pricing: Pricing[] = [];
-  availability: Availability[] = [];
-  images: string[] = [];
+  partyHall: any;
+  currentImageIndex=0;
+  src: any;
+  images: any;
 
-  constructor(private partyHallService: PartyHallService, private auth: AuthorizationService, private router: Router) { }
+  constructor(public partyHallService: PartyHallService, private route: ActivatedRoute, private auth: AuthorizationService, private router: Router) { }
 
-  ngOnInit() {
-    this.partyHallService.isAuthenticatedSubject.pipe(filter(isAuthenticated => isAuthenticated)).subscribe(() => {
-      this.partyHallService.nameSubject.subscribe(name => {
-        this.name = name;
-      });
-      this.partyHallService.CapacitySubject.subscribe(capacity => {
-        this.capacity = capacity;
-      });
-      this.partyHallService.AmenitiesSubject.subscribe(amenities => {
-        this.amenities = amenities;
-      });
-      this.partyHallService.PricingSubject.subscribe(pricing => {
-        this.pricing = pricing;
-      });
-      this.partyHallService.AddressSubject.subscribe(address => {
-        this.address = address;
-      });
-      this.partyHallService.AvailabilitySubject.subscribe(availability => {
-        this.availability = availability;
-      });
-      this.partyHallService.ImageSubject.subscribe(images => {
-        this.images = images;
-      });
-    });
-
-    this.router.navigate(['owner-dashboard/party-halls-list']);
-    this.router.navigate(['owner-dashboard/owner-details']);
+  ngOnInit(): void {
+    const partyHallIdParam = this.route.snapshot.paramMap.get('id');
+    if (partyHallIdParam !== null) {
+      const partyHallId = partyHallIdParam;
+      console.log(partyHallId);
+      if (partyHallId) {
+        this.partyHallService.getPartyHall(partyHallId).subscribe((res: any) => {
+          console.log(res);
+          this.partyHall = res;
+          this.images = this.partyHall.images;
+          this.currentImageIndex = Math.floor(Math.random() * this.images.length);
+          this.src = this.images[this.currentImageIndex];
+        });
+      } else {
+        console.error("Invalid Party Hall ID");
+      }
+    } else {
+      console.error("Party Hall ID id missing");
+    }
   }
 
-  logout(){
+  logout() {
     this.auth.isAuthenticatedSubject.next(false);
     this.auth.TypeSubject.next('');
     this.auth.nameSubject.next('');
     this.router.navigate(['/'])
   }
+
+  onNextClick() {
+    this.currentImageIndex = (this.currentImageIndex + 1) % this.images.length;
+    this.src = this.images[this.currentImageIndex];
+  }
+
+  onPrevClick() {
+    this.currentImageIndex = (this.currentImageIndex - 1 + this.images.length) % this.images.length;
+    this.src = this.images[this.currentImageIndex];
+  }
+
+  savedHalls(partyHall : any) {
+    this.partyHallService.savedHalls(partyHall);
+    alert("Party Hall saved!");
+}
 
 }

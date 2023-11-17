@@ -27,6 +27,7 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { OwnerDetailsComponent } from './components/owner-details/owner-details.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminOwnersComponent } from './components/admin-owners/admin-owners.component';
+import { SavedHallsComponent } from './components/saved-halls/saved-halls.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { AdminOwnersComponent } from './components/admin-owners/admin-owners.com
     AdminLoginComponent,
     OwnerDetailsComponent,
     AdminUsersComponent,
-    AdminOwnersComponent
+    AdminOwnersComponent,
+    SavedHallsComponent
   ],
   imports: [
     BrowserModule,

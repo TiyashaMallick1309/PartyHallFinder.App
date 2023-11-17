@@ -14,6 +14,7 @@
     border: none;
     margin-right: 15px;
     padding: 10px;
+    cursor: pointer;
 }
 
 .dashboard-tabs ul.nav-tabs li.active a,
@@ -31,8 +32,6 @@
     border-radius: 3px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-/* These styles are just for demo purposes */
 
 .dashboard-tabs {
     background-color: #f7f7f7;

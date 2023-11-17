@@ -1,82 +1,35 @@
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
+.container{
+  display:flex;
+  justify-content: center;
 }
 
-.party-hall-details {
-  margin: 50px 0;
-}
-
-.details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-}
-
-.details > div {
-  padding: 20px;
-  background-color: #f8f8f8;
-  border-radius: 10px;
-}
-
-.details > div span {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 10px;
-  font-size: 20px;
-}
-
-.address li {
-  list-style: none;
-  margin-bottom: 5px;
-}
-
-.availability li {
-  margin-bottom: 5px;
-}
-
-.images img {
-  height: 100px;
-  width: 100px;
-  object-fit: cover;
-  margin-right: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px #ddd;
-}
-
-@media (max-width: 768px) {
-  .details {
-    grid-template-columns: 1fr;
-  }
-}
-  
-.tabs ul.nav-tabs {
+.dashboard-tabs ul.nav-tabs {
   border-bottom: none;
 }
 
-.tabs ul.nav-tabs li {
+.dashboard-tabs ul.nav-tabs li {
   border: none;
   margin: 0;
 }
 
-.tabs ul.nav-tabs li a {
+.dashboard-tabs ul.nav-tabs li a {
   color: #444;
   font-size: 16px;
   border-radius: 0;
   border: none;
   margin-right: 15px;
   padding: 10px;
+  cursor: pointer;
 }
 
-.tabs ul.nav-tabs li.active a,
-.tabs ul.nav-tabs li a:hover {
+.dashboard-tabs ul.nav-tabs li.active a,
+.dashboard-tabs ul.nav-tabs li a:hover {
   background-color: #fdfdfd;
   color: #488aff;
   border-bottom: 3px solid #488aff;
 }
 
-.tabs .tab-content {
+.dashboard-tabs .tab-content {
   border: none;
   padding: 15px;
   margin-top: 30px;
@@ -85,13 +38,13 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.tabs {
+.dashboard-tabs {
   background-color: #f7f7f7;
   padding: 20px;
   margin-bottom: 50px;
 }
 
-.tabs h2 {
+.dashboard-tabs h2 {
   margin-top: 0;
 }
 
@@ -118,7 +71,7 @@
 }
 
 @media screen and (max-width: 767px) {
-  .tabs {
+  .dashboard-tabs {
       position: relative;
   }
 
@@ -129,4 +82,142 @@
       padding: 0;
       display: block;
   }
+}
+
+.partyHall-details {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1{
+  text-align: center;
+}
+
+ul li{
+  font-size: 1.1rem;
+}
+
+.partyHall-info {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  margin:5vw;
+  text-align: left;
+}
+
+.partyHall-info img {
+  max-width: 100%;
+  height: auto;
+}
+
+.partyHall-info h1 {
+  font-size: 32px;
+  margin-top: 20px;
+}
+
+.partyHall-info p {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.partyHall-info .carousel {
+  max-height: 400px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.partyHall-info .carousel-inner {
+  display: flex;
+}
+
+.partyHall-info .carousel-item {
+  flex: 1 0 100%;
+  margin-right: 20px;
+  transition: transform ease-in-out 0.3s;
+}
+
+.partyHall-info .carousel-item img {
+  max-width: 100%;
+  height: auto;
+}
+
+.image-carousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.carousel-slide {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.carousel-slide.active {
+  position: relative;
+  opacity: 1;
+}
+
+.carousel-buttons {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-buttons {
+  position: relative;
+}
+
+.carousel-buttons button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5); /* semi-transparent black */
+  border: none;
+  color: white;
+  font-size: 2em;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.carousel-buttons .prev-button {
+  left: 10px;
+}
+
+.carousel-buttons .next-button {
+  right: 10px;
+}
+
+.add-to-wishlist-button {
+  margin-top: 4vh;
+  background-color: #7098a2;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-to-wishlist-button:hover {
+  background-color: #367a55;
 }

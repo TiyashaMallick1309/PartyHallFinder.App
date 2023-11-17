@@ -10,32 +10,47 @@ import { OwnerDetailsComponent } from './components/owner-details/owner-details.
 import { AdminOwnersComponent } from './components/admin-owners/admin-owners.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { PartyHallDetailsComponent } from './components/party-hall-details/party-hall-details.component';
+import { SavedHallsComponent } from './components/saved-halls/saved-halls.component';
 
 const routes: Routes = [
   { path: "", component: RegisterLoginComponent },
+  //User
   {
     path: 'user-dashboard', component: UserDashboardComponent,
     children: [
       { path: 'user-history', component: UserHistoryComponent },
-      { path: 'party-hall-list', component: PartyHallListingComponent },
+      //help
+      {
+        path: 'party-hall-list', component: PartyHallListingComponent
+      },
+      { path: 'saved', component: SavedHallsComponent },
+      {
+        path: 'party-hall-list/:id', component: PartyHallDetailsComponent,
+        children: [
+          
+          //book--> children: booking calendar, pay....razorpay
+        ]
+      },
     ]
   },
+  //owner
   {
     path: 'owner-dashboard', component: OwnerDashboardComponent,
     children: [
       { path: 'owner-details', component: OwnerDetailsComponent },
-      { path: 'party-hall-list', component: PartyHallListingComponent },
+      //upload halls
     ]
   },
+  //Admin
   {
     path: 'admin-dashboard', component: AdminDashboardComponent,
     children: [
       { path: 'admin-owners', component: AdminOwnersComponent },
       { path: 'party-hall-list', component: PartyHallListingComponent },
       { path: 'admin-users', component: AdminUsersComponent },
+      //bookings
     ]
   },
-  { path: 'party-halls/:id', component: PartyHallDetailsComponent }
 ];
 
 @NgModule({

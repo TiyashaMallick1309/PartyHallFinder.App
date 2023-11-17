@@ -32,26 +32,16 @@ interface AvailabilityDetails {
 export class PartyHallService {
   baseUrl = 'https://localhost:7091/api';
   url = "PartyHalls";
-  partyHall$!: Observable<PartyHall[]>;
-
-  isAuthenticatedSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  IdSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  nameSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  AddressSubject: BehaviorSubject<Address[]> = new BehaviorSubject<Address[]>([]);
-  CapacitySubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  AmenitiesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  PricingSubject: BehaviorSubject<Pricing[]> = new BehaviorSubject<Pricing[]>([]);
-  AvailabilitySubject: BehaviorSubject<Availability[]> = new BehaviorSubject<Availability[]>([]);
-  ImageSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-
+  partyHall : any[] = [];
+  
   constructor(private router: Router, private http: HttpClient) { }
 
   public getPartyHalls(): Observable<PartyHall[]> {
     return this.http.get<PartyHall[]>(`${this.baseUrl}/${this.url}`);
   }
 
-  getPartyHall(userId: string): Observable<PartyHall> {
-    return this.http.get<PartyHall>(`${this.baseUrl}/${this.url}/${userId}`);
+  getPartyHall(id: string): Observable<PartyHall> {
+    return this.http.get<PartyHall>(`${this.baseUrl}/${this.url}/${id}`);
   }
 
   getImageUrl(imageUrls: string[]): string | undefined {
@@ -65,43 +55,27 @@ export class PartyHallService {
     return `${startDateTime} - ${endDateTime}`;
   }
 
-  GetDetails() {
-    this.partyHall$.pipe(first()).subscribe((partyHalls: PartyHall[]) => {
-      const latestHall = partyHalls[partyHalls.length - 1];
-      this.isAuthenticatedSubject.next(true);
-      this.IdSubject.next(latestHall.id);
-      this.nameSubject.next(latestHall.name);
+    // Adding item to savedHalls
+    savedHalls(item : any) {
+        this.partyHall.push(item);
+    }
 
-      const addressDetails: AddressDetails = {
-        street: latestHall.address?.street ?? '',
-        city: latestHall.address?.city ?? '',
-        state: latestHall.address?.state ?? '',
-        country: latestHall.address?.country ?? '',
-        postalcode: latestHall.address?.postalcode ?? ''
-      };
-      const address: Address[] = [addressDetails as Address];
-      this.AddressSubject.next(address);
+    // Method to remove item from savedHalls
+    removeFromSaved(item : any) {
+        const index = this.partyHall.findIndex((i) => i.id === item.id);
+        if (index !== -1) {
+            this.partyHall.splice(index, 1);
+        }
+    }
 
-      this.CapacitySubject.next(latestHall.capacity);
-      this.AmenitiesSubject.next(latestHall.amenities);
+    // Clear the savedHalls
+    clearsavedHalls() {
+        this.partyHall = [];
+    }
 
-      const pricingDetails: PricingDetails = {
-        perHour: latestHall.pricing?.perHour ?? '',
-        perDay: latestHall.pricing?.perDay ?? '',
-        perWeek: latestHall.pricing?.perWeek ?? '',
-      };
-      const pricing: Pricing[] = [pricingDetails as Pricing];
-      this.PricingSubject.next(pricing);
+    // Get the savedHalls items
+    getsavedHalls(): any[]{
+        return this.partyHall;
+    }
 
-      const availabilityDetails: AvailabilityDetails = {
-        startDateTime: latestHall.availability?.startDateTime ?? '',
-        endDateTime: latestHall.availability?.endDateTime ?? '',
-        range: latestHall.availability?.range ?? '',
-      };
-      const availability: Availability[] = [availabilityDetails as Availability];
-      this.AvailabilitySubject.next(availability);
-
-      this.ImageSubject.next(latestHall.images);
-    });
   }
-}

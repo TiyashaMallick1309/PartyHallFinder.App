@@ -1,0 +1,24 @@
+<div clas="=container">
+<!--Heading-->
+<div class="head">
+  <h2>Your Saved List</h2>
+  <div *ngIf="partyHall.length>0" class="empty">
+    <button (click)="clearWishlist()">Empty List</button>
+  </div>
+</div>
+<!--Wishlist items display-->
+<div *ngIf="partyHall.length>0" class="wishlist-items">
+  <div *ngFor="let item of partyHallService.partyHall" class="wishlist-card">
+    <img [src]="partyHallService.getImageUrl(item.images)" alt="{{ item.name }}" />
+    <div class="card-details">
+      <h3>{{ item.name }}</h3>
+      <p>{{ item.address.street }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }},
+        {{ item.address.postalcode }}</p>
+    </div>
+    <button (click)="removeFromWishlist(item)">Remove from Wishlist</button>
+  </div>
+</div>
+<div *ngIf="partyHall.length===0" class="empty-wishlist">
+  <p>Your Saved Halls List is empty</p>
+</div>
+</div>

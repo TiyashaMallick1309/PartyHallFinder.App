@@ -7,6 +7,7 @@ import { Owner } from '../models/owner';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ApiService {
   user$!: Observable<User[]>;
   owner$!: Observable<Owner[]>;
