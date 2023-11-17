@@ -58,6 +58,7 @@ export class LoginComponent {
           console.log('Authentication successful');
           this.authService.signInUser();
           this.router.navigate(['user-dashboard/party-hall-list']);
+          console.log(user.id+ "hey")
         } else {
           // authentication failed
           console.log('Authentication Failed');

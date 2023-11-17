@@ -11,7 +11,7 @@ import { PartyHallService } from 'src/app/services/party-hall.service';
 export class PartyHallListingComponent {
   partyHalls: PartyHall[] = [];
   searchText: string = '';
-  pageSize: number = 10;
+  pageSize: number = 9;
   currentPage: number = 1;
   filteredPartyHalls: any[] = [];
   filterOptions: any = {
@@ -26,17 +26,7 @@ export class PartyHallListingComponent {
 
   ngOnInit(): void {
     this.partyhallService.getPartyHalls().subscribe((result: PartyHall[]) => {
-      this.partyHalls = result.map(partyHall => {
-        const range = this.partyhallService.convertAvailabilityToRange(partyHall.availability);
-        return {
-          ...partyHall,
-          availability: {
-            ...partyHall.availability,
-            range
-          }
-        };
-      });
-
+      this.partyHalls = result; // assign the result to partyHalls
       this.filteredPartyHalls = this.partyHalls.slice();
     })
   }
@@ -57,10 +47,6 @@ export class PartyHallListingComponent {
       this.filteredPartyHalls = this.partyHalls.filter((partyHall) => {
         return Object.values(partyHall).some((value) => {
           if (typeof value === 'object') {
-            if (Object.values(partyHall.availability).includes(value)) {
-              const range = partyHall.availability.range.toString().toLowerCase();
-              return range.includes(searchText);
-            }
             return Object.values(value).some((subValue: any) =>
               subValue.toString().toLowerCase().includes(searchText)
             );
@@ -87,12 +73,7 @@ export class PartyHallListingComponent {
         ) : true) &&
         (capacity ? partyHall.capacity.toString().toLowerCase().includes(capacity) : true) &&
         (amenities ? partyHall.amenities.some((amenity) => amenity.toLowerCase().includes(amenities)) : true) &&
-        (availability ? {
-          toString: function () {
-            return partyHall.availability.range.toString().toLowerCase();
-          }
-        }
-          .toString().includes(availability) : true) &&
+        (availability ? partyHall.availability.toLowerCase(): true) &&
         (budget ? Object.values(partyHall.pricing).some((value) =>
           value.toString().toLowerCase().includes(budget)
         ) : true);
@@ -159,7 +140,6 @@ export class PartyHallListingComponent {
 
   openPartyHallDetails(partyHall: PartyHall) {
     console.log(partyHall);
-    console.log(partyHall.id);
     if (partyHall && partyHall.id) {
       this.router.navigate(['/user-dashboard/party-hall-list', partyHall.id]);
     }

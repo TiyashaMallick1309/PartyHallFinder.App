@@ -1,29 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Availability, PartyHall, Pricing } from '../models/party-hall';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, first } from 'rxjs';
-import { Address } from '../models/user';
+import { PartyHall } from '../models/party-hall';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, throwError} from 'rxjs';
 import { Router } from '@angular/router';
-
-interface AddressDetails {
-  street: string;
-  city: string;
-  state: string;
-  country: string;
-  postalcode: string;
-}
-
-interface PricingDetails {
-  perHour: number;
-  perDay: number;
-  perWeek: number;
-}
-
-interface AvailabilityDetails {
-  startDateTime: Date;
-  endDateTime: Date;
-  range: string;
-}
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +13,15 @@ export class PartyHallService {
   baseUrl = 'https://localhost:7091/api';
   url = "PartyHalls";
   partyHall : any[] = [];
+
+  private ownerIdSource = new BehaviorSubject<string>('');
+  ownerId$ = this.ownerIdSource.asObservable();
   
   constructor(private router: Router, private http: HttpClient) { }
+
+  setOwnerId(id: string) {
+    this.ownerIdSource.next(id);
+  }
 
   public getPartyHalls(): Observable<PartyHall[]> {
     return this.http.get<PartyHall[]>(`${this.baseUrl}/${this.url}`);
@@ -46,6 +33,10 @@ export class PartyHallService {
 
   getImageUrl(imageUrls: string[]): string | undefined {
     return imageUrls ? imageUrls[0] : undefined;
+  }
+
+  addPartyHall(partyHallData: any) {
+    return this.http.post('https://localhost:7091/api/PartyHalls', partyHallData);
   }
 
   // Method to convert availability date objects to string range
@@ -77,5 +68,21 @@ export class PartyHallService {
     getsavedHalls(): any[]{
         return this.partyHall;
     }
+
+    uploadHall(name:string){
+      const url = `${this.baseUrl}/${this.url}`;
+      const requestBody = {
+        name
+      };
+
+      return this.http
+      .post(url, requestBody)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError('Error while authenticating');
+        })
+      );
+      
+  }
 
   }

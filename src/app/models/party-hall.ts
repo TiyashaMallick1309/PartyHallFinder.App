@@ -7,16 +7,10 @@ export interface PartyHall {
     capacity: number;
     amenities: string[];
     pricing: Pricing;
-    availability: Availability;
+    availability: string;
     images: string[];
     ownerId: string;
-    geoLocation: GeoLocation;
-}
-
-export interface Availability {
-    startDateTime: Date;
-    endDateTime: Date;
-    range:string;
+    geolocation: Geolocation;
 }
 
 export interface Pricing {
@@ -25,7 +19,7 @@ export interface Pricing {
     perWeek: number;
 }
 
-export interface GeoLocation{
+export interface Geolocation{
     longitude:number;
     latitude:number;
   }

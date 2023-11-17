@@ -23,6 +23,11 @@
       <ng-container *ngIf="loginForm.get('loginPassword')?.errors?.['pattern']">Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.</ng-container>
     </div>
   </div>
+  <div class="social-container">
+    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+  </div>
   <button type="submit" class="btn btn-primary mt-3" [disabled]="!loginForm.valid || submitted">
     <ng-container *ngIf="loginActive">Log In</ng-container>
   </button>

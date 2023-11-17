@@ -29,6 +29,7 @@ import { AdminUsersComponent } from './components/admin-users/admin-users.compon
 import { AdminOwnersComponent } from './components/admin-owners/admin-owners.component';
 import { SavedHallsComponent } from './components/saved-halls/saved-halls.component';
 import { HelpComponent } from './components/help/help.component';
+import { UploadHallsComponent } from './components/upload-halls/upload-halls.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { HelpComponent } from './components/help/help.component';
     AdminUsersComponent,
     AdminOwnersComponent,
     SavedHallsComponent,
-    HelpComponent
+    HelpComponent,
+    UploadHallsComponent
   ],
   imports: [
     BrowserModule,

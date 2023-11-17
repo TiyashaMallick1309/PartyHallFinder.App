@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
+import { PartyHallService } from 'src/app/services/party-hall.service';
 
 @Component({
   selector: 'app-owner-details',
@@ -12,26 +14,26 @@ export class OwnerDetailsComponent implements OnInit{
   name!: string;
   email!: string;
   phonenumber :string = '';
+  id: string = '';
 
-  constructor(private authService: AuthorizationService, private apiService: ApiService) { }
+  constructor(private authService: AuthorizationService, private apiService: ApiService, private router: Router, private partyHallService:PartyHallService) { }
 
   ngOnInit() {
     this.authService.isAuthenticatedSubject.pipe(filter(isAuthenticated => isAuthenticated)).subscribe(() => {
       this.authService.nameSubject.subscribe(name => {
-        // console.log('name: ', name); 
         this.name = name;
       });
-      this.authService.TypeSubject.subscribe(role => {
-        // console.log('role: ', role); this.role = role; 
-      });
       this.authService.EmailSubject.subscribe(email => {
-        // console.log('email: ', email); 
         this.email = email;
       });
       this.authService.PhoneNumberSubject.subscribe(phonenumber  => {
-        console.log('phonenumber: ', phonenumber );
         this.phonenumber  = phonenumber ;
       });
+      this.authService.IdSubject.subscribe(id=>{
+        this.id = id;
+        console.log(this.id)
+        this.partyHallService.setOwnerId(this.id);
+      })
     });
   }
 }

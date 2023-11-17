@@ -14,8 +14,8 @@ export class OwnerDashboardComponent {
   constructor(private router:Router,private auth:AuthorizationService) { }
 
   ngOnInit() {
-    this.router.navigate(['owner-dashboard/party-halls-list']);
     this.router.navigate(['owner-dashboard/owner-details']);
+
   }
 
   logout(){

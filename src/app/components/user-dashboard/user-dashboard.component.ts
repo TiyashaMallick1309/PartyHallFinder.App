@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { PartyHallService } from 'src/app/services/party-hall.service';
 
@@ -10,13 +11,12 @@ import { PartyHallService } from 'src/app/services/party-hall.service';
 })
 export class UserDashboardComponent {
   partyHalls: any[] = [];
-  user: any = {};
+  user!: User;
 
   constructor(private router:Router,private auth:AuthorizationService, private partyHallService: PartyHallService) { }
 
   ngOnInit() {
     this.router.navigate(['user-dashboard/party-hall-list']);
-    this.router.navigate(['user-dashboard/user-history']);
   }
 
   logout(){
