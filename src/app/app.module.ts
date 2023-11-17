@@ -28,6 +28,7 @@ import { OwnerDetailsComponent } from './components/owner-details/owner-details.
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminOwnersComponent } from './components/admin-owners/admin-owners.component';
 import { SavedHallsComponent } from './components/saved-halls/saved-halls.component';
+import { HelpComponent } from './components/help/help.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { SavedHallsComponent } from './components/saved-halls/saved-halls.compon
     OwnerDetailsComponent,
     AdminUsersComponent,
     AdminOwnersComponent,
-    SavedHallsComponent
+    SavedHallsComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,

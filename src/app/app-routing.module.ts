@@ -11,6 +11,7 @@ import { AdminOwnersComponent } from './components/admin-owners/admin-owners.com
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { PartyHallDetailsComponent } from './components/party-hall-details/party-hall-details.component';
 import { SavedHallsComponent } from './components/saved-halls/saved-halls.component';
+import { HelpComponent } from './components/help/help.component';
 
 const routes: Routes = [
   { path: "", component: RegisterLoginComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
     path: 'user-dashboard', component: UserDashboardComponent,
     children: [
       { path: 'user-history', component: UserHistoryComponent },
-      //help
+      {path:'help',component:HelpComponent},
       {
         path: 'party-hall-list', component: PartyHallListingComponent
       },
