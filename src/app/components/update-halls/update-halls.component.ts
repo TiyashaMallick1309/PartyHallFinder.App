@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PartyHall } from 'src/app/models/party-hall';
 import { PartyHallService } from 'src/app/services/party-hall.service';
 
 @Component({
@@ -9,88 +10,144 @@ import { PartyHallService } from 'src/app/services/party-hall.service';
   styleUrls: ['./update-halls.component.css']
 })
 export class UpdateHallsComponent implements OnInit {
+
   updateForm!: FormGroup;
   partyHallId!: string;
+  ownerId!: string;
+  selectedPartyHall: PartyHall | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private partyHallService: PartyHallService
+    private partyHallService: PartyHallService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.partyHallId = this.activatedRoute.snapshot.paramMap.get('id')!;
-
-    this.partyHallService.getPartyHall(this.partyHallId).subscribe((partyHall) => {
-      this.updateForm = this.formBuilder.group({
-        name: [partyHall.name,Validators.required],
-        address: this.formBuilder.group({
-          street: [partyHall.address.street],
-          city: [partyHall.address.city],
-          state: [partyHall.address.state],
-          country: [partyHall.address.country],
-          postalcode: [partyHall.address.postalcode],
-        }),
-        capacity: [partyHall.capacity],
-        amenities: this.formBuilder.array(partyHall.amenities),
-        pricing: this.formBuilder.group({
-          perHour: [partyHall.pricing.perHour],
-          perDay: [partyHall.pricing.perDay],
-          perWeek: [partyHall.pricing.perWeek],
-        }),
-        images: this.formBuilder.array(partyHall.images),
-        geolocation: this.formBuilder.group({
-          longitude: [partyHall.geolocation.longitude],
-          latitude: [partyHall.geolocation.latitude],
-        }),
-      });
+    this.updateForm = this.formBuilder.group({
+      name: [''],
+      capacity: [''],
+      address: this.formBuilder.group({
+        street: [''],
+        city: [''],
+        state: [''],
+        country: [''],
+        postalcode: ['']
+      }),
+      pricing: this.formBuilder.group({
+        perHour: [''],
+        perDay: [''],
+        perWeek: ['']
+      }),
+      availability: [''],
+      images: this.formBuilder.array([]),
+      amenities: this.formBuilder.array([]),
+      geolocation: this.formBuilder.group({
+        longitude: [''],
+        latitude: ['']
+      }),
+    });
+  
+    this.partyHallService.getSelectedPartyHall().subscribe(partyHall => {
+      if (partyHall) {
+        this.selectedPartyHall = partyHall;
+        this.updateForm.patchValue({
+          name: partyHall.name,
+          capacity: partyHall.capacity,
+          pricing: {
+            perHour: partyHall.pricing.perHour,
+            perDay: partyHall.pricing.perDay,
+            perWeek: partyHall.pricing.perWeek
+          },
+          address: {
+            street: partyHall.address.street,
+            city: partyHall.address.city,
+            state: partyHall.address.state,
+            country: partyHall.address.country,
+            postalcode: partyHall.address.postalcode
+          },
+          geolocation: {
+            longitude: partyHall.geolocation.longitude,
+            latitude: partyHall.geolocation.latitude
+          },
+          availability: partyHall.availability
+        });
+  
+        const existingImages = partyHall.images;
+        const imageControls = existingImages.map(img => this.formBuilder.control(img));
+        this.updateForm.setControl('images', this.formBuilder.array(imageControls));
+  
+        const existingAmenities = partyHall.amenities;
+        const amenityControls = existingAmenities.map(amenity => this.formBuilder.control(amenity));
+        this.updateForm.setControl('amenities', this.formBuilder.array(amenityControls));
+      }
     });
   }
 
-  onUpdate(): void {
-    if (this.updateForm.valid) {
-      const formData = new FormData();
-      formData.append('name', this.updateForm.get('name')!.value);
-      formData.append('address', JSON.stringify(this.updateForm.get('address')!.value));
-      formData.append('capacity', this.updateForm.get('capacity')!.value);
+  onUpdateSubmit() {
+    const formValue = this.updateForm.value;
+    const updatedPartyHall: PartyHall = {
+      ...this.selectedPartyHall!,
+      name: formValue.name,
+      capacity: formValue.capacity,
+      pricing: {
+        perHour: formValue.pricing.perHour,
+        perDay: formValue.pricing.perDay,
+        perWeek: formValue.pricing.perWeek
+      },
+      address: {
+        street: formValue.address.street,
+        city: formValue.address.city,
+        state: formValue.address.state,
+        country: formValue.address.country,
+        postalcode: formValue.address.postalcode
+      },
+      geolocation: {
+        longitude: formValue.geolocation.longitude,
+        latitude: formValue.geolocation.latitude
+      },
+      availability: formValue.availability,
+      images: formValue.images,
+      amenities: formValue.amenities
+    };
 
-      const amenityControls = (this.updateForm.get('amenities') as FormArray).controls;
-      for (let i = 0; i < amenityControls.length; i++) {
-        formData.append(`amenities[${i}]`, amenityControls[i].value);
+    this.partyHallService.updatePartyHall(updatedPartyHall.id, updatedPartyHall).subscribe(
+      (response: any) => {
+        console.log('Party hall successfully updated!');
+        // display success alert
+      alert('Party hall information updated successfully!');
+      
+      // navigate to owner details page
+      this.router.navigate(['/owner-dashboard/owner-details']);
+      },
+      error => {
+        console.log(error);
       }
-
-      formData.append('pricing', JSON.stringify(this.updateForm.get('pricing')!.value));
-
-      const imageControls = (this.updateForm.get('images') as FormArray).controls;
-      for (let i = 0; i < imageControls.length; i++) {
-        formData.append(`images[${i}]`, imageControls[i].value);
-      }
-
-      formData.append('geolocation', JSON.stringify(this.updateForm.get('geolocation')!.value));
-
-      this.partyHallService.updatePartyHall(this.partyHallId, formData).subscribe(() => {
-        // do something on success
-      });
-    }
+    );
   }
 
-  removeAmenity(index: number): void {
-    const amenitiesArray = this.updateForm.get('amenities') as FormArray;
-    amenitiesArray.removeAt(index);
-  }
-
-  addAmenity(): void {
-    const amenitiesArray = this.updateForm.get('amenities') as FormArray;
-    amenitiesArray.push(this.formBuilder.control(''));
-  }
-
-  removeImage(index: number): void {
-    const imagesArray = this.updateForm.get('images') as FormArray;
-    imagesArray.removeAt(index);
+  get images(): FormArray {
+    return this.updateForm.get('images') as FormArray;
   }
 
   addImage(): void {
-    const imagesArray = this.updateForm.get('images') as FormArray;
-    imagesArray.push(this.formBuilder.control(''));
+    this.images.push(this.formBuilder.control(''));
   }
+
+  removeImage(index: number): void {
+    this.images.removeAt(index);
+  }
+
+  get amenities(): FormArray {
+    return this.updateForm.get('amenities') as FormArray;
+  }
+
+  addAmenity(): void {
+    this.amenities.push(this.formBuilder.control(''));
+  }
+
+  removeAmenity(index: number): void {
+    this.amenities.removeAt(index);
+  }
+
 }

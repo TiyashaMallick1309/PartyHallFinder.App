@@ -13,7 +13,8 @@ export class PartyHallService {
   baseUrl = 'https://localhost:7091/api';
   url = "PartyHalls";
   partyHall: any[] = [];
-
+  
+  private selectedPartyHallSubject = new BehaviorSubject<PartyHall | null>(null);
   private ownerIdSource = new BehaviorSubject<string>('');
   ownerId$ = this.ownerIdSource.asObservable();
 
@@ -84,7 +85,14 @@ export class PartyHallService {
           return throwError('Error while authenticating');
         })
       );
+  }
 
+  setSelectedPartyHall(partyHall: PartyHall | null): void {
+    this.selectedPartyHallSubject.next(partyHall);
+  }
+
+  getSelectedPartyHall(): Observable<PartyHall | null> {
+    return this.selectedPartyHallSubject.asObservable();
   }
 
 }

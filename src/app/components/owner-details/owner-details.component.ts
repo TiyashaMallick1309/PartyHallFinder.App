@@ -18,13 +18,13 @@ export class OwnerDetailsComponent implements OnInit {
   phonenumber: string = '';
   id: string = '';
   partyHalls: PartyHall[] = [];
+  selectedPartyHall: PartyHall | undefined;
 
   // Array to hold all the party halls owned by the current owner
   currentPartyHalls: PartyHall[] = [];
 
   constructor(
     private authService: AuthorizationService,
-    private apiService: ApiService,
     private router: Router,
     public partyHallService: PartyHallService
   ) {}
@@ -44,6 +44,7 @@ export class OwnerDetailsComponent implements OnInit {
         });
         this.authService.IdSubject.subscribe(id => {
           this.id = id;
+          console.log(this.id);
 
           // Set the owner id
           this.partyHallService.setOwnerId(this.id);
@@ -55,6 +56,7 @@ export class OwnerDetailsComponent implements OnInit {
 
           // Filter party halls by the current owner's id and store them in currentPartyHalls array
           this.currentPartyHalls = this.partyHalls.filter(partyHall => partyHall.ownerId == this.id);
+          console.log(this.currentPartyHalls);
         });
       });
   }
@@ -67,5 +69,12 @@ export class OwnerDetailsComponent implements OnInit {
 
   handleImageError(event: Event): void {
     console.error('Image error: ', event);
+  }
+
+  getHallId(currentPartyHall: PartyHall): void {
+    this.selectedPartyHall = currentPartyHall;
+    console.log('Selected party hall:', this.selectedPartyHall);
+    this.partyHallService.setSelectedPartyHall(this.selectedPartyHall);
+    this.router.navigate(['owner-dashboard', 'owner-details', 'update']);
   }
 }

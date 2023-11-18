@@ -10,16 +10,22 @@
     Phone: {{ phonenumber }}
     <br /><br />
   </p>
-  
+
   <!-- Party Hall Cards -->
   <div class="party-hall-card-grid">
-  <div *ngFor="let currentPartyHall of currentPartyHalls" class="party-hall-card">
-    <img [src]="partyHallService.getImageUrl(currentPartyHall.images)" (error)="handleImageError($event)" [alt]="currentPartyHall.name + ' image'" />
-    <div class="party-hall-details">
-      <h3><b>{{ currentPartyHall.name }}</b></h3>
-      <h5>{{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{ currentPartyHall.address.country }}</h5>
-      <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: {{ currentPartyHall.pricing.perHour }}/hr</p>
+    <div *ngFor="let currentPartyHall of currentPartyHalls" class="party-hall-card">
+      <img [src]="partyHallService.getImageUrl(currentPartyHall.images)" (error)="handleImageError($event)"
+        [alt]="currentPartyHall.name + ' image'" />
+      <div class="party-hall-details">
+        <h3><b>{{ currentPartyHall.name }}</b></h3>
+        <h5>{{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{
+          currentPartyHall.address.country }}</h5>
+        <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: {{ currentPartyHall.pricing.perHour }}/hr</p>
+      </div>
+      <button (click)="getHallId(currentPartyHall)">Update Hall</button>
     </div>
   </div>
 </div>
+<div class="updateForm">
+  <router-outlet></router-outlet>
 </div>

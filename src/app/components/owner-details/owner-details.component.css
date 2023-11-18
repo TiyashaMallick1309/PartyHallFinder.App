@@ -63,3 +63,15 @@ h3, h5 {
   padding: 1rem;
   text-align: center;
 }
+
+button {
+  position: static;
+  margin: 1rem 6rem;
+  background-color: darkseagreen;
+  border-radius: 0.8rem;
+}
+
+a{
+  text-decoration: none;
+  color: black;
+}

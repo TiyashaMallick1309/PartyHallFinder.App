@@ -50,8 +50,8 @@
                 class="nav-link">Register</a>
             </li>
           </ul>
-          <div *ngIf="loginActive && selectedAccountType === 'user'"><app-login></app-login></div>
-          <div *ngIf="registrationActive && selectedAccountType === 'user'"> <app-register></app-register></div>
+          <div *ngIf="loginActive && selectedAccountType == 'user'"><app-login></app-login></div>
+          <div *ngIf="registrationActive && selectedAccountType == 'user'"> <app-register></app-register></div>
           <div *ngIf="loginActive && selectedAccountType === 'owner'"><app-owner-login></app-owner-login></div>
           <div *ngIf="registrationActive && selectedAccountType === 'owner'"> <app-owner-register></app-owner-register></div>
           <div *ngIf="loginActive && selectedAccountType === 'admin'"><app-admin-login></app-admin-login></div>

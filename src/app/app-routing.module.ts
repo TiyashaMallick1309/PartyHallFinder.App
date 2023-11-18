@@ -14,6 +14,7 @@ import { SavedHallsComponent } from './components/saved-halls/saved-halls.compon
 import { HelpComponent } from './components/help/help.component';
 import { UploadHallsComponent } from './components/upload-halls/upload-halls.component';
 import { UpdateHallsComponent } from './components/update-halls/update-halls.component';
+import { BookingComponent } from './components/booking/booking.component';
 
 const routes: Routes = [
   { path: "", component: RegisterLoginComponent },
@@ -27,7 +28,7 @@ const routes: Routes = [
       { path: 'saved', component: SavedHallsComponent },
       { path: 'party-hall-list/:id', component: PartyHallDetailsComponent,
         children: [
-          //book--> children: booking calendar, pay....razorpay
+          {path:'book', component:BookingComponent}
         ]},
       ]
   },
@@ -35,9 +36,12 @@ const routes: Routes = [
   {
     path: 'owner-dashboard', component: OwnerDashboardComponent,
     children: [
-      { path: 'owner-details', component: OwnerDetailsComponent },
-      {path:'upload',component:UploadHallsComponent},
+      { path: 'owner-details', component: OwnerDetailsComponent, 
+    children:[
       {path:'update',component:UpdateHallsComponent}
+    ] },
+      {path:'upload',component:UploadHallsComponent}
+      
     ]
   },
   //Admin

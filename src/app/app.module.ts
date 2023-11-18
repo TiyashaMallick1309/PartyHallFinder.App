@@ -1,12 +1,13 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { MatOptionModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 import { PartyHallListingComponent } from './components/party-hall-listing/party-hall-listing.component';
 import { PartyHallDetailsComponent } from './components/party-hall-details/party-hall-details.component';
-import { PartyHallBookingComponent } from './components/party-hall-booking/party-hall-booking.component';
 import { ReviewRatingComponent } from './components/review-rating/review-rating.component';
 import { RegisterLoginComponent } from './components/register-login/register-login.component';
 import { OwnerDashboardComponent } from './components/owner-dashboard/owner-dashboard.component';
@@ -31,6 +32,7 @@ import { SavedHallsComponent } from './components/saved-halls/saved-halls.compon
 import { HelpComponent } from './components/help/help.component';
 import { UploadHallsComponent } from './components/upload-halls/upload-halls.component';
 import { UpdateHallsComponent } from './components/update-halls/update-halls.component';
+import { BookingComponent } from './components/booking/booking.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,6 @@ import { UpdateHallsComponent } from './components/update-halls/update-halls.com
     UserDashboardComponent,
     PartyHallListingComponent,
     PartyHallDetailsComponent,
-    PartyHallBookingComponent,
     ReviewRatingComponent,
     RegisterLoginComponent,
     OwnerDashboardComponent,
@@ -55,7 +56,8 @@ import { UpdateHallsComponent } from './components/update-halls/update-halls.com
     SavedHallsComponent,
     HelpComponent,
     UploadHallsComponent,
-    UpdateHallsComponent
+    UpdateHallsComponent,
+    BookingComponent
   ],
   imports: [
     BrowserModule,
@@ -67,9 +69,12 @@ import { UpdateHallsComponent } from './components/update-halls/update-halls.com
     BrowserAnimationsModule,
     MatInputModule,
     HttpClientModule,
-    
+    MatOptionModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

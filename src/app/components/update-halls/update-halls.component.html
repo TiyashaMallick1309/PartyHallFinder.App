@@ -1,77 +1,98 @@
-<!-- <form [formGroup]="updateForm" (ngSubmit)="onUpdate()">
-    <br>
-    <div class="form-group">
-      <label for="name">Hall Name</label>
-      <input type="text" class="form-control" formControlName="name" id="name" required>
-      <div *ngIf="updateForm.controls['name'].errors?.['required']" class="invalid-feedback d-block">Hall Name is required.</div>
+<form [formGroup]="updateForm" (ngSubmit)="onUpdateSubmit()">
+<br/><br/>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" formControlName="name">
+  </div>
+
+  <div class="mb-3">
+    <label for="capacity" class="form-label">Capacity</label>
+    <input type="number" class="form-control" id="capacity" formControlName="capacity">
+  </div>
+
+  <div formGroupName="pricing">
+    <div class="mb-3">
+      <label for="perHour" class="form-label">Price per Hour</label>
+      <input type="number" class="form-control" id="perHour" formControlName="perHour">
     </div>
   
-    <div class="form-group" formGroupName="address">
-      <label for="address.street">Street Address</label>
-      <input type="text" class="form-control" formControlName="street" id="address.street">
-  
-      <label for="address.city">City</label>
-      <input type="text" class="form-control" formControlName="city" id="address.city">
-  
-      <label for="address.state">State</label>
-      <input type="text" class="form-control" formControlName="state" id="address.state" >
-  
-      <label for="address.country">Country</label>
-      <input type="text" class="form-control" formControlName="country" id="address.country" >
-  
-      <label for="address.postalcode">Postal Code</label>
-      <input type="text" class="form-control" formControlName="postalcode" id="address.postalcode">
+    <div class="mb-3">
+      <label for="perDay" class="form-label">Price per Day</label>
+      <input type="number" class="form-control" id="perDay" formControlName="perDay">
     </div>
   
-    <div class="form-group">
-      <label for="capacity">Hall capacity</label>
-      <input type="text" class="form-control" formControlName="capacity" id="capacity" >
+    <div class="mb-3">
+      <label for="perWeek" class="form-label">Price per Week</label>
+      <input type="number" class="form-control" id="perWeek" formControlName="perWeek">
+    </div>
+  </div>
+
+  <div formGroupName="address">
+    <div class="mb-3">
+      <label for="street" class="form-label">Street</label>
+      <input type="text" class="form-control" id="street" formControlName="street">
     </div>
   
-    <div formArrayName="amenities">
-      <label for="amenities">Amenity</label>
-      <div *ngFor="let amenity of updateForm?.get('amenities')?.controls; let i=index">
-        <input type="text" [formControlName]="i" id="amenity{{i}}">
-        <button type="button" (click)="removeAmenity(i)">Remove</button>
-        <button type="button" (click)="addAmenity()" *ngIf="i === updateForm.get('amenities').controls.length - 1">Add Amenity</button>
-      </div>
+    <div class="mb-3">
+      <label for="city" class="form-label">City</label>
+      <input type="text" class="form-control" id="city" formControlName="city">
     </div>
   
-    <div class="form-group" formGroupName="pricing">
-      <label for="pricing.perHour">perHour Pricing</label>
-      <input type="text" class="form-control" formControlName="perHour" id="pricing.perHour">
-  
-      <label for="pricing.perDay">perDay Pricing</label>
-      <input type="text" class="form-control" formControlName="perDay" id="pricing.perDay">
-  
-      <label for="pricing.perWeek">perWeek Pricing</label>
-      <input type="text" class="form-control" formControlName="perWeek" id="pricing.perWeek">
+    <div class="mb-3">
+      <label for="state" class="form-label">State</label>
+      <input type="text" class="form-control" id="state" formControlName="state">
     </div>
-  
+
+    <div class="mb-3">
+      <label for="country" class="form-label">Country</label>
+      <input type="text" class="form-control" id="country" formControlName="country">
+    </div>
+
+    <div class="mb-3">
+      <label for="postalcode" class="form-label">PostalCode</label>
+      <input type="text" class="form-control" id="postalcode" formControlName="postalcode">
+    </div>
+  </div>
+
+  <div formGroupName="geolocation">
+    <div class="mb-3">
+      <label for="longitude" class="form-label">Longitude</label>
+      <input type="number" class="form-control" id="longitude" formControlName="longitude">
+    </div>
+
+    <div class="mb-3">
+      <label for="latitude" class="form-label">Latitude</label>
+      <input type="number" class="form-control" id="latitude" formControlName="latitude">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label for="availability" class="form-label">Availability</label>
+    <textarea class="form-control" id="availability" formControlName="availability"></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label for="images" class="form-label">Images</label>
     <div formArrayName="images">
-      <label for="images">Image</label>
-      <div *ngFor="let image of updateForm.get('images').controls; let i=index">
-        <input type="link" [formControlName]="i" id="image{{i}}">
-        <button type="button" (click)="removeImage(i)">Remove</button>
-        <button type="button" (click)="addImage()" *ngIf="i === updateForm.get('images').controls.length - 1">Add Image</button>
+      <div *ngFor="let image of images.controls; let i=index" class="mb-3">
+        <input type="text" class="form-control" [formControlName]="i">
+        <button type="button" class="btn btn-danger" (click)="removeImage(i)">Remove Image</button>
       </div>
+      <button type="button" class="btn btn-primary" (click)="addImage()">Add Image</button>
     </div>
+  </div>
   
-    <div class="form-group" formGroupName="geolocation">
-      <label for="geolocation.longitude">Longitude</label>
-      <input type="text" class="form-control" formControlName="longitude" id="geolocation.longitude">
-  
-      <label for="geolocation.latitude">Latitude</label>
-      <input type="text" class="form-control" formControlName="latitude" id="geolocation.latitude">
-    </div>
-  
-    <div class="terms-mailing">
-      <div class="checkbox"> 
-        <input type="checkbox" name="checkbox"><span>I accept the <a href="https://www.partyhallsapp.com/privacy-policy">Privacy Policy for Party Halls App.</a></span>
+  <div class="mb-3">
+    <label for="amenities" class="form-label">Amenities</label>
+    <div formArrayName="amenities">
+      <div *ngFor="let amenity of amenities.controls; let i=index" class="mb-3">
+        <input type="text" class="form-control" [formControlName]="i">
+        <button type="button" class="btn btn-danger" (click)="removeAmenity(i)">Remove Amenity</button>
       </div>
-      <div class="checkbox">
-        <input type="checkbox" name="checkbox"><span>I have uploaded valid information.</span>
-      </div><br />
+      <button type="button" class="btn btn-primary" (click)="addAmenity()">Add Amenity</button>
     </div>
-    <button type="submit" class="btn btn-primary">Upload Party Hall</button>
-  </form> -->
+  </div>
+
+  <button type="submit" class="btn btn-primary">Update Party Hall</button>
+
+</form>
