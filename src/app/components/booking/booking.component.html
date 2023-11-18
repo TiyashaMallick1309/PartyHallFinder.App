@@ -1,1 +1,23 @@
-<p>booking works!</p>
+
+  <div >
+    <mat-calendar [selected]="selectedDate" (selectedChange)="dateSelected($event || null)" [dateClass]="dateClass()" [matDatepickerFilter]="isDateBooked"></mat-calendar>    <mat-selection-list #slotList>
+        <mat-list-option *ngFor="let slot of availableSlots" (click)="selectSlot(slot)">
+          {{ slot.startTime | date: 'shortTime' }} - {{ slot.endTime | date: 'shortTime' }}
+        </mat-list-option>
+      </mat-selection-list>
+      <button mat-raised-button color="primary" (click)="bookSlot()">Book Slot</button>
+    </div>
+  
+    <div *ngIf="selectedSlot">
+      <h3>Book Slot</h3>
+      <form (ngSubmit)="confirmBooking()" #bookingForm="ngForm">
+        <mat-form-field>
+          <input matInput placeholder="Name" name="name" ngModel required>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="email" placeholder="Email" name="email" ngModel required email>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!bookingForm.valid">Confirm Booking</button>
+      </form>
+    </div>
+  

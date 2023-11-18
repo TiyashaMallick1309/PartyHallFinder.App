@@ -97,4 +97,10 @@ export class PartyHallDetailsComponent implements OnInit {
     this.partyHallService.savedHalls(partyHall);
     alert("Party Hall saved!");
   }
+
+  bookHall(){
+    // Pass the id to the service
+    this.partyHallService.setId(this.partyHall.id);
+    this.router.navigate([`/user-dashboard/party-hall-list/${this.partyHall.id}/book`])
+  }
 }

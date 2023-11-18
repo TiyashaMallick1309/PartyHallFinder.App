@@ -31,6 +31,11 @@
     <div class="availability">
       <p>Status: {{partyHall?.availability}}</p>
     </div>
-    <button (click)="savedHalls(partyHall)" class="add-to-wishlist-button">Add to Saved Halls</button>
+    <button (click)="savedHalls(partyHall)" class="add-to-wishlist-button">Add to Saved Halls</button><br/><br/>
+    <button (click)="bookHall()" class="book">Book Hall</button>
   </div>
+</div>
+<div>
+  <br/>
+  <router-outlet></router-outlet>
 </div>

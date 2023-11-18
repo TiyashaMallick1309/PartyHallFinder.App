@@ -222,18 +222,40 @@ ul li{
   background-color: #367a55;
 }
 
+.book {
+  margin-top: 4vh;
+  background-color: rgb(153, 112, 162);
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.book:hover {
+  background-color: #64367a;
+}
+
 @import "~leaflet/dist/leaflet.css";
 
 .map-container {
-  position: absolute;
-  margin: 30px;
+  height: 300px; /* same height as before */
+  width: 70%; /* same width as before */
+  /* margin: 0 auto; center the container horizontally */
+  /* overflow: hidden; */
+  margin-top: 63px; /* add some top margin for spacing */
+  margin-right: 30%; /* position the container on the right side */
+  float: right; /* float the container to the right */
+  overflow: hidden; /* hide any content that overflows the container */
 }
+ 
+ 
+  #map {
+    height: 100%; /* use all available height */
+    width: 66%; /* use all available width */
+  }
 
 .map-frame {
   border: 2px solid black;
-  height: 60vh;
-}
-
-#map {
-  height: 59vh;
+  height: 30rem;;
 }

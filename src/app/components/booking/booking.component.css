@@ -1,0 +1,11 @@
+.available-slot {
+    background-color: #eaf9ea;
+}
+.unavailable-slot {
+    background-color: #f5f5f5;
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.booked-slot {
+    background-color: #ffc9c9;
+}
