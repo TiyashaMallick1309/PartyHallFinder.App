@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PartyHall } from 'src/app/models/party-hall';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { PartyHallService } from 'src/app/services/party-hall.service';
 
 @Component({
@@ -9,117 +8,89 @@ import { PartyHallService } from 'src/app/services/party-hall.service';
   templateUrl: './update-halls.component.html',
   styleUrls: ['./update-halls.component.css']
 })
-export class UpdateHallsComponent {
-  uploadForm!: FormGroup;
-  uploadFailed = false;
-  submitted = false;
-  ownerId!: string;
+export class UpdateHallsComponent implements OnInit {
+  updateForm!: FormGroup;
+  partyHallId!: string;
 
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder, private partyHallService: PartyHallService, private fb: FormBuilder, private router: Router) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private partyHallService: PartyHallService
+  ) {}
 
-  ngOnInit() {
-    this.partyHallService.ownerId$.subscribe(id => {
-      this.ownerId = id;
-    });
+  ngOnInit(): void {
+    this.partyHallId = this.activatedRoute.snapshot.paramMap.get('id')!;
 
-    this.uploadForm = this.fb.group({
-      name: ['', Validators.required],
-      capacity: [0, Validators.required],
-      amenities: this.formBuilder.array([''], Validators.required),
-      address: this.fb.group({
-        street: ['', Validators.required],
-        city: ['', Validators.required],
-        state: ['', Validators.required],
-        country: ['', Validators.required],
-        postalcode: ['', Validators.required],
-      }),
-      pricing: this.fb.group({
-        perHour: [0, Validators.required],
-        perDay: [0, Validators.required],
-        perWeek: [0, Validators.required]
-      }),
-      images: this.formBuilder.array([''], Validators.required),
-      geolocation: this.fb.group({
-        longitude: [0, Validators.required],
-        latitude: [0, Validators.required]
-      }),
-    });
-  }
-
-  get amenities() {
-    return this.uploadForm.get('amenities') as FormArray;
-  }
-
-  get images() {
-    return this.uploadForm.get('images') as FormArray;
-  }
-
-  addAmenity() {
-    this.amenities.push(this.formBuilder.control(''));
-  }
-
-  removeAmenity(index: number) {
-    this.amenities.removeAt(index);
-  }
-
-  addImage() {
-    this.images.push(this.formBuilder.control(''));
-  }
-
-  removeImage(index: number) {
-    this.images.removeAt(index);
-  }
-
-async onUpload() {
-    this.submitted = true; // set the property to true when the form is submitted
-    if (this.uploadForm.errors !== null) {
-      return;
-    }
-
-    const partyHallData: PartyHall = {
-      id: this.uploadForm.get('id')?.value,
-      availability: this.uploadForm.get('availability')?.value,
-      ownerId: this.ownerId,
-      name: this.uploadForm.get('name')?.value,
-      capacity: this.uploadForm.get('capacity')?.value,
-      amenities: this.uploadForm.get('amenities')?.value,
-      images: this.uploadForm.get('images')?.value,
-      address: {
-        street: this.uploadForm.get('address.street')?.value,
-        city: this.uploadForm.get('address.city')?.value,
-        state: this.uploadForm.get('address.state')?.value,
-        country: this.uploadForm.get('address.country')?.value,
-        postalcode: this.uploadForm.get('address.postalcode')?.value,
-      },
-      pricing: {
-        perHour: this.uploadForm.get('pricing.perHour')?.value,
-        perDay: this.uploadForm.get('pricing.perDay')?.value,
-        perWeek: this.uploadForm.get('pricing.perWeek')?.value
-      },
-      geolocation: {
-        longitude: this.uploadForm.get('geolocation.longitude')?.value,
-        latitude: this.uploadForm.get('geolocation.latitude')?.value
-      }
-    };
-
-    try {
-      this.partyHallService.addPartyHall(partyHallData).subscribe(response => {
-        console.log(response);
+    this.partyHallService.getPartyHall(this.partyHallId).subscribe((partyHall) => {
+      this.updateForm = this.formBuilder.group({
+        name: [partyHall.name,Validators.required],
+        address: this.formBuilder.group({
+          street: [partyHall.address.street],
+          city: [partyHall.address.city],
+          state: [partyHall.address.state],
+          country: [partyHall.address.country],
+          postalcode: [partyHall.address.postalcode],
+        }),
+        capacity: [partyHall.capacity],
+        amenities: this.formBuilder.array(partyHall.amenities),
+        pricing: this.formBuilder.group({
+          perHour: [partyHall.pricing.perHour],
+          perDay: [partyHall.pricing.perDay],
+          perWeek: [partyHall.pricing.perWeek],
+        }),
+        images: this.formBuilder.array(partyHall.images),
+        geolocation: this.formBuilder.group({
+          longitude: [partyHall.geolocation.longitude],
+          latitude: [partyHall.geolocation.latitude],
+        }),
       });
+    });
+  }
 
-      const success = await this.partyHallService.uploadHall(
-        partyHallData.name
-      );
+  onUpdate(): void {
+    if (this.updateForm.valid) {
+      const formData = new FormData();
+      formData.append('name', this.updateForm.get('name')!.value);
+      formData.append('address', JSON.stringify(this.updateForm.get('address')!.value));
+      formData.append('capacity', this.updateForm.get('capacity')!.value);
 
-      if (success) {
-        console.log("Upload successful!")
-        this.uploadForm.reset();
-      } else {
-        this.uploadFailed = true;
+      const amenityControls = (this.updateForm.get('amenities') as FormArray).controls;
+      for (let i = 0; i < amenityControls.length; i++) {
+        formData.append(`amenities[${i}]`, amenityControls[i].value);
       }
-    } catch (error: any) {
-      console.error('UPLOAD ERROR:', error);
-      this.uploadFailed = true;
+
+      formData.append('pricing', JSON.stringify(this.updateForm.get('pricing')!.value));
+
+      const imageControls = (this.updateForm.get('images') as FormArray).controls;
+      for (let i = 0; i < imageControls.length; i++) {
+        formData.append(`images[${i}]`, imageControls[i].value);
+      }
+
+      formData.append('geolocation', JSON.stringify(this.updateForm.get('geolocation')!.value));
+
+      this.partyHallService.updatePartyHall(this.partyHallId, formData).subscribe(() => {
+        // do something on success
+      });
     }
+  }
+
+  removeAmenity(index: number): void {
+    const amenitiesArray = this.updateForm.get('amenities') as FormArray;
+    amenitiesArray.removeAt(index);
+  }
+
+  addAmenity(): void {
+    const amenitiesArray = this.updateForm.get('amenities') as FormArray;
+    amenitiesArray.push(this.formBuilder.control(''));
+  }
+
+  removeImage(index: number): void {
+    const imagesArray = this.updateForm.get('images') as FormArray;
+    imagesArray.removeAt(index);
+  }
+
+  addImage(): void {
+    const imagesArray = this.updateForm.get('images') as FormArray;
+    imagesArray.push(this.formBuilder.control(''));
   }
 }
