@@ -13,21 +13,21 @@ export class PartyHallService {
   baseUrl = 'https://localhost:7091/api';
   url = "PartyHalls";
   partyHall: any[] = [];
-  
+
   private selectedPartyHallSubject = new BehaviorSubject<PartyHall | null>(null);
+
   private ownerIdSource = new BehaviorSubject<string>('');
   ownerId$ = this.ownerIdSource.asObservable();
-  // Create a BehaviorSubject to store the id
-  private idSource = new BehaviorSubject<string>('');
-// Create an observable to get the id
-id$ = this.idSource.asObservable();
 
+  private idSource = new BehaviorSubject<string>('');
+  id$ = this.idSource.asObservable();
+  
   constructor(private router: Router, private http: HttpClient) { }
 
   setId(id: string) {
     this.idSource.next(id);
   }
-  
+
   setOwnerId(id: string) {
     this.ownerIdSource.next(id);
   }

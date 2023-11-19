@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { Subscription } from 'rxjs';
+import { SlotService } from 'src/app/services/slot.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,8 @@ export class LoginComponent {
     private authService: AuthorizationService,
     private fb: FormBuilder,
     private router: Router,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private slotService: SlotService
   ) {
     this.loginForm = this.fb.group({
       loginUsername: ['', Validators.required],
@@ -56,9 +58,12 @@ export class LoginComponent {
         if (user && this.apiService.comparePasswords(enteredPassword, user.password)) {
           // authentication successful
           console.log('Authentication successful');
+          console.log(user)
           this.authService.signInUser();
+          this.slotService.setUserId(user.id);
+          // Call a method of the SlotService and pass the userId
           this.router.navigate(['user-dashboard/party-hall-list']);
-          console.log(user.id+ "hey")
+          console.log(user.id + " hey")
         } else {
           // authentication failed
           console.log('Authentication Failed');

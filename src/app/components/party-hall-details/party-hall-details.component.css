@@ -237,25 +237,13 @@ ul li{
 }
 
 @import "~leaflet/dist/leaflet.css";
-
-.map-container {
-  height: 300px; /* same height as before */
-  width: 70%; /* same width as before */
-  /* margin: 0 auto; center the container horizontally */
-  /* overflow: hidden; */
-  margin-top: 63px; /* add some top margin for spacing */
-  margin-right: 30%; /* position the container on the right side */
-  float: right; /* float the container to the right */
-  overflow: hidden; /* hide any content that overflows the container */
+ 
+#map { 
+  height: 29.75rem; 
+  width: 100%; 
 }
- 
- 
-  #map {
-    height: 100%; /* use all available height */
-    width: 66%; /* use all available width */
-  }
 
 .map-frame {
   border: 2px solid black;
-  height: 30rem;;
+  height: 30rem;
 }

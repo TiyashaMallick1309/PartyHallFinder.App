@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class SlotService {
   private slotsUrl = 'https://localhost:7091/api/Bookings';
+  userId!: string;
 
   constructor(private http: HttpClient) {}
 
@@ -14,18 +15,12 @@ export class SlotService {
     return this.http.get<any[]>(this.slotsUrl);
   }
 
-  getBookingsForPartyHall(partyHallId: string): Observable<any[]> {
-    const url = `${this.slotsUrl}?partyHallId=${partyHallId}`;
-    return this.http.get<any[]>(url);
-  }
-  
-  bookSlot(slot: any): Observable<any> {
-    const bookingUrl = `${this.slotsUrl}/${slot.id}/book`;
-    return this.http.post<any>(bookingUrl, slot);
+  confirmBooking(bookingDetails: any): Observable<any> {
+    return this.http.post<any>(this.slotsUrl, bookingDetails);
   }
 
-  confirmBooking(bookingDetails: any): Observable<any> {
-    const confirmUrl = `${this.slotsUrl}/confirm`;
-    return this.http.post<any>(confirmUrl, bookingDetails);
+  setUserId(userId: string) {
+    this.userId = userId;
   }
 }
+

@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { ApiService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
 import {first} from 'rxjs/operators';
@@ -29,8 +29,11 @@ export class AuthorizationService {
    EmailSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
    AddressSubject: BehaviorSubject<Address[]> = new BehaviorSubject<Address[]>([]);
    PhoneNumberSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+   
+   loggedInUser = new BehaviorSubject<User[]>([]);
   
   constructor(private apiService: ApiService, private router: Router, private http:HttpClient) {}
+
 
   signInUser() {
     this.apiService.user$.pipe(first()).subscribe((users: User[]) => {

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { PartyHallService } from 'src/app/services/party-hall.service';
@@ -16,22 +16,7 @@ export class PartyHallDetailsComponent implements OnInit {
   images: any;
 
   private map!: L.Map;
-  private centroid: L.LatLngExpression = [0, 0]; 
-
-  private initMap(): void {
-    this.map = L.map('map', {
-      center: this.centroid,
-      zoom: 12
-    });
-
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-      minZoom: 10,
-      attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tiles.addTo(this.map);
-  }
+  private centroid: L.LatLngExpression = [0, 0];
 
   constructor(public partyHallService: PartyHallService, private route: ActivatedRoute, private auth: AuthorizationService, private router: Router) { }
 
@@ -41,6 +26,7 @@ export class PartyHallDetailsComponent implements OnInit {
       const partyHallId = partyHallIdParam;
       console.log(partyHallId);
       if (partyHallId) {
+        this.initMap();
         this.partyHallService.getPartyHall(partyHallId).subscribe((res: any) => {
           this.partyHall = res;
           this.images = this.partyHall.images;
@@ -48,10 +34,7 @@ export class PartyHallDetailsComponent implements OnInit {
           this.src = this.images[this.currentImageIndex];
 
           // Update the centroid with the latitude and longitude from the party hall data
-          this.centroid = [this.partyHall.geolocation.latitude, this.partyHall.geolocation.longitude];
-
-          // Initialize the map after the centroid has been updated
-          this.initMap();
+          this.centroid = [this.partyHall.geolocation.longitude,this.partyHall.geolocation.latitude];
 
           // Define your icon 
           const icon = L.icon({
@@ -65,8 +48,12 @@ export class PartyHallDetailsComponent implements OnInit {
           });
 
           // Add a marker to the map using the latitude and longitude from the party hall data
-          const marker = L.marker(this.centroid);
+          const marker = L.marker(this.centroid, { icon: icon });
           marker.addTo(this.map);
+
+          // Center the map on the marker's location
+          const markerBounds = L.latLngBounds([this.centroid]);
+          this.map.fitBounds(markerBounds);
         });
       } else {
         console.error("Invalid Party Hall ID");
@@ -74,6 +61,21 @@ export class PartyHallDetailsComponent implements OnInit {
     } else {
       console.error("Party Hall ID id missing");
     }
+  }
+
+  private initMap(): void {
+    this.map = L.map('map', {
+      center: this.centroid,
+      zoom: 12
+    });
+
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      minZoom: 0,
+      attribution: '© OpenStreetMap'
+    });
+
+    tiles.addTo(this.map);
   }
 
   logout() {
@@ -98,7 +100,7 @@ export class PartyHallDetailsComponent implements OnInit {
     alert("Party Hall saved!");
   }
 
-  bookHall(){
+  bookHall() {
     // Pass the id to the service
     this.partyHallService.setId(this.partyHall.id);
     this.router.navigate([`/user-dashboard/party-hall-list/${this.partyHall.id}/book`])

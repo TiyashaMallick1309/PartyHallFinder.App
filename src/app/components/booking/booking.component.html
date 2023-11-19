@@ -1,23 +1,33 @@
-
-  <div >
-    <mat-calendar [selected]="selectedDate" (selectedChange)="dateSelected($event || null)" [dateClass]="dateClass()" [matDatepickerFilter]="isDateBooked"></mat-calendar>    <mat-selection-list #slotList>
-        <mat-list-option *ngFor="let slot of availableSlots" (click)="selectSlot(slot)">
-          {{ slot.startTime | date: 'shortTime' }} - {{ slot.endTime | date: 'shortTime' }}
-        </mat-list-option>
-      </mat-selection-list>
-      <button mat-raised-button color="primary" (click)="bookSlot()">Book Slot</button>
-    </div>
-  
-    <div *ngIf="selectedSlot">
-      <h3>Book Slot</h3>
-      <form (ngSubmit)="confirmBooking()" #bookingForm="ngForm">
+<div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h2 class="text-center mb-4">Booking</h2>
         <mat-form-field>
-          <input matInput placeholder="Name" name="name" ngModel required>
+          <input matInput
+                 [matDatepicker]="startPicker"
+                 placeholder="Select a start date"
+                 [min]="minDate"
+                 [max]="maxDate"
+                 (dateInput)="handleStartDateInput($event)">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
         </mat-form-field>
         <mat-form-field>
-          <input matInput type="email" placeholder="Email" name="email" ngModel required email>
+          <input matInput
+                 [matDatepicker]="endPicker"
+                 placeholder="Select an end date"
+                 [min]="startDate"
+                 [max]="maxDate"
+                 (dateInput)="handleEndDateInput($event)">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="!bookingForm.valid">Confirm Booking</button>
-      </form>
+      </div>
     </div>
-  
+    <div class="row">
+      <div class="col-md-6 offset-md-3 text-center">
+        <button mat-raised-button [disabled]="!startDate || !endDate || startDate > endDate || isDateDisabled(startDate) || isDateDisabled(endDate)" (click)="payNow() ">Pay</button>        
+        <p *ngIf="isDateDisabled(startDate) || isDateDisabled(endDate)" class="invalid-feedback d-block">Selected dates are not available. Please choose different dates.</p>
+      </div>
+    </div>
+  </div>
