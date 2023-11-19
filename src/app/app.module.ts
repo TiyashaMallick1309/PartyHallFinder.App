@@ -33,6 +33,7 @@ import { HelpComponent } from './components/help/help.component';
 import { UploadHallsComponent } from './components/upload-halls/upload-halls.component';
 import { UpdateHallsComponent } from './components/update-halls/update-halls.component';
 import { BookingComponent } from './components/booking/booking.component';
+import { ReviewComponent } from './components/review/review.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { BookingComponent } from './components/booking/booking.component';
     HelpComponent,
     UploadHallsComponent,
     UpdateHallsComponent,
-    BookingComponent
+    BookingComponent,
+    ReviewComponent
   ],
   imports: [
     BrowserModule,

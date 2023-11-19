@@ -105,4 +105,9 @@ export class PartyHallDetailsComponent implements OnInit {
     this.partyHallService.setId(this.partyHall.id);
     this.router.navigate([`/user-dashboard/party-hall-list/${this.partyHall.id}/book`])
   }
+
+  seeReview(){
+    this.partyHallService.setId(this.partyHall.id);
+    this.router.navigate([`/user-dashboard/party-hall-list/${this.partyHall.id}/rating`])
+  }
 }

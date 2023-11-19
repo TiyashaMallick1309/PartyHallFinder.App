@@ -15,6 +15,8 @@ import { HelpComponent } from './components/help/help.component';
 import { UploadHallsComponent } from './components/upload-halls/upload-halls.component';
 import { UpdateHallsComponent } from './components/update-halls/update-halls.component';
 import { BookingComponent } from './components/booking/booking.component';
+import { ReviewComponent } from './components/review/review.component';
+import { ReviewRatingComponent } from './components/review-rating/review-rating.component';
 
 
 const routes: Routes = [
@@ -23,26 +25,36 @@ const routes: Routes = [
   {
     path: 'user-dashboard', component: UserDashboardComponent,
     children: [
-      { path: 'user-history', component: UserHistoryComponent },
-      {path:'help',component:HelpComponent},
-      { path: 'party-hall-list', component: PartyHallListingComponent},
-      { path: 'saved', component: SavedHallsComponent },
-      { path: 'party-hall-list/:id', component: PartyHallDetailsComponent,
+      {
+        path: 'user-history', component: UserHistoryComponent,
         children: [
-          {path:'book', component:BookingComponent}
-        ]},
-      ]
+          { path: 'review', component: ReviewComponent }
+        ]
+      },
+      { path: 'help', component: HelpComponent },
+      { path: 'party-hall-list', component: PartyHallListingComponent },
+      { path: 'saved', component: SavedHallsComponent },
+      {
+        path: 'party-hall-list/:id', component: PartyHallDetailsComponent,
+        children: [
+          { path: 'book', component: BookingComponent },
+          {path:'rating',component:ReviewRatingComponent}
+        ]
+      },
+    ]
   },
   //Owner
   {
     path: 'owner-dashboard', component: OwnerDashboardComponent,
     children: [
-      { path: 'owner-details', component: OwnerDetailsComponent, 
-    children:[
-      {path:'update',component:UpdateHallsComponent}
-    ] },
-      {path:'upload',component:UploadHallsComponent}
-      
+      {
+        path: 'owner-details', component: OwnerDetailsComponent,
+        children: [
+          { path: 'update', component: UpdateHallsComponent }
+        ]
+      },
+      { path: 'upload', component: UploadHallsComponent }
+
     ]
   },
   //Admin

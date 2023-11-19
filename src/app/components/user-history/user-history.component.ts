@@ -4,9 +4,9 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { ApiService } from 'src/app/services/api.service';
 import { filter } from 'rxjs';
 import { SlotService } from 'src/app/services/slot.service';
-import { Booking } from 'src/app/models/booking';
 import { PartyHallService } from 'src/app/services/party-hall.service';
 import { PartyHall } from 'src/app/models/party-hall';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-history',
@@ -15,12 +15,13 @@ import { PartyHall } from 'src/app/models/party-hall';
 })
 export class UserHistoryComponent implements OnInit {
   name!: string;
+  id!:string;
   email!: string;
   phonenumber: string = '';
   address: Address[] = [];
   matchingHalls: PartyHall[] = [];
 
-  constructor(public partyHallService: PartyHallService,private slotService: SlotService, private authService: AuthorizationService, private apiService: ApiService) { }
+  constructor(private router:Router,public partyHallService: PartyHallService,private slotService: SlotService, private authService: AuthorizationService, private apiService: ApiService) { }
 
   ngOnInit() {
     this.authService.isAuthenticatedSubject.pipe(filter(isAuthenticated => isAuthenticated)).subscribe(() => {
@@ -28,6 +29,10 @@ export class UserHistoryComponent implements OnInit {
         // console.log('name: ', name); 
         this.name = name;
       });
+      this.authService.IdSubject.subscribe(id=>{
+        this.id=id;
+        console.log(this.id);
+      })
       this.authService.EmailSubject.subscribe(email => {
         // console.log('email: ', email); 
         this.email = email;
@@ -54,5 +59,9 @@ export class UserHistoryComponent implements OnInit {
 
   handleImageError(event: Event): void {
     console.error('Image error: ', event);
+  }
+
+  Rating(){
+    this.router.navigate(['user-dashboard/user-history/review'])
   }
 }

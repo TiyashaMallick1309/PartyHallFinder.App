@@ -97,7 +97,8 @@
       <input type="checkbox" name="checkbox"><span>I want to recelve personallzed offers by your site</span>
     </div><br />
   </div>
-  <button type="submit" class="btn btn-primary">Create Account</button>
+  <br/>
+  <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid">Create Account</button>
 </form>
 
 

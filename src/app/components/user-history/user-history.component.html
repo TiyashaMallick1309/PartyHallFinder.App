@@ -20,6 +20,8 @@
           <h5>{{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{ currentPartyHall.address.country }}</h5>
           <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: {{ currentPartyHall.pricing.perDay }}/day</p>
         </div>
+        <button (click)="Rating()">Rate</button>
       </div>
     </div>
+    <router-outlet></router-outlet>
   </div>

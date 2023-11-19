@@ -59,11 +59,11 @@ export class LoginComponent {
           // authentication successful
           console.log('Authentication successful');
           console.log(user)
-          this.authService.signInUser();
-          this.slotService.setUserId(user.id);
+          this.authService.signInUser(user);
           // Call a method of the SlotService and pass the userId
           this.router.navigate(['user-dashboard/party-hall-list']);
           console.log(user.id + " hey")
+          this.slotService.setUserId(user.id);
         } else {
           // authentication failed
           console.log('Authentication Failed');

@@ -73,7 +73,6 @@ export class PartyHallListingComponent {
         ) : true) &&
         (capacity ? partyHall.capacity.toString().toLowerCase().includes(capacity) : true) &&
         (amenities ? partyHall.amenities.some((amenity) => amenity.toLowerCase().includes(amenities)) : true) &&
-        (availability ? partyHall.availability.toLowerCase(): true) &&
         (budget ? Object.values(partyHall.pricing).some((value) =>
           value.toString().toLowerCase().includes(budget)
         ) : true);

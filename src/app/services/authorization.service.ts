@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
 import { ApiService } from './api.service';
 import { BehaviorSubject } from 'rxjs';
 import {first} from 'rxjs/operators';
@@ -35,38 +35,32 @@ export class AuthorizationService {
   constructor(private apiService: ApiService, private router: Router, private http:HttpClient) {}
 
 
-  signInUser() {
-    this.apiService.user$.pipe(first()).subscribe((users: User[]) => {
-      const latestUser = users[users.length - 1];
+  signInUser(user:User) {
       this.isAuthenticatedSubject.next(true);
-      this.nameSubject.next(latestUser.userName);
-      this.TypeSubject.next(latestUser.role);
-      this.IdSubject.next(latestUser.id);
-      this.EmailSubject.next(latestUser.email);
-      this.PhoneNumberSubject.next(latestUser.phonenumber  ?? '');
+      this.nameSubject.next(user.userName);
+      this.TypeSubject.next(user.role);
+      this.IdSubject.next(user.id);
+      this.EmailSubject.next(user.email);
+      this.PhoneNumberSubject.next(user.phonenumber  ?? '');
       const addressDetails: AddressDetails = {
-        street: latestUser.address?.street ?? '',
-        city: latestUser.address?.city ?? '',
-        state: latestUser.address?.state ?? '',
-        country: latestUser.address?.country ?? '',
-        postalcode: latestUser.address?.postalcode ?? ''
+        street: user.address?.street ?? '',
+        city: user.address?.city ?? '',
+        state: user.address?.state ?? '',
+        country: user.address?.country ?? '',
+        postalcode: user.address?.postalcode ?? ''
       };
       const address: Address[] = [addressDetails as Address];
       this.AddressSubject.next(address);
-    });
   }
 
 
-  signInOwner(selectedAccountType: string) {
-    this.apiService.owner$.pipe(first()).subscribe((owners: Owner[]) => {
-      const latestUser = owners[owners.length - 1];
+  signInOwner(selectedAccountType: string, owner: Owner) {
       this.isAuthenticatedSubject.next(true);
-      this.nameSubject.next(latestUser.username);
-      this.TypeSubject.next(latestUser.role);
-      this.IdSubject.next(latestUser.id);
-      this.EmailSubject.next(latestUser.email);
-      this.PhoneNumberSubject.next(latestUser.phonenumber  ?? '')
-    });
+      this.nameSubject.next(owner.username);
+      this.TypeSubject.next(owner.role);
+      this.IdSubject.next(owner.id);
+      this.EmailSubject.next(owner.email);
+      this.PhoneNumberSubject.next(owner.phonenumber  ?? '');
   }
 
   signUp(selectedAccountType: string, email: string, password: string, username: string, firstname: string, lastname: string){

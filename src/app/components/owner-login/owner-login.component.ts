@@ -56,7 +56,7 @@ export class OwnerLoginComponent {
         if (owner && this.apiService.comparePasswords(enteredPassword, owner.password)) {
           // authentication successful
           console.log('Authentication successful');
-          this.authService.signInOwner(owner.role);
+          this.authService.signInOwner(owner.role, owner);
               this.router.navigate(['owner-dashboard']);
               console.log(owner);
         } else {

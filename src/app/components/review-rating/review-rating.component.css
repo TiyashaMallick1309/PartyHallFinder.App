@@ -1,0 +1,41 @@
+.container {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    margin-bottom: 0.5rem;
+}
+
+.rating {
+    color: orange;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.review-text {
+    font-size: 16px;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+/* CSS for "No reviews yet" text */
+
+.no-review-text {
+    font-size: 1.2rem;
+    text-align: center;
+    color: grey;
+    margin-top: 20px;
+  }

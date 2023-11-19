@@ -7,7 +7,6 @@ export interface PartyHall {
     capacity: number;
     amenities: string[];
     pricing: Pricing;
-    availability: string;
     images: string[];
     ownerId: string;
     geolocation: Geolocation;

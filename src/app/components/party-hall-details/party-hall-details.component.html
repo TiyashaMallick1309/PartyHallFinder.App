@@ -14,9 +14,9 @@
     <p><b>Address:</b> {{ partyHall?.address?.street }}, {{ partyHall?.address?.city }}, {{ partyHall?.address?.state
       }},
       {{ partyHall?.address?.country }}, {{ partyHall?.address?.postalcode }}</p>
-      <div class="map-frame" >
-        <div id="map" ></div>
-      </div>
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
     <p><b>Capacity:</b> {{ partyHall?.capacity }}</p>
     <p><b>Amenities:</b></p>
     <ul>
@@ -28,14 +28,14 @@
       <p><b>Price per day:</b> ${{partyHall?.pricing?.perDay}}</p>
       <p><b>Price per week:</b> ${{partyHall?.pricing?.perWeek}}</p>
     </div>
-    <div class="availability">
-      <p>Status: {{partyHall?.availability}}</p>
-    </div>
-    <button (click)="savedHalls(partyHall)" class="add-to-wishlist-button">Add to Saved Halls</button><br/><br/>
+    <div class="button">
+    <button (click)="savedHalls(partyHall)" class="add-to-wishlist-button">Save Hall</button><br/>
+    <button (click)="seeReview()" class="review">See Reviews</button>
     <button (click)="bookHall()" class="book">Book Hall</button>
+  </div>
   </div>
 </div>
 <div>
-  <br/>
+  <br />
   <router-outlet></router-outlet>
 </div>

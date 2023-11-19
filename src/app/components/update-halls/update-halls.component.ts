@@ -69,8 +69,7 @@ export class UpdateHallsComponent implements OnInit {
           geolocation: {
             longitude: partyHall.geolocation.longitude,
             latitude: partyHall.geolocation.latitude
-          },
-          availability: partyHall.availability
+          }
         });
   
         const existingImages = partyHall.images;
@@ -106,7 +105,6 @@ export class UpdateHallsComponent implements OnInit {
         longitude: formValue.geolocation.longitude,
         latitude: formValue.geolocation.latitude
       },
-      availability: formValue.availability,
       images: formValue.images,
       amenities: formValue.amenities
     };

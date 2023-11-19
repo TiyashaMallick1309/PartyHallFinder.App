@@ -46,48 +46,20 @@ export class OwnerRegisterComponent {
     return password && confirmPassword && password.value === confirmPassword.value ? null : { passwordMatch: true };
   }
 
-  async onRegistration() {
-    this.submitted = true; // set the property to true when the form is submitted
-  
-    if (this.registrationForm.invalid) {
-      return;
-    }
-  
-    const ownerData: Owner = {
-      id: this.registrationForm.get('id')?.value,
-      username: this.registrationForm.get('username')?.value,
-      firstname: this.registrationForm.get('firstname')?.value,
-      lastname: this.registrationForm.get('lastname')?.value,
-      email: this.registrationForm.get('email')?.value,
-      password: this.registrationForm.get('password')?.value,
-      role: this.registrationForm.get('role')?.value,
-      phonenumber: this.registrationForm.get('phonenumber')?.value,
-      ownedHall:this.registrationForm.get('ownedHall')?.value,
-    };
-  
-    try {
-      this.apiService.addOwner(ownerData).subscribe(response => {
-        console.log(response);
-      });
-      
-      const success = await this.authService.signUp(
-        this.selectedAccountType,
-        ownerData.email,
-        ownerData.password,
-        ownerData.firstname,
-        ownerData.lastname,
-        ownerData.role
-      );
-  
-      if (success) {
-            this.router.navigate(['/owner-dashboard']);
+  onRegistration() {
+    this.submitted = true;
+    if (this.registrationForm.valid) {
+      const ownerData = this.registrationForm.value;
+      this.apiService.addUser(ownerData).subscribe({
+        next: response => {
+          console.log('Registration successful!');
+          window.location.reload();
+        },
+        error: error => {
+          console.error(error);
+          this.registrationFailed = true;
         }
-       else {
-        this.registrationFailed = true;
-      }
-    } catch (error: any) {
-      console.error('REGISTRATION ERROR:', error);
-      this.registrationFailed = true;
+      });
     }
   }
 }

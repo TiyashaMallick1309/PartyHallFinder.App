@@ -73,3 +73,52 @@
   .nav-link {
     transition: 0.3s ease-out;
   }
+
+  .social-container {
+    margin: 20px 0;
+  }
+  
+  .social-container a {
+    border: 1px solid #DDDDDD;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    height: 40px;
+    width: 40px;
+  }
+
+  .social-media {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: auto;
+    font-size: 14px;
+  }
+  
+  .social-media span {
+    font-size: 16px;
+    color: grey;
+  }
+  
+  .social-media a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+    margin: 0 0.5rem;
+    padding:0.7rem;
+    border-radius: 1rem;
+  }
+
+  .fa-facebook-f{
+    background-color: rgb(74, 93, 179);
+  }
+
+  .fa-twitter{
+    background-color: rgb(13, 209, 235);
+  }
+
+  .fa-instagram{
+    background: linear-gradient(to right, #ff6adf, #ffd671);
+  }

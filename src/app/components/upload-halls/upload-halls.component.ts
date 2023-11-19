@@ -78,7 +78,6 @@ async onUpload() {
 
     const partyHallData: PartyHall = {
       id: this.uploadForm.get('id')?.value,
-      availability: this.uploadForm.get('availability')?.value,
       ownerId: this.ownerId,
       name: this.uploadForm.get('name')?.value,
       capacity: this.uploadForm.get('capacity')?.value,

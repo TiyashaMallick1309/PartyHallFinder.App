@@ -49,53 +49,20 @@ export class RegisterComponent implements OnInit {
     return password === confirmPassword ? null : { passwordMatch: true };
   }
 
-  async onRegistration() {
-    this.submitted = true; // set the property to true when the form is submitted
-    if (this.registrationForm.errors !== null) {
-      return;
-    }
-
-    const userData: User = {
-      id: this.registrationForm.get('username')?.value,
-      userName: this.registrationForm.get('username')?.value,
-      firstname: this.registrationForm.get('firstname')?.value,
-      lastname: this.registrationForm.get('lastname')?.value,
-      address: {
-        street: this.registrationForm.get('address.street')?.value,
-        city: this.registrationForm.get('address.city')?.value,
-        state: this.registrationForm.get('address.state')?.value,
-        country: this.registrationForm.get('address.country')?.value,
-        postalcode: this.registrationForm.get('address.postalcode')?.value,
-      },
-      email: this.registrationForm.get('email')?.value,
-      password: this.registrationForm.get('password')?.value,
-      role: this.registrationForm.get('role')?.value,
-      phonenumber: this.registrationForm.get('phonenumber')?.value,
-    };
-
-    try {
-      this.apiService.addUser(userData).subscribe(response => {
-        console.log(response);
+  onRegistration() {
+    this.submitted = true;
+    if (this.registrationForm.valid) {
+      const userData = this.registrationForm.value;
+      this.apiService.addUser(userData).subscribe({
+        next: response => {
+          console.log('Registration successful!');
+          window.location.reload();
+        },
+        error: error => {
+          console.error(error);
+          this.registrationFailed = true;
+        }
       });
-
-      const success = await this.authService.signUp(
-        this.selectedAccountType,
-        userData.email,
-        userData.password,
-        userData.firstname,
-        userData.lastname,
-        userData.role
-      );
-
-      if (success) {
-        window.location.reload();
-        console.log("Registration successful!")
-      } else {
-        this.registrationFailed = true;
-      }
-    } catch (error: any) {
-      console.error('REGISTRATION ERROR:', error);
-      this.registrationFailed = true;
     }
   }
 }
