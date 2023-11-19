@@ -28,7 +28,7 @@ export class AuthorizationService {
    IdSubject : BehaviorSubject<string> = new BehaviorSubject<string>('');
    EmailSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
    AddressSubject: BehaviorSubject<Address[]> = new BehaviorSubject<Address[]>([]);
-   PhoneNumberSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+   phonenumberSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
    
    loggedInUser = new BehaviorSubject<User[]>([]);
   
@@ -41,7 +41,7 @@ export class AuthorizationService {
       this.TypeSubject.next(user.role);
       this.IdSubject.next(user.id);
       this.EmailSubject.next(user.email);
-      this.PhoneNumberSubject.next(user.phonenumber  ?? '');
+      this.phonenumberSubject.next(user.phonenumber  ?? '');
       const addressDetails: AddressDetails = {
         street: user.address?.street ?? '',
         city: user.address?.city ?? '',
@@ -60,18 +60,18 @@ export class AuthorizationService {
       this.TypeSubject.next(owner.role);
       this.IdSubject.next(owner.id);
       this.EmailSubject.next(owner.email);
-      this.PhoneNumberSubject.next(owner.phonenumber  ?? '');
+      this.phonenumberSubject.next(owner.phonenumber  ?? '');
   }
 
-  signUp(selectedAccountType: string, email: string, password: string, username: string, firstname: string, lastname: string){
+  signUp(selectedAccountType: string, email: string, password: string, username: string, firstName: string, lastName: string){
       const url = `${this.baseUrl}/auth/register`;
       const requestBody = {
         accountType: selectedAccountType,
         email,
         password,
         username,
-        firstname,
-        lastname,
+        firstName,
+        lastName,
       };
 
       return this.http

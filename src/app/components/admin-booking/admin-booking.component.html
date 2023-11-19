@@ -1,0 +1,19 @@
+<h2>Booking List</h2>
+<table class="table">
+  <tr>
+    <th class="equal-width">ID</th>
+    <th class="equal-width">User ID</th>
+    <th class="equal-width">Party Hall Name</th>
+    <th class="equal-width">Start Date</th>
+    <th class="equal-width">End Date</th>
+    <th class="equal-width">Confirmed</th>
+  </tr>
+  <tr *ngFor="let booking of bookings">
+    <td>{{booking.id}}</td>
+    <td>{{booking.userId}}</td>
+    <td>{{booking.partyHallId}}</td>
+    <td>{{booking.startDate | date:'short'}}</td>
+    <td>{{booking.endDate | date:'short'}}</td>
+    <td>{{booking.isConfirmed ? 'Yes' : 'No'}}</td>
+  </tr>
+</table>

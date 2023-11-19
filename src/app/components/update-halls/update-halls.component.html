@@ -67,11 +67,6 @@
   </div>
 
   <div class="mb-3">
-    <label for="availability" class="form-label">Availability</label>
-    <textarea class="form-control" id="availability" formControlName="availability"></textarea>
-  </div>
-
-  <div class="mb-3">
     <label for="images" class="form-label">Images</label>
     <div formArrayName="images">
       <div *ngFor="let image of images.controls; let i=index" class="mb-3">

@@ -17,8 +17,8 @@ export class AdminLoginComponent {
   submitted = false;
   admin: Admin[] = [{
     userName: 'Admin01',
-    firstname: 'Tiyasha',
-    lastname: 'Mallick',
+    firstName: 'Tiyasha',
+    lastName: 'Mallick',
     email: 'tiyasha.mallick@chubb.com',
     password: 'Qwerty@123',
     role: 'admin',

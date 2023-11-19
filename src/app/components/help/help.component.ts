@@ -6,16 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./help.component.css']
 })
 export class HelpComponent {
-  firstname: string = '';
-  lastname: string = '';
+  firstName: string = '';
+  lastName: string = '';
   email: string = '';
   phone: string = '';
   message: string = '';
 
   Send() {
     // Clear form fields
-    this.firstname = '';
-    this.lastname = '';
+    this.firstName = '';
+    this.lastName = '';
     this.email = '';
     this.phone = '';
     this.message = '';

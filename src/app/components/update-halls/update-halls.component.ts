@@ -39,7 +39,6 @@ export class UpdateHallsComponent implements OnInit {
         perDay: [''],
         perWeek: ['']
       }),
-      availability: [''],
       images: this.formBuilder.array([]),
       amenities: this.formBuilder.array([]),
       geolocation: this.formBuilder.group({

@@ -14,7 +14,7 @@ export class AdminDashboardComponent {
   constructor(private router:Router,private auth:AuthorizationService) { }
 
   ngOnInit() {
-    this.router.navigate(['admin-dashboard/party-halls']);
+    this.router.navigate(['admin-dashboard/admin-booking']);
   }
 
   logout(){

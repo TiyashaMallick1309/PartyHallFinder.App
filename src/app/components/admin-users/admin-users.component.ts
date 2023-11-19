@@ -15,8 +15,8 @@ export class AdminUsersComponent {
   currentPage: number = 1;
   filteredUsers: any[] = [];
   filterOptions: any = {
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     email: '',
     role: '',
     phonenumber: ''
@@ -35,7 +35,7 @@ export class AdminUsersComponent {
   filterUsers() {
     this.currentPage = 1;
 
-    if (this.filterOptions.firstname || this.filterOptions.lastname ||
+    if (this.filterOptions.firstName || this.filterOptions.lastName ||
       this.filterOptions.email || this.filterOptions.role ||
       this.filterOptions.phonenumber) {
       this.filterUsersWithFilterOptions();
@@ -61,14 +61,14 @@ export class AdminUsersComponent {
   }
 
   filterUsersWithFilterOptions() {
-    const firstname = this.filterOptions.firstname.toLowerCase(); const lastname = this.filterOptions.lastname.toLowerCase(); const email = this.filterOptions.email.toLowerCase(); const role = this.filterOptions.role.toLowerCase(); const phonenumber = this.filterOptions.phonenumber.toLowerCase();
+    const firstName = this.filterOptions.firstName.toLowerCase(); const lastName = this.filterOptions.lastName.toLowerCase(); const email = this.filterOptions.email.toLowerCase(); const role = this.filterOptions.role.toLowerCase(); const phonenumber = this.filterOptions.phonenumber.toLowerCase();
 
     this.filteredUsers = this.users.filter((user) => {
-      return (firstname ?
-        user.firstname.toString().toLowerCase().includes(firstname)
+      return (firstName ?
+        user.firstName.toString().toLowerCase().includes(firstName)
         : true) &&
-        (lastname ?
-          user.lastname.toString().toLowerCase().includes(lastname)
+        (lastName ?
+          user.lastName.toString().toLowerCase().includes(lastName)
           : true) &&
         (email ?
           user.email.toString().toLowerCase().includes(email)
@@ -97,11 +97,11 @@ export class AdminUsersComponent {
     this.currentPage = 1;
 
     switch (filterType) {
-      case 'firstname':
-        this.filterOptions.firstname = filterValue.toLowerCase();
+      case 'firstName':
+        this.filterOptions.firstName = filterValue.toLowerCase();
         break;
-      case 'lastname':
-        this.filterOptions.lastname = filterValue.toLowerCase();
+      case 'lastName':
+        this.filterOptions.lastName = filterValue.toLowerCase();
         break;
       case 'email':
         this.filterOptions.email = filterValue.toLowerCase();

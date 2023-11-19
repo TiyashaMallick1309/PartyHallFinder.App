@@ -25,8 +25,8 @@ export class RegisterComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/)]],
       confirmPassword: ['', Validators.required],
       username: ['', Validators.required],
-      firstname: ['', Validators.required],
-      lastname: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       address: this.fb.group({
         street: ['', Validators.required],
         city: ['', Validators.required],

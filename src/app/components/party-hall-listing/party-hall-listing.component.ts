@@ -18,7 +18,6 @@ export class PartyHallListingComponent {
     location: '',
     capacity: '',
     amenities: '',
-    availability: '',
     budget: ''
   };
 
@@ -35,8 +34,7 @@ export class PartyHallListingComponent {
     this.currentPage = 1;
 
     if (this.filterOptions.location || this.filterOptions.capacity ||
-      this.filterOptions.amenities || this.filterOptions.availability ||
-      this.filterOptions.budget) {
+      this.filterOptions.amenities ||  this.filterOptions.budget) {
       this.filterPartyHallsWithFilterOptions();
       return;
     }
@@ -63,7 +61,6 @@ export class PartyHallListingComponent {
     const location = this.filterOptions.location.toLowerCase();
     const capacity = this.filterOptions.capacity.toLowerCase();
     const amenities = this.filterOptions.amenities.toLowerCase();
-    const availability = this.filterOptions.availability.toLowerCase();
     const budget = this.filterOptions.budget.toLowerCase();
 
     this.filteredPartyHalls = this.partyHalls.filter((partyHall) => {
@@ -125,9 +122,6 @@ export class PartyHallListingComponent {
         break;
       case 'amenities':
         this.filterOptions.amenities = filterValue.toLowerCase();
-        break;
-      case 'availability':
-        this.filterOptions.availability = filterValue.toLowerCase();
         break;
       case 'budget':
         this.filterOptions.budget = filterValue.toLowerCase();

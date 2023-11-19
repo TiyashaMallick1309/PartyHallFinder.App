@@ -78,7 +78,7 @@ textarea::-webkit-scrollbar {
 }
 
 button {
-  background: #2f4ad0;
+  background: #3e51b3;
   padding: 8px 16px;
   margin: 16px 0 50px 0;
   color: #fff;
@@ -89,6 +89,7 @@ button {
 }
 
 button:hover {
+  background-color: rgb(78, 21, 132);
   letter-spacing: 2px;
   box-shadow: none;
 }
@@ -111,9 +112,24 @@ button:hover {
 }
 
 .social-media a {
-  color: #000;
-  font-size: 20px;
-  margin:1rem;
+  color: #ffffff;
+    text-decoration: none;
+    font-size: 20px;
+    margin: 0 0.5rem;
+    padding:0.7rem;
+    border-radius: 1rem;
+}
+
+.fa-facebook-f{
+  background-color: rgb(74, 93, 179);
+}
+
+.fa-twitter{
+  background-color: rgb(13, 209, 235);
+}
+
+.fa-instagram{
+  background: linear-gradient(to right, #ff6adf, #ffd671);
 }
 
 @media (max-width: 425px) {

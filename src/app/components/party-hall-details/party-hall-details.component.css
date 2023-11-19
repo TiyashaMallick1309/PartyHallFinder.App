@@ -103,13 +103,14 @@ ul li{
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  max-width: 650px;
   padding: 20px;
   border: 2px solid #ddd;
   border-radius: 5px;
-  background-color: #fff;
+  background-image: linear-gradient(to top, rgb(241, 192, 192),rgb(219, 187, 219));
   margin:5vw;
   text-align: left;
+  border-radius: 1rem;
 }
 
 .partyHall-info img {

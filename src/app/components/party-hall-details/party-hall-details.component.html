@@ -1,5 +1,6 @@
 <div class="container">
   <div class="partyHall-info">
+    <br />
     <div class="image-carousel" *ngIf="partyHall && partyHall.images && partyHall.images.length > 0">
 
       <div class="carousel-buttons">
@@ -13,10 +14,11 @@
     <h1><b>{{ partyHall?.name }}</b></h1>
     <p><b>Address:</b> {{ partyHall?.address?.street }}, {{ partyHall?.address?.city }}, {{ partyHall?.address?.state
       }},
-      {{ partyHall?.address?.country }}, {{ partyHall?.address?.postalcode }}</p>
+      {{ partyHall?.address?.country }}, {{ partyHall?.address?.postalcode }}</p> <br />
     <div class="map-frame">
       <div id="map"></div>
     </div>
+    <br />
     <p><b>Capacity:</b> {{ partyHall?.capacity }}</p>
     <p><b>Amenities:</b></p>
     <ul>
@@ -29,10 +31,11 @@
       <p><b>Price per week:</b> ${{partyHall?.pricing?.perWeek}}</p>
     </div>
     <div class="button">
-    <button (click)="savedHalls(partyHall)" class="add-to-wishlist-button">Save Hall</button><br/>
-    <button (click)="seeReview()" class="review">See Reviews</button>
-    <button (click)="bookHall()" class="book">Book Hall</button>
-  </div>
+      <button (click)="savedHalls(partyHall)" class="add-to-wishlist-button">Save Hall</button><br />
+      <button (click)="seeReview()" class="review">See Reviews</button>
+      <button (click)="bookHall()" class="book">Book Hall</button>
+    </div>
+    <br />
   </div>
 </div>
 <div>

@@ -37,7 +37,7 @@ export class UserHistoryComponent implements OnInit {
         // console.log('email: ', email); 
         this.email = email;
       });
-      this.authService.PhoneNumberSubject.subscribe(phonenumber => {
+      this.authService.phonenumberSubject.subscribe(phonenumber => {
         // console.log('phonenumber: ', phonenumber );
         this.phonenumber = phonenumber;
       });

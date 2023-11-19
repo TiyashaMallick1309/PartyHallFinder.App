@@ -1,0 +1,42 @@
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 100%;
+    background-image: linear-gradient(-225deg, #c9c4c4 0%, #af7b7b 50%, #ff8c8c 100%);
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  
+  th {
+    background-color: #6e2f3b;
+    color: white;
+  }
+  
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  
+  @media (max-width: 767px) {
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    
+    th, td {
+      display: inline-block;
+      border: none;
+      vertical-align: top;
+    }
+  }
+
+  .equal-width {
+    width: calc(100% / 6);
+  }

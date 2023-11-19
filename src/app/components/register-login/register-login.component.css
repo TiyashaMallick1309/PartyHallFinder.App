@@ -22,6 +22,11 @@ img {
   }
 }
 
+.card {
+  background-color: #fff;
+  background-image: linear-gradient(to top, #c7d6b8, #b8d2e8);
+}
+
 h1{
   color: white;
   padding: 1rem;

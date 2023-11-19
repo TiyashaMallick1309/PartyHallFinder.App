@@ -41,6 +41,7 @@
     border-radius: 0.5rem;
     overflow: hidden;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(to bottom, rgb(233, 246, 250), rgb(236, 237, 238));
   }
   
   /* Style the artwork card on hover state */
@@ -102,4 +103,8 @@
     text-align: center;
     /* Center the content */
     cursor: pointer;
+  }
+
+  .container{
+    background: linear-gradient(to bottom, rgb(245, 245, 233), rgb(255, 204, 211));
   }

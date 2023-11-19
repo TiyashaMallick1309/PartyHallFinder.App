@@ -39,7 +39,7 @@ export class OwnerDetailsComponent implements OnInit {
         this.authService.EmailSubject.subscribe(email => {
           this.email = email;
         });
-        this.authService.PhoneNumberSubject.subscribe(phonenumber => {
+        this.authService.phonenumberSubject.subscribe(phonenumber => {
           this.phonenumber = phonenumber;
         });
         this.authService.IdSubject.subscribe(id => {

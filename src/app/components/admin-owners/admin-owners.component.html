@@ -1,4 +1,6 @@
-<div class="search-bar">
+<div class="container">
+  <br/>
+  <div class="search-bar">
     <i class="fa fa-search" aria-hidden="true"></i>
     <input [(ngModel)]="searchText" (input)="filterOwners()" placeholder="Search owners..." />
   </div>
@@ -9,7 +11,7 @@
     <div class="owner-card"
       *ngFor="let owner of filteredOwners | slice: (currentPage - 1) * pageSize : (currentPage * pageSize)">
       <div class="owner-details">
-        <p>Name: {{ owner.firstname }} {{ owner.lastname }}<br /><br />
+        <p>Name: {{ owner.firstname }} {{ owner.lastName }}<br /><br />
         Email: {{ owner.email }}<br /><br />
         Phn. no.: {{owner.phonenumber}}<br /><br />
           </p>
@@ -34,3 +36,4 @@
       </li>
     </ul>
   </div>
+</div>

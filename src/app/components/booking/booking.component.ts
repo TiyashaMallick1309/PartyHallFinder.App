@@ -148,9 +148,9 @@ export class BookingComponent implements OnInit {
     Razorpay.open(razorpayOptions, successCallback, failureCallback)
 
     const userId = this.slotService.userId;
-    const startdate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()).toISOString();
-    const enddate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate() + 1).toISOString();
-    const booking = { userId, partyhallid: this.id, startdate, enddate, isconfirmed: true };
+    const startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()).toISOString();
+    const endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate() + 1).toISOString();
+    const booking = { userId, partyhallid: this.id, startDate, endDate, isconfirmed: true };
 
     this.slotService.confirmBooking(booking).subscribe((response) => {
       console.log("Booking in progress:", response); // Handle success/failure here 

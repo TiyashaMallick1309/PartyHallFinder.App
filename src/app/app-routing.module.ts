@@ -17,6 +17,7 @@ import { UpdateHallsComponent } from './components/update-halls/update-halls.com
 import { BookingComponent } from './components/booking/booking.component';
 import { ReviewComponent } from './components/review/review.component';
 import { ReviewRatingComponent } from './components/review-rating/review-rating.component';
+import { AdminBookingComponent } from './components/admin-booking/admin-booking.component';
 
 
 const routes: Routes = [
@@ -62,7 +63,7 @@ const routes: Routes = [
     path: 'admin-dashboard', component: AdminDashboardComponent,
     children: [
       { path: 'admin-owners', component: AdminOwnersComponent },
-      { path: 'party-hall-list', component: PartyHallListingComponent },
+      { path: 'admin-booking', component: AdminBookingComponent },
       { path: 'admin-users', component: AdminUsersComponent },
       //bookings
     ]

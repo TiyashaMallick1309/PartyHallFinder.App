@@ -1,27 +1,38 @@
-<div class="user-details"><br>
-  <h2> Personal Details</h2><br><br>
-  <p class="user-info">
-    Name: {{ name }} <br><br>
-    Email: {{ email }} <br><br>
-    Phone: {{ phonenumber  }} <br><br>
-    Address:
-    <span *ngFor="let addr of address">
-      {{ addr.street }}, {{ addr.city }}, {{ addr.state }}, {{ addr.country }}, {{ addr.postalcode }}
-    </span>
-    </p>
-    <br/>
-    <!-- Party Hall Cards -->
-    <div class="party-hall-card-grid">
-      <div *ngFor="let currentPartyHall of matchingHalls" class="party-hall-card">
-        <img [src]="partyHallService.getImageUrl(currentPartyHall.images)" (error)="handleImageError($event)"
-          [alt]="currentPartyHall.name + ' image'" />
-        <div class="party-hall-details">
-          <h3><b>{{ currentPartyHall.name }}</b></h3>
-          <h5>{{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{ currentPartyHall.address.country }}</h5>
-          <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: {{ currentPartyHall.pricing.perDay }}/day</p>
-        </div>
-        <button (click)="Rating()">Rate</button>
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="card d-flex">
+    <div class="upper">
+      <img src="https://i.imgur.com/Qtrsrk5.jpg" class="img-fluid">
+    </div>
+    <div class="user text-center">
+      <div class="profile">
+        <img src="https://th.bing.com/th/id/OIP.TvQr31f2ewCZIvzqS5n65AHaHa?rs=1&pid=ImgDetMain" class="rounded-circle"
+          width="80">
       </div>
     </div>
-    <router-outlet></router-outlet>
+    <div class="mt-5 text-center">
+      <h4 class="mb-0">{{ name }}</h4><br/>
+      Name: <span class="text-muted mb-2">{{ email }}</span><br/><br/>
+      Email: <span class="text-muted mb-2">{{ phonenumber }}</span><br/><br/>
+      Address: <span *ngFor="let addr of address">
+         <span class="text-muted mb-2">{{ addr.street }}, {{ addr.city }}, {{ addr.state }}</span><br/><br/>
+        <span class="text-muted mb-2">{{ addr.country }}, {{ addr.postalcode }}</span>
+      </span>
+    </div>
   </div>
+</div>
+<!-- Party Hall Cards -->
+<div class="party-hall-card-grid">
+  <div *ngFor="let currentPartyHall of matchingHalls" class="party-hall-card">
+    <img [src]="partyHallService.getImageUrl(currentPartyHall.images)" (error)="handleImageError($event)"
+      [alt]="currentPartyHall.name + ' image'" />
+    <div class="party-hall-details">
+      <h3><b>{{ currentPartyHall.name }}</b></h3>
+      <h5>{{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{
+        currentPartyHall.address.country
+        }}</h5>
+      <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: {{ currentPartyHall.pricing.perDay }}/day</p>
+    </div>
+    <button (click)="Rating()">Rate</button>
+  </div>
+</div>
+<router-outlet></router-outlet>
