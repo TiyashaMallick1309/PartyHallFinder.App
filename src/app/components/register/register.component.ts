@@ -11,7 +11,6 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 })
 export class RegisterComponent implements OnInit {
   selectedAccountType = 'user';
-
   registrationForm!: FormGroup;
   registrationFailed = false;
   submitted = false;

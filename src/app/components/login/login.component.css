@@ -30,6 +30,8 @@ button[type="submit"] {
   border-radius: 5px;
   cursor: pointer;
   margin-left: 40%;
+  border-radius: 2rem;
+
 }
 
 button[type="submit"]:hover {

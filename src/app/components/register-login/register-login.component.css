@@ -76,6 +76,7 @@ input[type="text"] {
   border: 1px solid #ccc;
   padding: 8px;
   border-radius: 5px;
+  
 }
 
 .button-group {
@@ -143,8 +144,10 @@ button[type="submit"]:hover {
   text-align: center;
   background-color: #5282ca;
   border-color: #6936f4;
-  border-radius: .25rem;
+  /* border-radius: .25rem; */
   transition: background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out;
+  border-radius: 2rem;
+
 }
 
 .btn-primary:hover, .btn-primary:focus {
@@ -166,4 +169,8 @@ button[type="submit"]:hover {
   background-color: #ccc;
   border-color: #ccc;
   color: #888;
+}
+
+.form-select{
+  border-radius: 2rem;
 }
