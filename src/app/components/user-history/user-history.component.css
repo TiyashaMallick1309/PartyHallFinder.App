@@ -66,10 +66,6 @@ a{
         font-weight: 300;
        }
 
-       .container{
-        height: 100vh;
-       }
-
        .card{
         width: 380px;
         border: none;

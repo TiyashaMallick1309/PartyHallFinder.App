@@ -12,13 +12,15 @@ import { PartyHallService } from 'src/app/services/party-hall.service';
   styleUrls: ['./owner-details.component.css']
 })
 export class OwnerDetailsComponent implements OnInit {
-  
-  name!: string;
+  username!: string;
+  firstName!: string;
+  lastName!: string;
   email!: string;
   phonenumber: string = '';
   id: string = '';
   partyHalls: PartyHall[] = [];
   selectedPartyHall: PartyHall | undefined;
+  private currentOwner: any;
 
   // Array to hold all the party halls owned by the current owner
   currentPartyHalls: PartyHall[] = [];
@@ -30,11 +32,31 @@ export class OwnerDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.isAuthenticatedSubject
-      .pipe(filter(isAuthenticated => isAuthenticated))
-      .subscribe(() => {
-        this.authService.nameSubject.subscribe(name => {
-          this.name = name;
+    this.currentOwner = JSON.parse(localStorage.getItem('currentOwner') || '{}');
+    if (this.currentOwner && this.currentOwner.id) {
+      this.authService.isAuthenticatedSubject.next(true);
+      this.authService.IdSubject.next(this.currentOwner.id);
+this.id = this.currentOwner.id; // Add this line to update the id value
+      this.authService.EmailSubject.next(this.currentOwner.email);
+      this.authService.phonenumberSubject.next(this.currentOwner.phonenumber || '');
+      this.authService.firstNameSubject.next(this.currentOwner.firstName);
+      this.authService.lastNameSubject.next(this.currentOwner.lastName);
+      this.authService.nameSubject.next(this.currentOwner.username);
+      this.authService.TypeSubject.next(this.currentOwner.role);
+    }  
+    this.authService.isAuthenticatedSubject.subscribe(isAuthenticated => {
+      if (isAuthenticated) {
+        this.authService.firstNameSubject.subscribe(firstName => {
+          this.firstName = firstName;
+          console.log("first: ",firstName)
+        });
+        this.authService.nameSubject.subscribe(username => {
+          this.username = username;
+          console.log(username," username")
+        });
+        this.authService.lastNameSubject.subscribe(lastName => {
+          this.lastName = lastName;
+          console.log("lastName: ",lastName)
         });
         this.authService.EmailSubject.subscribe(email => {
           this.email = email;
@@ -42,14 +64,8 @@ export class OwnerDetailsComponent implements OnInit {
         this.authService.phonenumberSubject.subscribe(phonenumber => {
           this.phonenumber = phonenumber;
         });
-        this.authService.IdSubject.subscribe(id => {
-          this.id = id;
-          console.log(this.id);
-
-          // Set the owner id
-          this.partyHallService.setOwnerId(this.id);
-        });
-
+      }
+    });
         // Get all party halls
         this.partyHallService.getPartyHalls().subscribe((partyHalls: PartyHall[]) => {
           this.partyHalls = partyHalls;
@@ -58,8 +74,7 @@ export class OwnerDetailsComponent implements OnInit {
           this.currentPartyHalls = this.partyHalls.filter(partyHall => partyHall.ownerId == this.id);
           console.log(this.currentPartyHalls);
         });
-      });
-  }
+      }
 
   openPartyHallDetails(partyHall: PartyHall) {
     if (partyHall && partyHall.id) {
@@ -76,5 +91,12 @@ export class OwnerDetailsComponent implements OnInit {
     console.log('Selected party hall:', this.selectedPartyHall);
     this.partyHallService.setSelectedPartyHall(this.selectedPartyHall);
     this.router.navigate(['owner-dashboard', 'owner-details', 'update']);
+  }
+
+  openPartyHall(partyHall: PartyHall) {
+    console.log(partyHall);
+    if (partyHall && partyHall.id) {
+      this.router.navigate(['/owner-dashboard/owner-details/manage-hall']);
+    }
   }
 }

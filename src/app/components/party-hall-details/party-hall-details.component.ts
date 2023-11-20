@@ -14,6 +14,7 @@ export class PartyHallDetailsComponent implements OnInit {
   currentImageIndex = 0;
   src: any;
   images: any;
+  savedHalls: any[]=[];
 
   private map!: L.Map;
   private centroid: L.LatLngExpression = [0, 0];
@@ -21,6 +22,9 @@ export class PartyHallDetailsComponent implements OnInit {
   constructor(public partyHallService: PartyHallService, private route: ActivatedRoute, private auth: AuthorizationService, private router: Router) { }
 
   ngOnInit(): void {
+    // Retrieve saved halls from local storage and store it in the savedHalls variable
+    this.savedHalls= JSON.parse(localStorage.getItem('savedHalls') || '[]');
+    console.log('Retrieved saved halls:', this.savedHalls);
     const partyHallIdParam = this.route.snapshot.paramMap.get('id');
     if (partyHallIdParam !== null) {
       const partyHallId = partyHallIdParam;
@@ -34,7 +38,7 @@ export class PartyHallDetailsComponent implements OnInit {
           this.src = this.images[this.currentImageIndex];
 
           // Update the centroid with the latitude and longitude from the party hall data
-          this.centroid = [this.partyHall.geolocation.longitude,this.partyHall.geolocation.latitude];
+          this.centroid = [this.partyHall.geolocation.longitude, this.partyHall.geolocation.latitude];
 
           // Define your icon 
           const icon = L.icon({
@@ -95,10 +99,18 @@ export class PartyHallDetailsComponent implements OnInit {
     this.src = this.images[this.currentImageIndex];
   }
 
-  savedHalls(partyHall: any) {
-    this.partyHallService.savedHalls(partyHall);
-    alert("Party Hall saved!");
-  }
+  saveToSavedList() {
+    // Add selected party hall to the savedHalls list
+    this.savedHalls.push(this.partyHall);
+    console.log('Party Hall added to saved halls:', this.savedHalls);
+
+    // Update the savedHalls list in local storage
+    localStorage.setItem('savedHalls', JSON.stringify(this.savedHalls));
+    console.log('Saved halls updated in local storage:', JSON.parse(localStorage.getItem('savedHalls') || '[]'));
+
+    // Display a success message
+    alert('The party hall has been saved to your list.');
+}
 
   bookHall() {
     // Pass the id to the service
@@ -106,7 +118,7 @@ export class PartyHallDetailsComponent implements OnInit {
     this.router.navigate([`/user-dashboard/party-hall-list/${this.partyHall.id}/book`])
   }
 
-  seeReview(){
+  seeReview() {
     this.partyHallService.setId(this.partyHall.id);
     this.router.navigate([`/user-dashboard/party-hall-list/${this.partyHall.id}/rating`])
   }

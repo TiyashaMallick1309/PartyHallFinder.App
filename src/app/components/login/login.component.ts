@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { Subscription } from 'rxjs';
 import { SlotService } from 'src/app/services/slot.service';
+import { authGuard } from 'src/app/Guard/auth.guard';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,9 @@ export class LoginComponent {
   submitted = false; // add new property here
   data: User[] = [];
   userSubscription: Subscription | undefined;
+
+  // Implement the canActivate property
+  canActivate = authGuard;
 
   constructor(
     private authService: AuthorizationService,
@@ -60,10 +64,13 @@ export class LoginComponent {
           console.log('Authentication successful');
           console.log(user)
           this.authService.signInUser(user);
+          localStorage.setItem('isLoggedIn', 'true');
           // Call a method of the SlotService and pass the userId
           this.router.navigate(['user-dashboard/party-hall-list']);
-          console.log(user.id + " hey")
+          console.log(user.id , " hey")
           this.slotService.setUserId(user.id);
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          console.log('User data stored in local storage', JSON.stringify(user));
         } else {
           // authentication failed
           console.log('Authentication Failed');

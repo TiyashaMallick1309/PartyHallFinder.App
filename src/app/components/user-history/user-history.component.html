@@ -1,4 +1,5 @@
-<div class="container d-flex justify-content-center align-items-center">
+<br/><h2>Personal Details:</h2>
+<div class="container d-flex justify-content-center">
   <div class="card d-flex">
     <div class="upper">
       <img src="https://i.imgur.com/Qtrsrk5.jpg" class="img-fluid">
@@ -10,16 +11,18 @@
       </div>
     </div>
     <div class="mt-5 text-center">
-      <h4 class="mb-0">{{ name }}</h4><br/>
-      Name: <span class="text-muted mb-2">{{ email }}</span><br/><br/>
-      Email: <span class="text-muted mb-2">{{ phonenumber }}</span><br/><br/>
+      <h4 class="mb-0">{{ firstName }} {{ lastName }}</h4><br/>
+      <h4 class="mb-0">{{ userName}} </h4><br/>
+      Email: <span class="text-muted mb-2">{{ email }}</span><br/><br/>
+      Phn. No.: <span class="text-muted mb-2">{{ phonenumber }}</span><br/><br/>
       Address: <span *ngFor="let addr of address">
-         <span class="text-muted mb-2">{{ addr.street }}, {{ addr.city }}, {{ addr.state }}</span><br/><br/>
+        <span class="text-muted mb-2">{{ addr.street }}, {{ addr.city }}, {{ addr.state }}</span><br/><br/>
         <span class="text-muted mb-2">{{ addr.country }}, {{ addr.postalcode }}</span>
       </span>
     </div>
   </div>
 </div>
+<h2>Halls Booked: </h2>
 <!-- Party Hall Cards -->
 <div class="party-hall-card-grid">
   <div *ngFor="let currentPartyHall of matchingHalls" class="party-hall-card">

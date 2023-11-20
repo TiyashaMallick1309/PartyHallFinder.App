@@ -51,6 +51,7 @@ export class AdminLoginComponent {
     if (admin) {
       // authentication successful
       console.log('Authentication successful');
+      localStorage.setItem('isLoggedIn', 'true');
       this.router.navigate(['admin-dashboard']);
     } else {
       // authentication failed

@@ -15,12 +15,24 @@ export class OwnerDashboardComponent {
 
   ngOnInit() {
     this.router.navigate(['owner-dashboard/owner-details']);
+     // Retrieve user data from local storage
+     const currentOwner = JSON.parse(localStorage.getItem('currentOwner') || '{}');
+     if (currentOwner && currentOwner.id) {
+       // Initialize component properties with user data
+       this.owner = currentOwner;
+ 
+       // (optional) log the user data
+       console.log('Owner data in OwnerDashboardComponent', this.owner);
+     }
+ 
   }
 
   logout(){
     this.auth.isAuthenticatedSubject.next(false);
     this.auth.TypeSubject.next('');
     this.auth.nameSubject.next('');
-    this.router.navigate(['/'])
+    localStorage.removeItem('currentOwner');
+    localStorage.setItem('isLoggedIn', 'false');
+    this.router.navigate(['/']);
   }
 }

@@ -57,8 +57,11 @@ export class OwnerLoginComponent {
           // authentication successful
           console.log('Authentication successful');
           this.authService.signInOwner(owner.role, owner);
+          localStorage.setItem('isLoggedIn', 'true');
               this.router.navigate(['owner-dashboard']);
               console.log(owner);
+              localStorage.setItem('currentOwner', JSON.stringify(owner));
+          console.log('Owner data stored in local storage', JSON.stringify(owner));
         } else {
           // authentication failed
           console.log('Authentication Failed');

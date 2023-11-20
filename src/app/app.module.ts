@@ -35,6 +35,7 @@ import { UpdateHallsComponent } from './components/update-halls/update-halls.com
 import { BookingComponent } from './components/booking/booking.component';
 import { ReviewComponent } from './components/review/review.component';
 import { AdminBookingComponent } from './components/admin-booking/admin-booking.component';
+import { ManageHallComponent } from './components/manage-hall/manage-hall.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { AdminBookingComponent } from './components/admin-booking/admin-booking.
     UpdateHallsComponent,
     BookingComponent,
     ReviewComponent,
-    AdminBookingComponent
+    AdminBookingComponent,
+    ManageHallComponent
   ],
   imports: [
     BrowserModule,

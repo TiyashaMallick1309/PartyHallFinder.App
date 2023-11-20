@@ -13,6 +13,10 @@ export class PartyHallService {
   baseUrl = 'https://localhost:7091/api';
   url = "PartyHalls";
   partyHall: any[] = [];
+  savedHalls: any[] = [];
+
+  private savedHallsSubject = new BehaviorSubject<any[]>([]);
+  savedHalls$!: Observable<any[]>;
 
   private selectedPartyHallSubject = new BehaviorSubject<PartyHall | null>(null);
 
@@ -21,8 +25,12 @@ export class PartyHallService {
 
   private idSource = new BehaviorSubject<string>('');
   id$ = this.idSource.asObservable();
-  
-  constructor(private router: Router, private http: HttpClient) { }
+
+  constructor(private router: Router, private http: HttpClient) {
+    // Retrieve saved halls from local storage and store it in the savedHalls variable
+    this.savedHalls = JSON.parse(localStorage.getItem('savedHalls') || '[]');
+    console.log('Retrieved saved halls:', this.savedHalls);
+  }
 
   setId(id: string) {
     this.idSource.next(id);
@@ -52,27 +60,49 @@ export class PartyHallService {
     return this.http.post('https://localhost:7091/api/PartyHalls', partyHallData);
   }
 
-  // Adding item to savedHalls
-  savedHalls(item: any) {
-    const index = this.partyHall.findIndex((i) => i.id === item.id);
+  // Method to add item to savedHalls and update local storage
+  addToSavedHalls(item: any) {
+    console.log('Saved halls in addToSavedHalls method:', this.savedHalls);
+    const index = this.savedHalls.findIndex((i) => i.id === item.id);
     if (index === -1) {
-      this.partyHall.push(item);
+      this.savedHalls.push(item);
+      console.log('Party hall added to saved halls:', this.savedHalls);
+      this.saveToLocalStorage(this.savedHalls);
+      console.log('Saved halls updated in local storage:', JSON.parse(localStorage.getItem('savedHalls') || '[]'));
     } else {
-      console.log('Item is already in the wishlist');
+      console.log('Item is already in the saved list');
     }
   }
 
-  // Method to remove item from savedHalls
+  // Method to remove item from savedHalls and update local storage
   removeFromSaved(item: any) {
-    const index = this.partyHall.findIndex((i) => i.id === item.id);
+    console.log('Saved halls in removeFromSaved method:', this.savedHalls);
+    const index = this.savedHalls.findIndex((i) => i.id === item.id);
     if (index !== -1) {
-      this.partyHall.splice(index, 1);
+      this.savedHalls.splice(index, 1);
+      console.log('Party hall removed from saved halls:', this.savedHalls);
+      this.saveToLocalStorage(this.savedHalls);
+      console.log('Saved halls updated in local storage:', JSON.parse(localStorage.getItem('savedHalls') || '[]'));
     }
   }
 
-  // Clear the savedHalls
-  clearsavedHalls() {
-    this.partyHall = [];
+  // Method to clear entire savedHalls and update local storage
+  clearSavedHalls() {
+    this.savedHalls = [];
+    console.log('Saved halls cleared:', this.savedHalls);
+    this.saveToLocalStorage(this.savedHalls);
+    console.log('Saved halls updated in local storage:', JSON.parse(localStorage.getItem('savedHalls') || '[]'));
+  }
+
+  //Helper method to update savedHalls in local storage
+  private saveToLocalStorage(savedHalls: any[]) {
+    localStorage.setItem('savedHalls', JSON.stringify(savedHalls));
+  }
+
+  private getFromLocalStorage(): any[] {
+    const savedHalls = JSON.parse(localStorage.getItem('savedHalls') || '[]');
+    console.log("Retrieved saved halls from local storage: ", savedHalls);
+    return savedHalls;
   }
 
   // Get the savedHalls items

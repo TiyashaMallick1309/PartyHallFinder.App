@@ -1,19 +1,29 @@
-<div class="owner-details">
-  <br />
-  <h2> Personal Details</h2>
-  <br /><br />
-  <p class="owner-info">
-    Name: {{ name }}
-    <br /><br />
-    Email: {{ email }}
-    <br /><br />
-    Phone: {{ phonenumber }}
-    <br /><br />
-  </p>
-
+<br/>
+<h2>  Personal Details: </h2>
+<div class="container d-flex justify-content-center ">
+  <div class="card d-flex">
+    <div class="upper">
+      <img src="https://i.imgur.com/Qtrsrk5.jpg" class="img-fluid">
+    </div>
+    <div class="user text-center">
+      <div class="profile">
+        <img src="https://th.bing.com/th/id/OIP.TvQr31f2ewCZIvzqS5n65AHaHa?rs=1&pid=ImgDetMain" class="rounded-circle"
+          width="80">
+      </div>
+    </div>
+    <div class="mt-5 text-center">
+      <h4 class="mb-0">{{ firstName }} {{ lastName }}</h4><br/>
+      <h4 class="mb-0">{{ username}} </h4><br/>
+      Email: <span class="text-muted mb-2">{{ email }}</span><br/><br/>
+      Phn. No.: <span class="text-muted mb-2">{{ phonenumber }}</span><br/><br/>
+    </div>
+  </div>
+</div>
+<h2>Halls Owned: </h2>
   <!-- Party Hall Cards -->
   <div class="party-hall-card-grid">
     <div *ngFor="let currentPartyHall of currentPartyHalls" class="party-hall-card">
+      <span (click)="openPartyHall(currentPartyHall)">
       <img [src]="partyHallService.getImageUrl(currentPartyHall.images)" (error)="handleImageError($event)"
         [alt]="currentPartyHall.name + ' image'" />
       <div class="party-hall-details">
@@ -22,10 +32,11 @@
           currentPartyHall.address.country }}</h5>
         <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: {{ currentPartyHall.pricing.perDay }}/day</p>
       </div>
+      </span>
       <button (click)="getHallId(currentPartyHall)">Update Hall</button>
     </div>
   </div>
-</div>
-<div class="updateForm">
+<div>
+  <br/>
   <router-outlet></router-outlet>
 </div>

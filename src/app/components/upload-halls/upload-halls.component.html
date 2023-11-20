@@ -1,105 +1,108 @@
-<form [formGroup]="uploadForm" (ngSubmit)="onUpload()">
-  <br>
-  <div class="form-group">
-    <label for="name">Hall Name</label>
-    <input type="text" class="form-control" formControlName="name" id="name" required>
-    <div *ngIf="uploadForm.controls?.['name']?.errors?.['required']" class="invalid-feedback d-block">Hall Name
-      is required.</div>
-  </div>
-
-  <div class="form-group" formGroupName="address">
-    <label for="address.street">Street Address</label>
-    <input type="text" class="form-control" formControlName="street" id="address.street" required>
-    <div *ngIf="uploadForm.get('address.street')?.errors?.['required']" class="invalid-feedback d-block">Street
-      Address is required.</div>
-
-    <label for="address.city">City</label>
-    <input type="text" class="form-control" formControlName="city" id="address.city" required>
-    <div *ngIf="uploadForm.get('address.city')?.errors?.['required']" class="invalid-feedback d-block">City is
-      required.</div>
-
-    <label for="address.state">State</label>
-    <input type="text" class="form-control" formControlName="state" id="address.state" required>
-    <div *ngIf="uploadForm.get('address.state')?.errors?.['required']" class="invalid-feedback d-block">State is
-      required.</div>
-
-    <label for="address.country">Country</label>
-    <input type="text" class="form-control" formControlName="country" id="address.country" required>
-    <div *ngIf="uploadForm.get('address.country')?.errors?.['required']" class="invalid-feedback d-block">Country
-      is required.</div>
-
-    <label for="address.postalcode">Postal Code</label>
-    <input type="text" class="form-control" formControlName="postalcode" id="address.postalcode" required>
-    <div *ngIf="uploadForm.get('address.postalcode')?.errors?.['required']" class="invalid-feedback d-block">
-      Postal Code is required.</div>
-  </div>
-
-  <div class="form-group">
-    <label for="capacity">Hall capacity</label>
-    <input type="text" class="form-control" formControlName="capacity" id="capacity" required>
-    <div *ngIf="uploadForm.controls?.['capacity']?.errors?.['required']" class="invalid-feedback d-block">Hall capacity
-      is required.</div>
-  </div>
-
-  <div formArrayName="amenities">
-    <label for="amenities">Amenity</label>
-    <div *ngFor="let amenity of amenities.controls; let i=index">
-      <input type="text" [formControlName]="i" id="amenity{{i}}">
-      <button type="button" (click)="removeAmenity(i)">Remove</button>
-      <button type="button" (click)="addAmenity()" *ngIf="i === amenities.controls.length - 1">Add Amenity</button>
+<div class="container">
+  <br/><h2>Upload Form</h2><br/>
+  <form [formGroup]="uploadForm" (ngSubmit)="onUpload()">
+    <br>
+    <div class="form-group">
+      <label for="name">Hall Name</label>
+      <input type="text" class="form-control" formControlName="name" id="name" required>
+      <div *ngIf="uploadForm.controls?.['name']?.errors?.['required']" class="invalid-feedback d-block">Hall Name
+        is required.</div>
     </div>
-    <div *ngIf="uploadForm.controls?.['amenities']?.errors?.['required']" class="invalid-feedback d-block">At least one
-      amenity is required.</div>
-  </div>
-
-  <div class="form-group" formGroupName="pricing">
-    <label for="pricing.perHour">perHour Pricing</label>
-    <input type="text" class="form-control" formControlName="perHour" id="pricing.perHour" required>
-    <div *ngIf="uploadForm.get('pricing.perHour')?.errors?.['required']" class="invalid-feedback d-block">perHour
-      pricing is required.</div>
-
-    <label for="pricing.perDay">perDay Pricing</label>
-    <input type="text" class="form-control" formControlName="perDay" id="pricing.perDay" required>
-    <div *ngIf="uploadForm.get('pricing.perDay')?.errors?.['required']" class="invalid-feedback d-block">perDay pricing
-      is
-      required.</div>
-
-    <label for="pricing.perWeek">perWeek Pricing</label>
-    <input type="text" class="form-control" formControlName="perWeek" id="pricing.perWeek" required>
-    <div *ngIf="uploadForm.get('pricing.perWeek')?.errors?.['required']" class="invalid-feedback d-block">perWeek
-      pricing is
-      required.</div>
-  </div>
-
-  <div formArrayName="images">
-    <label for="images">Image</label>
-    <div *ngFor="let image of images.controls; let i=index">
-      <input type="link" [formControlName]="i" id="image{{i}}">
-      <button type="button" (click)="removeImage(i)">Remove</button>
-      <button type="button" (click)="addImage()" *ngIf="i === images.controls.length - 1">Add Image</button>
+  
+    <div class="form-group" formGroupName="address">
+      <label for="address.street">Street Address</label>
+      <input type="text" class="form-control" formControlName="street" id="address.street" required>
+      <div *ngIf="uploadForm.get('address.street')?.errors?.['required']" class="invalid-feedback d-block">Street
+        Address is required.</div>
+  
+      <label for="address.city">City</label>
+      <input type="text" class="form-control" formControlName="city" id="address.city" required>
+      <div *ngIf="uploadForm.get('address.city')?.errors?.['required']" class="invalid-feedback d-block">City is
+        required.</div>
+  
+      <label for="address.state">State</label>
+      <input type="text" class="form-control" formControlName="state" id="address.state" required>
+      <div *ngIf="uploadForm.get('address.state')?.errors?.['required']" class="invalid-feedback d-block">State is
+        required.</div>
+  
+      <label for="address.country">Country</label>
+      <input type="text" class="form-control" formControlName="country" id="address.country" required>
+      <div *ngIf="uploadForm.get('address.country')?.errors?.['required']" class="invalid-feedback d-block">Country
+        is required.</div>
+  
+      <label for="address.postalcode">Postal Code</label>
+      <input type="text" class="form-control" formControlName="postalcode" id="address.postalcode" required>
+      <div *ngIf="uploadForm.get('address.postalcode')?.errors?.['required']" class="invalid-feedback d-block">
+        Postal Code is required.</div>
     </div>
-    <div *ngIf="uploadForm.controls?.['images']?.errors?.['required']" class="invalid-feedback d-block">At least one
-      image is required.</div>
-  </div>
-
-  <div class="form-group" formGroupName="geolocation">
-    <label for="geolocation.longitude">Longitude</label>
-    <input type="text" class="form-control" formControlName="longitude" id="geolocation.longitude" required>
-    <div *ngIf="uploadForm.get('geolocation.longitude')?.errors?.['required']" class="invalid-feedback d-block">Longitude is required.</div>
-
-    <label for="geolocation.latitude">Latitude</label>
-    <input type="text" class="form-control" formControlName="latitude" id="geolocation.latitude" required>
-    <div *ngIf="uploadForm.get('geolocation.latitude')?.errors?.['required']" class="invalid-feedback d-block">Latitude is required.</div>
-  </div>
-
-  <div class="terms-mailing">
-    <div class="checkbox"> 
-      <input type="checkbox" name="checkbox"><span>I accept the <a
-          href="https://www.partyhallsapp.com/privacy-policy">Privacy Policy for Party Halls App.</a></span>
+  
+    <div class="form-group">
+      <label for="capacity">Hall capacity</label>
+      <input type="text" class="form-control" formControlName="capacity" id="capacity" required>
+      <div *ngIf="uploadForm.controls?.['capacity']?.errors?.['required']" class="invalid-feedback d-block">Hall capacity
+        is required.</div>
     </div>
-    <div class="checkbox">
-      <input type="checkbox" name="checkbox"><span>I have uploaded valid information.</span>
-    </div><br />
-  </div>
-  <button type="submit" class="btn btn-primary">Upload Party Hall</button>
-</form>
+  
+    <div formArrayName="amenities">
+      <label for="amenities">Amenity</label>
+      <div *ngFor="let amenity of amenities.controls; let i=index">
+        <input type="text" [formControlName]="i" id="amenity{{i}}">
+        <button type="button" (click)="removeAmenity(i)">Remove</button>
+        <button type="button" (click)="addAmenity()" *ngIf="i === amenities.controls.length - 1">Add Amenity</button>
+      </div>
+      <div *ngIf="uploadForm.controls?.['amenities']?.errors?.['required']" class="invalid-feedback d-block">At least one
+        amenity is required.</div>
+    </div>
+  
+    <div class="form-group" formGroupName="pricing">
+      <label for="pricing.perHour">perHour Pricing</label>
+      <input type="text" class="form-control" formControlName="perHour" id="pricing.perHour" required>
+      <div *ngIf="uploadForm.get('pricing.perHour')?.errors?.['required']" class="invalid-feedback d-block">perHour
+        pricing is required.</div>
+  
+      <label for="pricing.perDay">perDay Pricing</label>
+      <input type="text" class="form-control" formControlName="perDay" id="pricing.perDay" required>
+      <div *ngIf="uploadForm.get('pricing.perDay')?.errors?.['required']" class="invalid-feedback d-block">perDay pricing
+        is
+        required.</div>
+  
+      <label for="pricing.perWeek">perWeek Pricing</label>
+      <input type="text" class="form-control" formControlName="perWeek" id="pricing.perWeek" required>
+      <div *ngIf="uploadForm.get('pricing.perWeek')?.errors?.['required']" class="invalid-feedback d-block">perWeek
+        pricing is
+        required.</div>
+    </div>
+  
+    <div formArrayName="images">
+      <label for="images">Image</label>
+      <div *ngFor="let image of images.controls; let i=index">
+        <input type="link" [formControlName]="i" id="image{{i}}">
+        <button type="button" (click)="removeImage(i)">Remove</button>
+        <button type="button" (click)="addImage()" *ngIf="i === images.controls.length - 1">Add Image</button>
+      </div>
+      <div *ngIf="uploadForm.controls?.['images']?.errors?.['required']" class="invalid-feedback d-block">At least one
+        image is required.</div>
+    </div>
+  
+    <div class="form-group" formGroupName="geolocation">
+      <label for="geolocation.longitude">Longitude</label>
+      <input type="text" class="form-control" formControlName="longitude" id="geolocation.longitude" required>
+      <div *ngIf="uploadForm.get('geolocation.longitude')?.errors?.['required']" class="invalid-feedback d-block">Longitude is required.</div>
+  
+      <label for="geolocation.latitude">Latitude</label>
+      <input type="text" class="form-control" formControlName="latitude" id="geolocation.latitude" required>
+      <div *ngIf="uploadForm.get('geolocation.latitude')?.errors?.['required']" class="invalid-feedback d-block">Latitude is required.</div>
+    </div>
+  
+    <div class="terms-mailing">
+      <div class="checkbox"> 
+        <input type="checkbox" name="checkbox"><span>I accept the <a
+            href="https://www.partyhallsapp.com/privacy-policy">Privacy Policy for Party Halls App.</a></span>
+      </div>
+      <div class="checkbox">
+        <input type="checkbox" name="checkbox"><span>I have uploaded valid information.</span>
+      </div><br />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload Party Hall</button>
+  </form>
+</div>

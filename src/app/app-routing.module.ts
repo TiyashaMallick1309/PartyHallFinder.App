@@ -18,6 +18,9 @@ import { BookingComponent } from './components/booking/booking.component';
 import { ReviewComponent } from './components/review/review.component';
 import { ReviewRatingComponent } from './components/review-rating/review-rating.component';
 import { AdminBookingComponent } from './components/admin-booking/admin-booking.component';
+import { ManageHallComponent } from './components/manage-hall/manage-hall.component';
+import { authGuard } from './Guard/auth.guard';
+import { CanActivateFn } from '@angular/router';
 
 
 const routes: Routes = [
@@ -25,6 +28,7 @@ const routes: Routes = [
   //User
   {
     path: 'user-dashboard', component: UserDashboardComponent,
+    // canActivate:[authGuard],
     children: [
       {
         path: 'user-history', component: UserHistoryComponent,
@@ -33,7 +37,7 @@ const routes: Routes = [
         ]
       },
       { path: 'help', component: HelpComponent },
-      { path: 'party-hall-list', component: PartyHallListingComponent },
+      { path: 'party-hall-list', component: PartyHallListingComponent,canActivate: [authGuard] },
       { path: 'saved', component: SavedHallsComponent },
       {
         path: 'party-hall-list/:id', component: PartyHallDetailsComponent,
@@ -47,11 +51,13 @@ const routes: Routes = [
   //Owner
   {
     path: 'owner-dashboard', component: OwnerDashboardComponent,
+    // canActivate:[authGuard],
     children: [
       {
-        path: 'owner-details', component: OwnerDetailsComponent,
+        path: 'owner-details', component: OwnerDetailsComponent,canActivate: [authGuard],
         children: [
-          { path: 'update', component: UpdateHallsComponent }
+          { path: 'update', component: UpdateHallsComponent },
+          {path: 'manage-hall', component: ManageHallComponent}
         ]
       },
       { path: 'upload', component: UploadHallsComponent }
@@ -61,9 +67,10 @@ const routes: Routes = [
   //Admin
   {
     path: 'admin-dashboard', component: AdminDashboardComponent,
+    // canActivate:[authGuard],
     children: [
       { path: 'admin-owners', component: AdminOwnersComponent },
-      { path: 'admin-booking', component: AdminBookingComponent },
+      { path: 'admin-booking', component: AdminBookingComponent,canActivate: [authGuard] },
       { path: 'admin-users', component: AdminUsersComponent },
       //bookings
     ]
@@ -72,6 +79,12 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    {
+      provide: 'canActivateTeam',
+      useValue: authGuard
+    }
+]
 })
 export class AppRoutingModule { }
