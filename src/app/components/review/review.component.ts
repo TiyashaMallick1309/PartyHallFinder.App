@@ -21,14 +21,28 @@ export class ReviewComponent {
   constructor(private router:Router, private slotService: SlotService, private partyHallService:PartyHallService, private reviewRatingService: ReviewRatingService){}
 
   ngOnInit() {
+    console.log(JSON.parse(localStorage.getItem('currentUser') || '{}')," in review")
+    let userId = this.slotService.userId || '';
+  if (!userId) {
+    const userData = localStorage.getItem('currentUser');
+    if (userData) {
+      userId = JSON.parse(userData).id;
+      this.slotService.setUserId(userId);
+    }
+  }
+  this.getMatchingHalls(userId);
+  }
+
+  getMatchingHalls(userId: string) {
     this.slotService.getSlots().subscribe(slots => {
-      const userBookings = slots.filter(slot => slot.userId === this.slotService.userId);
+      const userBookings = slots.filter(slot => slot.userId == userId);
       const hallIds = userBookings.map(booking => booking.partyHallId);
-      console.log(hallIds);
-    
+      console.log(hallIds + ' id');
+      console.log(userBookings + ' book')
+  
       this.partyHallService.getPartyHalls().subscribe(halls => {
         this.matchingHalls = halls.filter(hall => hallIds.includes(hall.id));
-        console.log(this.matchingHalls);
+        console.log(this.matchingHalls + ' halls');
         if (this.matchingHalls.length > 0) {
           this.partyHallId = this.matchingHalls[0].id;
         }

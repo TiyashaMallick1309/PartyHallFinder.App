@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Owner } from 'src/app/models/owner';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 
@@ -26,13 +25,6 @@ export class OwnerRegisterComponent {
       username: ['', Validators.required],
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      address: this.fb.group({
-        street: ['', Validators.required],
-        city: ['', Validators.required],
-        state: ['', Validators.required],
-        country: ['', Validators.required],
-        postalcode: ['', Validators.required],
-      }),
       phonenumber: ['', [Validators.required, Validators.pattern(/^\(?([0-9]{3})\)?[- ]?([0-9]{3})[- ]?([0-9]{4})$/)]],
       role: ['', Validators.required],
     }, {
@@ -41,16 +33,18 @@ export class OwnerRegisterComponent {
   }
 
   passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password');
-    const confirmPassword = form.get('confirmPassword');
-    return password && confirmPassword && password.value === confirmPassword.value ? null : { passwordMatch: true };
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    console.log(password, confirmPassword);
+
+    return password === confirmPassword ? null : { passwordMatch: true };
   }
 
   onRegistration() {
     this.submitted = true;
     if (this.registrationForm.valid) {
       const ownerData = this.registrationForm.value;
-      this.apiService.addUser(ownerData).subscribe({
+      this.apiService.addOwner(ownerData).subscribe({
         next: response => {
           console.log('Registration successful!');
           window.location.reload();
