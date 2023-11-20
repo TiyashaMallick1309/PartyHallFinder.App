@@ -20,6 +20,8 @@ export class PartyHallListingComponent {
     amenities: '',
     budget: ''
   };
+  sortDirection: string = 'asc';
+  capacitySortDirection: string = 'asc';
 
   constructor(public partyhallService: PartyHallService, private router: Router) { }
 
@@ -55,6 +57,32 @@ export class PartyHallListingComponent {
     } else {
       this.filteredPartyHalls = this.partyHalls.slice();
     }
+    this.sortPartyHalls(); // sort the filteredPartyHalls array
+    this.sortPartyHallsByCapacity(); // sort the filteredPartyHalls array by capacity
+  }
+
+  sortPartyHalls() {
+    this.filteredPartyHalls.sort((a, b) => {
+      const priceA = a.pricing.perDay;
+      const priceB = b.pricing.perDay;
+      if (this.sortDirection === 'asc') {
+        return priceA - priceB;
+      } else {
+        return priceB - priceA;
+      }
+    });
+  }
+
+  sortPartyHallsByCapacity() {
+    this.filteredPartyHalls.sort((a, b) => {
+      const capacityA = a.capacity;
+      const capacityB = b.capacity;
+      if (this.capacitySortDirection === 'asc') {
+        return capacityA - capacityB;
+      } else {
+        return capacityB - capacityA;
+      }
+    });
   }
 
   filterPartyHallsWithFilterOptions() {

@@ -3,6 +3,12 @@
   <div class="search-bar">
     <i class="fa fa-search" aria-hidden="true"></i>
     <input [(ngModel)]="searchText" (input)="filterPartyHalls()" placeholder="Search party halls..." />
+    <button (click)="sortPartyHalls(); sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
+      Sort by Price {{ sortDirection === 'asc' ? '↑' : '↓' }}
+    </button>
+    <button (click)="sortPartyHallsByCapacity(); capacitySortDirection = capacitySortDirection === 'asc' ? 'desc' : 'asc'">
+      Sort by Capacity {{ capacitySortDirection === 'asc' ? '↑' : '↓' }}
+    </button>
   </div>
 
   <!-- Party Hall Cards -->
