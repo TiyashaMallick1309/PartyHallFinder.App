@@ -105,6 +105,7 @@ export class OwnerDetailsComponent implements OnInit {
   setDeleteBooking(hallId: string) {
     this.deleteHallId = hallId;
     this.confirmDelete = true;
+    console.log(this.deleteHallId)
   }
 
   deleteHall() {
