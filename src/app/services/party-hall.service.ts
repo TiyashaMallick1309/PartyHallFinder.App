@@ -60,6 +60,11 @@ export class PartyHallService {
     return this.http.post('https://localhost:7091/api/PartyHalls', partyHallData);
   }
 
+  deletePartyHall(id: string): Observable<any> {
+    const url = `${this.baseUrl}/${this.url}/${id}`;
+    return this.http.delete<any>(url);
+  }
+
   // Method to add item to savedHalls and update local storage
   addToSavedHalls(item: any) {
     console.log('Saved halls in addToSavedHalls method:', this.savedHalls);

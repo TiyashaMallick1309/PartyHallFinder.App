@@ -4,7 +4,7 @@ table {
     width: 100%;
     background-image: linear-gradient(-225deg, #c9c4c4 0%, #af7b7b 50%, #ff8c8c 100%);
   }
-  
+
   th, td {
     text-align: center;
     padding: 10px;
@@ -38,5 +38,72 @@ table {
   }
 
   .equal-width {
-    width: calc(100% / 6);
+    width: calc(100% / 7);
+  }
+
+  .delete{
+    background-color: #4773be;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    padding: 10px 16px;
+    transition: all 0.2s ease;
+  }
+
+  .delete:hover{
+    background-color: rgb(126, 4, 4);
+  }
+
+  .container {
+    margin: 20px;
+  }
+  
+  .confirmation-dialog {
+    background-color: #ffffff;
+    border-radius: 6px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+  }
+  
+  .confirmation-dialog p {
+    margin-bottom: 20px;
+  }
+  
+  .confirmation-dialog button {
+    background-color: #d74b4b;
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+    padding: 10px 16px;
+    transition: all 0.2s ease;
+  }
+  
+  .confirmation-dialog .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .confirmation-dialog button:hover {
+    background-color: rgb(126, 4, 4);
+  }
+  
+  .confirmation-dialog button.cancel {
+    background-color: #d4d3d3;
+    color: #050505;
+  }
+  
+  .confirmation-dialog button.cancel:hover {
+    background-color: #a9a9a9;
   }

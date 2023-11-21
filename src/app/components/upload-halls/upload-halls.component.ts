@@ -21,7 +21,7 @@ export class UploadHallsComponent {
     const owner=JSON.parse(localStorage.getItem('currentOwner') || '{}');
     this.partyHallService.ownerId$.subscribe(id => {
       this.ownerId = id|| owner['id'];
-        console.log(this.ownerId+" hey")
+        console.log(this.ownerId)
     });
 
     this.uploadForm = this.fb.group({

@@ -31,7 +31,7 @@ export class ReviewRatingComponent {
         .map((review: any) => ({
           rating: review.rating,
           reviewText: review.reviewText,
-          // ownerReply: review.reply
+          ownerReply: review.reply
         }));
         console.log(this.reviews);
       },

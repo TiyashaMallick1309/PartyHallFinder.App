@@ -21,6 +21,8 @@ export class OwnerDetailsComponent implements OnInit {
   partyHalls: PartyHall[] = [];
   selectedPartyHall: PartyHall | undefined;
   private currentOwner: any;
+  confirmDelete: boolean = false;
+  deleteHallId: string = '';
 
   // Array to hold all the party halls owned by the current owner
   currentPartyHalls: PartyHall[] = [];
@@ -29,34 +31,34 @@ export class OwnerDetailsComponent implements OnInit {
     private authService: AuthorizationService,
     private router: Router,
     public partyHallService: PartyHallService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.currentOwner = JSON.parse(localStorage.getItem('currentOwner') || '{}');
     if (this.currentOwner && this.currentOwner.id) {
       this.authService.isAuthenticatedSubject.next(true);
       this.authService.IdSubject.next(this.currentOwner.id);
-this.id = this.currentOwner.id; // Add this line to update the id value
+      this.id = this.currentOwner.id; // Add this line to update the id value
       this.authService.EmailSubject.next(this.currentOwner.email);
       this.authService.phonenumberSubject.next(this.currentOwner.phonenumber || '');
       this.authService.firstNameSubject.next(this.currentOwner.firstName);
       this.authService.lastNameSubject.next(this.currentOwner.lastName);
       this.authService.nameSubject.next(this.currentOwner.username);
       this.authService.TypeSubject.next(this.currentOwner.role);
-    }  
+    }
     this.authService.isAuthenticatedSubject.subscribe(isAuthenticated => {
       if (isAuthenticated) {
         this.authService.firstNameSubject.subscribe(firstName => {
           this.firstName = firstName;
-          console.log("first: ",firstName)
+          console.log("first: ", firstName)
         });
         this.authService.nameSubject.subscribe(username => {
           this.username = username;
-          console.log(username," username")
+          console.log(username, " username")
         });
         this.authService.lastNameSubject.subscribe(lastName => {
           this.lastName = lastName;
-          console.log("lastName: ",lastName)
+          console.log("lastName: ", lastName)
         });
         this.authService.EmailSubject.subscribe(email => {
           this.email = email;
@@ -66,15 +68,15 @@ this.id = this.currentOwner.id; // Add this line to update the id value
         });
       }
     });
-        // Get all party halls
-        this.partyHallService.getPartyHalls().subscribe((partyHalls: PartyHall[]) => {
-          this.partyHalls = partyHalls;
+    // Get all party halls
+    this.partyHallService.getPartyHalls().subscribe((partyHalls: PartyHall[]) => {
+      this.partyHalls = partyHalls;
 
-          // Filter party halls by the current owner's id and store them in currentPartyHalls array
-          this.currentPartyHalls = this.partyHalls.filter(partyHall => partyHall.ownerId == this.id);
-          console.log(this.currentPartyHalls);
-        });
-      }
+      // Filter party halls by the current owner's id and store them in currentPartyHalls array
+      this.currentPartyHalls = this.partyHalls.filter(partyHall => partyHall.ownerId == this.id);
+      console.log(this.currentPartyHalls);
+    });
+  }
 
   openPartyHallDetails(partyHall: PartyHall) {
     if (partyHall && partyHall.id) {
@@ -98,5 +100,25 @@ this.id = this.currentOwner.id; // Add this line to update the id value
     if (partyHall && partyHall.id) {
       this.router.navigate(['/owner-dashboard/owner-details/manage-hall']);
     }
+  }
+
+  setDeleteBooking(hallId: string) {
+    this.deleteHallId = hallId;
+    this.confirmDelete = true;
+  }
+
+  deleteHall() {
+    this.partyHallService.deletePartyHall(this.deleteHallId).subscribe(() => {
+      console.log(this.partyHalls)
+      this.partyHalls = this.partyHalls.filter(
+        (partyHall: PartyHall) => partyHall.id !== this.deleteHallId
+      );
+    });
+    this.confirmDelete = false;
+    window.location.reload();
+  }
+
+  cancelDelete() {
+    this.confirmDelete = false;
   }
 }

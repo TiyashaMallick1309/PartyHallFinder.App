@@ -30,10 +30,20 @@
         <h3><b>{{ currentPartyHall.name }}</b></h3>
         <h5>{{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{
           currentPartyHall.address.country }}</h5>
-        <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: {{ currentPartyHall.pricing.perDay }}/day</p>
+        <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: ${{ currentPartyHall.pricing.perDay }}/day</p>
       </div>
       </span>
+      <span class="buttons">
       <button (click)="getHallId(currentPartyHall)">Update Hall</button>
+      <button (click)="setDeleteBooking(deleteHallId)">Delete Hall</button>
+    </span>
+    </div>
+  </div>
+  <div *ngIf="confirmDelete" class="confirmation-dialog">
+    <p>Are you sure you want to delete this booking?</p>
+    <div class="button-container">
+      <button class="confirm" (click)="deleteHall()">Delete</button>
+      <button class="cancel" (click)="cancelDelete()">Cancel</button>
     </div>
   </div>
 <div>

@@ -6,11 +6,21 @@
   background-image: linear-gradient(to bottom, #fff8e9, #fde2ff);
 }
 
+.container{
+  background-image: linear-gradient(to bottom, #fff8e9, #fde2ff);
+  border-radius: 2rem;
+}
+
 button{
   margin-left:2rem;
   border-radius: 1rem;
-  background-color: rgb(11, 95, 67);
+  background-color: rgb(47, 147, 114);
   color:white;
+  border: 1px solid green;
+}
+
+button:hover{
+  background-color: rgb(51, 104, 105);
 }
 
 /* Style the search bar */

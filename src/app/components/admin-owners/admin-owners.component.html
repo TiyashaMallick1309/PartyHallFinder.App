@@ -5,19 +5,29 @@
     <input [(ngModel)]="searchText" (input)="filterOwners()" placeholder="Search owners..." />
   </div>
   
-  <!-- Owner Cards -->
-  <div class="owner-card-grid">
-    <!-- Owners Card for each party hall in the filtered party hall list -->
-    <div class="owner-card"
-      *ngFor="let owner of filteredOwners | slice: (currentPage - 1) * pageSize : (currentPage * pageSize)">
-      <div class="owner-details">
-        <p>Name: {{ owner.firstname }} {{ owner.lastName }}<br /><br />
-        Email: {{ owner.email }}<br /><br />
-        Phn. no.: {{owner.phonenumber}}<br /><br />
-          </p>
-      </div>
-    </div>
-  </div>
+  <!-- Owner Data -->
+  <table class="owner-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone No.</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let owner of filteredOwners | slice: (currentPage - 1) * pageSize : (currentPage * pageSize)">
+        <td>
+          {{owner.firstName}} {{owner.lastName}}
+        </td>
+        <td>
+          {{owner.email}}
+        </td>
+        <td>
+          {{owner.phonenumber}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
   
   <!-- Pagination -->
   <div class="pagination-container">

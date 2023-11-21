@@ -14,6 +14,7 @@
     border: none;
     margin-right: 15px;
     padding: 10px;
+    cursor: pointer;
 }
 
 .dashboard-tabs ul.nav-tabs li.active a,
@@ -48,7 +49,7 @@
 
 .logout-btn {
     font-size: 16px;
-    margin: 1vw;
+    margin: 2vw;
     position: absolute;
     border: none;
     right: 0;
@@ -60,9 +61,21 @@
     background-color: rgb(179, 74, 83);
 }
 
+.dashboard-nav .nav-list{
+    position: fixed;
+    margin-top: 3rem;
+    width: 13vw;
+}
+
+h2{
+    color: white;
+    text-align: center;
+    position: fixed;
+}
+
 .logout-btn:hover {
     background-color: #7e0307;
-  }
+}
 
 @media screen and (max-width: 767px) {
     .dashboard-tabs {
@@ -77,3 +90,90 @@
         display: block;
     }
 }
+
+.dashboard-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    background-color: #e4ded4;
+}
+
+.dashboard-nav {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    background-color: #2d2727;
+    box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid #D1D1D1;
+    border-bottom: 1px solid #D1D1D1;
+}
+
+.nav-item {
+    margin-bottom: 15px;
+}
+
+.nav-link {
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    color:white;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+    background-color: #7c6666;
+}
+
+.dashboard-content {
+    flex: 1;
+    padding: 20px;
+}
+
+
+
+
+@media only screen and (max-width: 768px) {
+    .dashboard-nav .nav-list {
+        display: none;
+        position: absolute;
+        top: 55px;
+        left: 0;
+        background-color: #fff;
+        width: 100%;
+        padding: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+        z-index: 1;
+    }
+
+    .dashboard-nav .show-menu {
+        display: block;
+    }
+
+    .dashboard-nav .nav-item {
+        margin-bottom: 10px;
+    }
+
+    .dashboard-nav .nav-link {
+        display: block;
+        padding: 3px 0;
+    }
+
+    .dashboard-nav .logout-container {
+        display: none;
+    }
+
+    .dashboard-nav .navbar-toggler {
+        display: block;
+        margin: 0 auto;
+    }
+}
+  

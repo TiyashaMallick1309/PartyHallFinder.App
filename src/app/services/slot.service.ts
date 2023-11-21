@@ -19,9 +19,13 @@ export class SlotService {
     return this.http.post<any>(this.slotsUrl, bookingDetails);
   }
 
+  deleteBooking(bookingId: string): Observable<any> { 
+    const url = `${this.slotsUrl}/${bookingId}`;
+    return this.http.delete(url);
+   }
+
   setUserId(userId: string) {
     this.userId = userId;
-    
   }
 }
 

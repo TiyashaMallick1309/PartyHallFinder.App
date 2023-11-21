@@ -45,7 +45,7 @@ export class BookingComponent implements OnInit {
       const initialUserId = currentUser['id'];
       console.log(initialUserId + " yep")
       // Store the user ID in the slot service
-      this.slotService.setUserId(initialUserId + " hey");
+      this.slotService.setUserId(initialUserId);
       // Fetch all the booking data
       this.slotService.getSlots().subscribe((bookings) => {
         console.log(`All Bookings:`, bookings);
@@ -127,7 +127,7 @@ export class BookingComponent implements OnInit {
     }
     const razorpayOptions = {
       description: 'Sample Razorpay',
-      currency: 'USD',
+      currency: 'INR',
       amount: ((this.perDayPrice * this.diffDays)*100),
       name: 'User',
       key: 'rzp_test_Hy7nLkjezniYHG',

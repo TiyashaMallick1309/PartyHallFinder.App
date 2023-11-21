@@ -6,21 +6,13 @@
         {{ review.rating }} out of 5 stars
       </div>
       <ng-container>
-        <p class="review-text">
+        <div class="review-text">
           {{ review.reviewText }}
-        </p>
-        <p class="name">
+        </div>
+        <div class="name">
           - Anonymous
-        </p>
+        </div>
       </ng-container>
-      <!-- <ng-container *ngIf="review.ownerReply">
-        <mat-form-field>
-          <mat-label>Owner Reply</mat-label>
-          <mat-select mat-select-trigger>
-            <mat-option [value]="review.ownerReply">{{ review.ownerReply }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </ng-container> -->
     </div>
   </ng-container>
   <ng-template #noReview>

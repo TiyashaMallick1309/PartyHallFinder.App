@@ -1,14 +1,14 @@
 <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
     <div class="form-group mt-3">
       <label for="loginUsername"></label>
-      <input type="text" class="form-control" id="loginUsername" formControlName="loginUsername" placeholder="e.g. johndoe">
+      <input type="text" class="form-control" id="loginUsername" formControlName="loginUsername" placeholder="Username">
       <div class="invalid-feedback d-block" *ngIf="loginForm.get('loginUsername')?.invalid && (loginForm.get('loginUsername')?.dirty || loginForm.get('loginUsername')?.touched)">
         <ng-container *ngIf="loginForm.get('loginUsername')?.errors?.['required']">Username is required.</ng-container>
       </div>
     </div>
     <div class="form-group mt-3">
       <label for="loginEmail"></label>
-      <input type="email" class="form-control" id="loginEmail" formControlName="loginEmail" placeholder="e.g. john.doe@mail.com">
+      <input type="email" class="form-control" id="loginEmail" formControlName="loginEmail" placeholder="Email">
       <div class="invalid-feedback d-block" *ngIf="loginForm.get('loginEmail')?.invalid && (loginForm.get('loginEmail')?.dirty || loginForm.get('loginEmail')?.touched)">
         <ng-container *ngIf="loginForm.get('loginEmail')?.errors?.['required']">Email is required.</ng-container>
         <ng-container *ngIf="loginForm.get('loginEmail')?.errors?.['email']">Email is invalid.</ng-container>
@@ -16,7 +16,7 @@
     </div>
     <div class="form-group">
       <label for="loginPassword"></label>
-      <input type="password" class="form-control" id="loginPassword" formControlName="loginPassword">
+      <input type="password" class="form-control" id="loginPassword" formControlName="loginPassword" placeholder="Password">
       <div class="invalid-feedback d-block" *ngIf="loginForm.get('loginPassword')?.invalid && (loginForm.get('loginPassword')?.dirty || loginForm.get('loginPassword')?.touched)">
         <ng-container *ngIf="loginForm.get('loginPassword')?.errors?.['required']">Password is required.</ng-container>
         <ng-container *ngIf="loginForm.get('loginPassword')?.errors?.['minlength']">Password must be at least 8 characters long.</ng-container>

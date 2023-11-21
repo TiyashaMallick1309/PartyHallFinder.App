@@ -67,7 +67,7 @@ export class LoginComponent {
           localStorage.setItem('isLoggedIn', 'true');
           // Call a method of the SlotService and pass the userId
           this.router.navigate(['user-dashboard/party-hall-list']);
-          console.log(user.id , " hey")
+          console.log(user.id)
           this.slotService.setUserId(user.id);
           localStorage.setItem('currentUser', JSON.stringify(user));
           console.log('User data stored in local storage', JSON.stringify(user));

@@ -13,14 +13,9 @@ export class HelpComponent {
   message: string = '';
 
   Send() {
-    // Clear form fields
-    this.firstName = '';
-    this.lastName = '';
-    this.email = '';
-    this.phone = '';
-    this.message = '';
-
     // Display alert message
     window.alert('Message sent!');
+    window.location.reload();
   }
+
 }
