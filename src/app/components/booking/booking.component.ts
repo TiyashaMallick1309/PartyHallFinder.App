@@ -21,9 +21,10 @@ export class BookingComponent implements OnInit {
   datesToDisable: Date[] = [];
   startDate!: Date;
   endDate!: Date;
-
+  diffDays!: number;
   partyHalls: PartyHall[] = [];
   partyHallsSubscription!: Subscription;
+  perDayPrice!: number;
 
   constructor(private partyHallService: PartyHallService, private slotService: SlotService, private router: Router) {
     // Set the min and max dates for the datepicker
@@ -36,8 +37,15 @@ export class BookingComponent implements OnInit {
     this.partyHallService.id$.subscribe(id => {
       this.id = id;
       console.log(`ID: ${this.id}`);
+      this.partyHallService.getPartyHall(this.id).subscribe((partyHall: PartyHall) => {
+        this.perDayPrice = partyHall.pricing.perDay;
+      });
       //userid
-      console.log(this.slotService.userId+" hey")
+      const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+      const initialUserId = currentUser['id'];
+      console.log(initialUserId + " yep")
+      // Store the user ID in the slot service
+      this.slotService.setUserId(initialUserId + " hey");
       // Fetch all the booking data
       this.slotService.getSlots().subscribe((bookings) => {
         console.log(`All Bookings:`, bookings);
@@ -49,11 +57,11 @@ export class BookingComponent implements OnInit {
           const startDate = new Date(Date.parse(booking.startDate)); // parse start date
           const endDate = new Date(Date.parse(booking.endDate)); // parse end date
           const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-          const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          console.log(`Start Date: ${startDate}, End Date: ${endDate}, Difference in Days: ${diffDays}`);
+          this.diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+          console.log(`Start Date: ${startDate}, End Date: ${endDate}, Difference in Days: ${this.diffDays}`);
           // Calculate the difference between the dates in days
           const dates = [];
-          for (let i = 0; i < diffDays; i++) {
+          for (let i = 0; i < this.diffDays; i++) {
             const date = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
             dates.push(date);
           }
@@ -120,10 +128,22 @@ export class BookingComponent implements OnInit {
     const razorpayOptions = {
       description: 'Sample Razorpay',
       currency: 'USD',
-      amount: 30000,
+      amount: ((this.perDayPrice * this.diffDays)*100),
       name: 'User',
-      key: 'rzp_test_A7L1Y2WxpEwsyT',
+      key: 'rzp_test_Hy7nLkjezniYHG',
       image: 'https://th.bing.com/th/id/OIP.PqeeWcgP2vqyNHU_zE0AmQAAAA?w=396&h=396&rs=1&pid=ImgDetMain',
+      handler: (response: { razorpay_payment_id: any }) => {
+        const userId = this.slotService.userId;
+        const startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()).toISOString();
+        const endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate() + 1).toISOString();
+        const booking = { userId, partyhallid: this.id, startDate, endDate, isconfirmed: true };
+
+        this.slotService.confirmBooking(booking).subscribe((response) => {
+          console.log("Booking in progress:", response); // Handle success/failure here 
+        });
+        window.alert("Payment Successful! Booking Confirmed!!!")
+        this.router.navigate(['/user-dashboard/party-hall-list']);
+      },
       prefill: {
         name: 'User',
       },
@@ -146,15 +166,5 @@ export class BookingComponent implements OnInit {
     }
 
     Razorpay.open(razorpayOptions, successCallback, failureCallback)
-
-    const userId = this.slotService.userId;
-    const startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()).toISOString();
-    const endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate() + 1).toISOString();
-    const booking = { userId, partyhallid: this.id, startDate, endDate, isconfirmed: true };
-
-    this.slotService.confirmBooking(booking).subscribe((response) => {
-      console.log("Booking in progress:", response); // Handle success/failure here 
-    });
-    this.router.navigate(['/user-dashboard/party-hall-list']);
   }
 }

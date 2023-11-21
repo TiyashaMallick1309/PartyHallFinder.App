@@ -15,11 +15,13 @@ export class UploadHallsComponent {
   submitted = false;
   ownerId!: string;
 
-  constructor(private route: ActivatedRoute,private formBuilder: FormBuilder, private partyHallService: PartyHallService, private fb: FormBuilder, private router: Router) { }
+  constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private partyHallService: PartyHallService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
+    const owner=JSON.parse(localStorage.getItem('currentOwner') || '{}');
     this.partyHallService.ownerId$.subscribe(id => {
-      this.ownerId = id;
+      this.ownerId = id|| owner['id'];
+        console.log(this.ownerId+" hey")
     });
 
     this.uploadForm = this.fb.group({
@@ -70,7 +72,7 @@ export class UploadHallsComponent {
     this.images.removeAt(index);
   }
 
-async onUpload() {
+  async onUpload() {
     this.submitted = true; // set the property to true when the form is submitted
     if (this.uploadForm.errors !== null) {
       return;

@@ -21,6 +21,7 @@ export class SlotService {
 
   setUserId(userId: string) {
     this.userId = userId;
+    
   }
 }
 

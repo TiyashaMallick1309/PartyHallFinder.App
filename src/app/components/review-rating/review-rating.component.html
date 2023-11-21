@@ -1,20 +1,30 @@
 <div class="container">
-  <br/>
+  <br />
   <ng-container *ngIf="reviews.length > 0; else noReview">
     <div class="card" *ngFor="let review of reviews">
       <div class="rating">
         {{ review.rating }} out of 5 stars
       </div>
-      <p class="review-text">
-        {{ review.reviewText }}
-      </p>
-      <p class="name">
-        - Anonymous
-      </p>
+      <ng-container>
+        <p class="review-text">
+          {{ review.reviewText }}
+        </p>
+        <p class="name">
+          - Anonymous
+        </p>
+      </ng-container>
+      <!-- <ng-container *ngIf="review.ownerReply">
+        <mat-form-field>
+          <mat-label>Owner Reply</mat-label>
+          <mat-select mat-select-trigger>
+            <mat-option [value]="review.ownerReply">{{ review.ownerReply }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container> -->
     </div>
   </ng-container>
   <ng-template #noReview>
     <p class="no-review-text">No reviews yet</p>
   </ng-template>
-  <br/>
+  <br />
 </div>
