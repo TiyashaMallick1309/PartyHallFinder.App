@@ -18,7 +18,6 @@ import { BookingComponent } from './components/booking/booking.component';
 import { ReviewComponent } from './components/review/review.component';
 import { ReviewRatingComponent } from './components/review-rating/review-rating.component';
 import { AdminBookingComponent } from './components/admin-booking/admin-booking.component';
-import { ManageHallComponent } from './components/manage-hall/manage-hall.component';
 import { authGuard } from './Guard/auth.guard';
 import { CanActivateFn } from '@angular/router';
 
@@ -56,8 +55,7 @@ const routes: Routes = [
       {
         path: 'owner-details', component: OwnerDetailsComponent,canActivate: [authGuard],
         children: [
-          { path: 'update', component: UpdateHallsComponent },
-          {path: 'manage-hall', component: ManageHallComponent}
+          { path: 'update', component: UpdateHallsComponent }
         ]
       },
       { path: 'upload', component: UploadHallsComponent }

@@ -23,7 +23,6 @@
   <!-- Party Hall Cards -->
   <div class="party-hall-card-grid">
     <div *ngFor="let currentPartyHall of currentPartyHalls" class="party-hall-card">
-      <span (click)="openPartyHall(currentPartyHall)">
       <img [src]="partyHallService.getImageUrl(currentPartyHall.images)" (error)="handleImageError($event)"
         [alt]="currentPartyHall.name + ' image'" />
       <div class="party-hall-details">
@@ -32,7 +31,6 @@
           currentPartyHall.address.country }}</h5>
         <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: ${{ currentPartyHall.pricing.perDay }}/day</p>
       </div>
-      </span>
       <span class="buttons">
       <button (click)="getHallId(currentPartyHall)">Update Hall</button>
       <button (click)="setDeleteBooking(currentPartyHall.id)">Delete Hall</button>

@@ -95,13 +95,6 @@ export class OwnerDetailsComponent implements OnInit {
     this.router.navigate(['owner-dashboard', 'owner-details', 'update']);
   }
 
-  openPartyHall(partyHall: PartyHall) {
-    console.log(partyHall);
-    if (partyHall && partyHall.id) {
-      this.router.navigate(['/owner-dashboard/owner-details/manage-hall']);
-    }
-  }
-
   setDeleteBooking(hallId: string) {
     this.deleteHallId = hallId;
     this.confirmDelete = true;
