@@ -43,7 +43,7 @@ export class BookingComponent implements OnInit {
       //userid
       const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
       const initialUserId = currentUser['id'];
-      console.log(initialUserId + " yep")
+      console.log(initialUserId)
       // Store the user ID in the slot service
       this.slotService.setUserId(initialUserId);
       // Fetch all the booking data
@@ -53,26 +53,29 @@ export class BookingComponent implements OnInit {
         const filteredBookings = bookings.filter((booking) => booking.partyHallId == this.id);
         console.log(`Filtered Bookings:`, filteredBookings);
         // Populate the bookedDateRanges array with the start and end dates of the filtered bookings
-        const bookedDateRanges = filteredBookings.map((booking) => {
-          const startDate = new Date(Date.parse(booking.startDate)); // parse start date
-          const endDate = new Date(Date.parse(booking.endDate)); // parse end date
-          const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-          this.diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-          console.log(`Start Date: ${startDate}, End Date: ${endDate}, Difference in Days: ${this.diffDays}`);
-          // Calculate the difference between the dates in days
-          const dates = [];
-          for (let i = 0; i < this.diffDays; i++) {
-            const date = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
-            dates.push(date);
-          }
-          return { startDate, endDate, dates };
-        });
-        console.log(`Booked Date Ranges:`, bookedDateRanges);
-        // Merge overlapping date ranges and add them to the datesToDisable array
-        this.datesToDisable = this.mergeDateRanges(bookedDateRanges).map((range) => range.dates).flat();
-      });
+        if (filteredBookings.length > 0) {
+          const bookedDateRanges = filteredBookings.map((booking) => {
+            const startDate = new Date(Date.parse(booking.startDate));
+            const endDate = new Date(Date.parse(booking.endDate));
+            const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+            this.diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            console.log("reached");
+            console.log(`Start Date: ${startDate}, End Date: ${endDate}, Difference in Days: ${this.diffDays}`);
+            const dates = [];
+            for (let i = 0; i < this.diffDays; i++) {
+              const date = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() + i);
+              dates.push(date);
+            }
+            return { startDate, endDate, dates };
+          });
+          console.log(`Booked Date Ranges:`, bookedDateRanges);
+          this.datesToDisable = this.mergeDateRanges(bookedDateRanges).map((range) => range.dates).flat();
+        } else {
+          this.diffDays = 1;
+        }
     });
-  }
+  });
+}
 
   // Merge overlapping date ranges
   mergeDateRanges(ranges: any[]): any[] {
@@ -128,7 +131,7 @@ export class BookingComponent implements OnInit {
     const razorpayOptions = {
       description: 'Sample Razorpay',
       currency: 'INR',
-      amount: ((this.perDayPrice * this.diffDays)*100),
+      amount: ((this.perDayPrice * this.diffDays) * 100),
       name: 'User',
       key: 'rzp_test_Hy7nLkjezniYHG',
       image: 'https://th.bing.com/th/id/OIP.PqeeWcgP2vqyNHU_zE0AmQAAAA?w=396&h=396&rs=1&pid=ImgDetMain',
@@ -156,6 +159,10 @@ export class BookingComponent implements OnInit {
         }
       }
     }
+
+    console.log((this.perDayPrice * this.diffDays) * 100);
+    console.log(this.perDayPrice);
+    console.log(this.diffDays);
 
     const successCallback = (paymentid: any) => {
       console.log(paymentid);

@@ -114,6 +114,7 @@ export class UploadHallsComponent {
 
       if (success) {
         console.log("Upload successful!")
+        window.alert("Party Hall uploaded successfully!!")
         this.uploadForm.reset();
       } else {
         this.uploadFailed = true;

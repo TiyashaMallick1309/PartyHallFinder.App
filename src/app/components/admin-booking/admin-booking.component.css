@@ -59,6 +59,8 @@ table {
 
   .container {
     margin: 20px;
+    min-height:100vh;
+    max-height:100%;
   }
   
   .confirmation-dialog {
