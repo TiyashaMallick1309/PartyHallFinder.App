@@ -24,7 +24,8 @@ img {
 
 .card {
   background-color: #fff;
-  background-image: linear-gradient(to top, #c7d6b8, #b8d2e8);
+  background-image: linear-gradient(to top, #403939, #3b3636);
+  color:white;
 }
 
 h1{

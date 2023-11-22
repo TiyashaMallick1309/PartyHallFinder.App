@@ -7,13 +7,17 @@
 /* Control the hall card styles */
 .party-hall-card {
   width: 18rem;
-  margin: 2rem;
+  margin: 1rem;
   border: 0.2rem solid #ccc;
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   background-color: rgb(255, 247, 238);
+}
+
+h2{
+  margin:1rem;
 }
 
 /* Style the dhall card on hover state */

@@ -6,7 +6,7 @@
   margin-bottom: 8px;
 }
 
-.name,
+/* .name,
 .password {
   display: flex;
   flex-direction: row;
@@ -15,7 +15,7 @@
 .name,
 .password input::placeholder {
   font-size: smaller;
-}
+} */
 
 label {
   display: block;

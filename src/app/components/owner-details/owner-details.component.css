@@ -171,3 +171,7 @@ a{
 .confirmation-dialog button.cancel:hover {
   background-color: #a9a9a9;
 }
+
+h2{
+  margin:1rem;
+}

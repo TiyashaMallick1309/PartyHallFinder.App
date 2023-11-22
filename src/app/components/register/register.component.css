@@ -6,7 +6,7 @@
   margin-bottom: 8px;
 }
 
-.name,
+/* .name,
 .password,
 .coun-post,
 .city-state {
@@ -19,7 +19,7 @@
 .coun-post,
 .password input::placeholder {
   font-size: smaller;
-}
+} */
 
 label {
   display: block;

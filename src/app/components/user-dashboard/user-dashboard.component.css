@@ -25,7 +25,7 @@ h2{
     border-radius: 0;
     border: none;
     margin-right: 15px;
-    padding: 10px;
+    /* padding: 10px; */
     cursor: pointer;
 }
 
@@ -38,7 +38,7 @@ h2{
 
 .dashboard-tabs .tab-content {
     border: none;
-    padding: 15px;
+    /* padding: 15px; */
     margin-top: 30px;
     background-color: #fdfdfd;
     border-radius: 3px;
@@ -62,7 +62,7 @@ h2{
 .logout-btn {
     font-size: 16px;
     margin: 2vw;
-    position: absolute;
+    /* position: absolute; */
     border: none;
     right: 0;
     top: 0;
@@ -71,6 +71,7 @@ h2{
     border-radius: 5px;
     cursor: pointer;
     background-color: rgb(179, 74, 83);
+    box-shadow: 2px 2px 2px 2px rgba(79, 70, 70, 0.3);
 }
 
 .logout-btn:hover {
@@ -95,7 +96,7 @@ h2{
     display: flex;
     flex-direction: row;
     height: 100%;
-    background-color: #e4ded4;
+    /* background-color: #e4ded4; */
     overflow: auto;
 }
 
@@ -114,7 +115,7 @@ h2{
     margin: 0;
     padding: 0;
     border-top: 1px solid #D1D1D1;
-    border-bottom: 1px solid #D1D1D1;
+    /* border-bottom: 1px solid #D1D1D1; */
 }
 
 .nav-item {
@@ -138,10 +139,12 @@ h2{
 
 .dashboard-content {
     flex: 1;
-    padding: 20px;
+    /* padding: 20px; */
 }
 
-
+.topbar{
+    background-color: rgb(0, 0, 0);
+}
 
 
 @media only screen and (max-width: 768px) {

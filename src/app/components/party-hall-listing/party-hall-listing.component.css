@@ -2,7 +2,7 @@
 .party-hall-card-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   /* background-image: linear-gradient(to bottom, #fff8e9, #fde2ff); */
 }
 
@@ -12,15 +12,16 @@
 }
 
 button{
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
   margin-left:2rem;
   border-radius: 1rem;
-  background-color: rgb(95, 199, 165);
-  color:rgb(0, 0, 0);
-  border: 1px solid rgb(16, 199, 16);
+  background-color: rgb(200, 75, 75);
+  color:rgb(255, 255, 255);
+  border: 1px solid rgb(199, 16, 117);
 }
 
 button:hover{
-  background-color: rgb(51, 104, 105);
+  background-color: rgb(105, 51, 51);
   color: white;
 }
 
@@ -54,14 +55,14 @@ input {
 
 /* Control the artwork card styles */
 .party-hall-card {
-  width: 18rem;
+  width: 15rem;
   margin: 2rem;
   border: 0.2rem solid #ccc;
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  background-image: linear-gradient(195deg, #bddaf8, #f4ffcf);
+
 }
 
 /* Style the artwork card on hover state */

@@ -100,16 +100,20 @@ export class PartyHallDetailsComponent implements OnInit {
   }
 
   saveToSavedList() {
-    // Add selected party hall to the savedHalls list
-    this.savedHalls.push(this.partyHall);
-    console.log('Party Hall added to saved halls:', this.savedHalls);
+    // Add selected party hall to the savedHalls list only if it doesn't already exist
+    if (!this.savedHalls.find(hall => hall.id === this.partyHall.id)) {
+        this.savedHalls.push(this.partyHall);
+        console.log('Party Hall added to saved halls:', this.savedHalls);
 
-    // Update the savedHalls list in local storage
-    localStorage.setItem('savedHalls', JSON.stringify(this.savedHalls));
-    console.log('Saved halls updated in local storage:', JSON.parse(localStorage.getItem('savedHalls') || '[]'));
+        // Update the savedHalls list in local storage
+        localStorage.setItem('savedHalls', JSON.stringify(this.savedHalls));
+        console.log('Saved halls updated in local storage:', JSON.parse(localStorage.getItem('savedHalls') || '[]'));
 
-    // Display a success message
-    alert('The party hall has been saved to your list.');
+        // Display a success message
+        alert('The party hall has been saved to your list.');
+    } else {
+        alert('This party hall is already on your list.');
+    }
 }
 
   bookHall() {

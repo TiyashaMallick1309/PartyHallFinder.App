@@ -18,7 +18,7 @@
     <div class="map-frame">
       <div id="map"></div>
     </div>
-    <br />
+    <br/>
     <p><b>Capacity:</b> {{ partyHall?.capacity }}</p>
     <p><b>Amenities:</b></p>
     <ul>
@@ -26,9 +26,9 @@
     </ul>
 
     <div class="pricing">
-      <p><b>Price per hour:</b> ${{partyHall?.pricing?.perHour}}</p>
-      <p><b>Price per day:</b> ${{partyHall?.pricing?.perDay}}</p>
-      <p><b>Price per week:</b> ${{partyHall?.pricing?.perWeek}}</p>
+      <p><b>Price/hour:</b> ${{partyHall?.pricing?.perHour}}</p>
+      <p><b>Price/day:</b> ${{partyHall?.pricing?.perDay}}</p>
+      <p><b>Price/week:</b> ${{partyHall?.pricing?.perWeek}}</p>
     </div>
     <div class="button">
       <button (click)="saveToSavedList()" class="add-to-wishlist-button">Save Hall</button><br />

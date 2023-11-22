@@ -2,6 +2,18 @@
     border-bottom: none;
 }
 
+.dashboard-nav .nav-list{
+    position: fixed;
+    margin-top: 3rem;
+    width: 13vw;
+}
+
+h2{
+    color: white;
+    text-align: center;
+    position: fixed;
+}
+
 .dashboard-tabs ul.nav-tabs li {
     border: none;
     margin: 0;
@@ -13,7 +25,7 @@
     border-radius: 0;
     border: none;
     margin-right: 15px;
-    padding: 10px;
+    /* padding: 10px; */
     cursor: pointer;
 }
 
@@ -26,7 +38,7 @@
 
 .dashboard-tabs .tab-content {
     border: none;
-    padding: 15px;
+    /* padding: 15px; */
     margin-top: 30px;
     background-color: #fdfdfd;
     border-radius: 3px;
@@ -48,9 +60,10 @@
 }
 
 .logout-btn {
+    box-shadow: 2px 2px 2px 2px rgba(79, 70, 70, 0.3);
     font-size: 16px;
     margin: 2vw;
-    position: absolute;
+    /* position: absolute; */
     border: none;
     right: 0;
     top: 0;
@@ -59,17 +72,6 @@
     border-radius: 5px;
     cursor: pointer;
     background-color: rgb(179, 74, 83);
-}
-.dashboard-nav .nav-list{
-    position: fixed;
-    margin-top: 3rem;
-    width: 13vw;
-}
-
-h2{
-    color: white;
-    text-align: center;
-    position: fixed;
 }
 
 .logout-btn:hover {
@@ -94,7 +96,8 @@ h2{
     display: flex;
     flex-direction: row;
     height: 100%;
-    background-color: #e4ded4;
+    /* background-color: #e4ded4; */
+    overflow: auto;
 }
 
 .dashboard-nav {
@@ -112,11 +115,12 @@ h2{
     margin: 0;
     padding: 0;
     border-top: 1px solid #D1D1D1;
-    border-bottom: 1px solid #D1D1D1;
+    /* border-bottom: 1px solid #D1D1D1; */
 }
 
 .nav-item {
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .nav-link {
@@ -126,6 +130,7 @@ h2{
     color:white;
     text-decoration: none;
     transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
 }
 
 .nav-link:hover {
@@ -134,10 +139,12 @@ h2{
 
 .dashboard-content {
     flex: 1;
-    padding: 20px;
+    /* padding: 20px; */
 }
 
-
+.topbar{
+    background-color: rgb(0, 0, 0);
+}
 
 
 @media only screen and (max-width: 768px) {
