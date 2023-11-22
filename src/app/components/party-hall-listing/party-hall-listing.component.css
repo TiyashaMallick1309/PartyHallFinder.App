@@ -3,7 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  /* background-image: linear-gradient(to bottom, #fff8e9, #fde2ff); */
+  /* background-image: linear-gradient(to bottom, #ffffff, #d5a2a2); */
 }
 
 .container{
@@ -62,7 +62,7 @@ input {
   overflow: hidden;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
-
+  background-image: linear-gradient(to bottom, #ffffff, #ba9595);
 }
 
 /* Style the artwork card on hover state */
