@@ -1,4 +1,9 @@
 /* Apply styles to the Wishlist component*/
+.container{
+  min-height:70vh;
+  max-height: 100%;
+}
+
 #wishlist {
     display: flex;
     flex-wrap: wrap;

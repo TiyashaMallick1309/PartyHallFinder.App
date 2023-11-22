@@ -3,24 +3,25 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  background-image: linear-gradient(to bottom, #fff8e9, #fde2ff);
+  /* background-image: linear-gradient(to bottom, #fff8e9, #fde2ff); */
 }
 
 .container{
-  background-image: linear-gradient(to bottom, #fff8e9, #fde2ff);
+  /* background-image: linear-gradient(to bottom, #fff8e9, #fde2ff); */
   border-radius: 2rem;
 }
 
 button{
   margin-left:2rem;
   border-radius: 1rem;
-  background-color: rgb(47, 147, 114);
-  color:white;
-  border: 1px solid green;
+  background-color: rgb(95, 199, 165);
+  color:rgb(0, 0, 0);
+  border: 1px solid rgb(16, 199, 16);
 }
 
 button:hover{
   background-color: rgb(51, 104, 105);
+  color: white;
 }
 
 /* Style the search bar */

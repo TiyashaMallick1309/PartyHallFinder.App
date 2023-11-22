@@ -50,7 +50,7 @@ const routes: Routes = [
   //Owner
   {
     path: 'owner-dashboard', component: OwnerDashboardComponent,
-    // canActivate:[authGuard],
+    canActivate:[authGuard],
     children: [
       {
         path: 'owner-details', component: OwnerDetailsComponent,canActivate: [authGuard],
@@ -65,7 +65,7 @@ const routes: Routes = [
   //Admin
   {
     path: 'admin-dashboard', component: AdminDashboardComponent,
-    // canActivate:[authGuard],
+    canActivate:[authGuard],
     children: [
       { path: 'admin-owners', component: AdminOwnersComponent },
       { path: 'admin-booking', component: AdminBookingComponent,canActivate: [authGuard] },
