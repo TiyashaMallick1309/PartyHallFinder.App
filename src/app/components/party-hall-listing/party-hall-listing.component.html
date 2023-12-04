@@ -13,21 +13,21 @@
   </div>
   <hr>
 
-  <!-- Party Hall Cards -->
-  <div class="party-hall-card-grid">
-    <!-- Party Halls Card for each party hall in the filtered party hall list -->
-    <div class="party-hall-card" (click)="openPartyHallDetails(partyHall)"
-      *ngFor="let partyHall of filteredPartyHalls | slice: (currentPage - 1) * pageSize : (currentPage * pageSize)">
-      <img [src]="partyhallService.getImageUrl(partyHall.images)" (error)="handleImageError($event)"
-        alt="{{ partyHall.name }} image">
-      <div class="party-hall-details">
-        <h3><b>{{ partyHall.name }}</b></h3>
-        <h5>{{ partyHall.address.city }}, {{ partyHall.address.state }}, {{ partyHall.address.country }}</h5>
-        <p>Capacity: {{ partyHall.capacity }}<br /><br />
-          Pricing: {{ partyHall.pricing.perDay }}/day</p>
-      </div>
+ <!-- Party Hall Cards -->
+<div class="party-hall-card-grid">
+  <!-- Party Halls Card for each party hall in the filtered party hall list -->
+  <div class="party-hall-card" (click)="openPartyHallDetails(partyHall)"
+    *ngFor="let partyHall of filteredPartyHalls | slice: (currentPage - 1) * pageSize : (currentPage * pageSize)">
+    <img [src]="partyhallService.getImageUrl(partyHall.images)" (error)="handleImageError($event)"
+      alt="{{ partyHall.name }} image">
+    <div class="party-hall-details">
+      <h3><b>{{ partyHall.name}}</b></h3>
+      <p>{{ partyHall.address.city }}, {{ partyHall.address.state }}, {{ partyHall.address.country }}</p>
+      <div class="icons"><i class="fas fa-user-friends"></i>{{ partyHall.capacity }}   
+        <i class="fas fa-dollar-sign"></i>{{ partyHall.pricing.perDay }}</div>
     </div>
   </div>
+</div>
 <br/>
   <!-- Pagination -->
   <div class="pagination-container">
