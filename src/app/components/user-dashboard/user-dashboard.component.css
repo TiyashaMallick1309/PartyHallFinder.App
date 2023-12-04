@@ -2,11 +2,13 @@
     display: flex;
     flex-direction: row;
     height: 100%;
-    overflow: auto;
+    /* overflow: auto; */
 }
 
 .dashboard-tabs{
     flex-direction: column;
+    flex-grow: 1;
+    overflow: auto;
 }
 
 .dashboard-content{
@@ -93,6 +95,9 @@ h2{
     box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.2);
     padding: 20px;
     transition: transform 0.3s ease-in-out;
+    position: relative;
+    min-height: 100vh;
+    max-height: 10000vh;
 }
 
 .nav-list {

@@ -26,7 +26,7 @@
     </div>
     <div class="row">
       <div class="col-md-6 offset-md-3 text-center">
-        <button mat-raised-button [disabled]="!startDate || !endDate || startDate > endDate || isDateDisabled(startDate) || isDateDisabled(endDate)" (click)="payNow() ">Pay</button>        
+        <button mat-raised-button [disabled]="!startDate || !endDate || startDate > endDate || isDateDisabled(startDate) || isDateDisabled(endDate)" (click)="payNow() ">Pay</button>      
         <p *ngIf="isDateDisabled(startDate) || isDateDisabled(endDate)" class="invalid-feedback d-block">Selected dates are not available. Please choose different dates.</p>
       </div>
     </div>

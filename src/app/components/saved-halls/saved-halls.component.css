@@ -1,7 +1,6 @@
 /* Apply styles to the Wishlist component*/
 .container{
-  min-height:85vh;
-  max-height: 100%;
+  overflow: hidden;
 }
 
 #wishlist {
@@ -98,86 +97,3 @@
     margin-top: 1rem;
     padding:1rem;
   }
-
-  .dashboard-tabs ul.nav-tabs {
-    border-bottom: none;
-}
-
-.dashboard-tabs ul.nav-tabs li {
-    border: none;
-    margin: 0;
-    cursor: pointer;
-}
-
-.dashboard-tabs ul.nav-tabs li a {
-    color: #444;
-    font-size: 16px;
-    border-radius: 0;
-    border: none;
-    margin-right: 15px;
-    padding: 10px;
-}
-
-.dashboard-tabs ul.nav-tabs li.active a,
-.dashboard-tabs ul.nav-tabs li a:hover {
-    background-color: #fdfdfd;
-    color: #488aff;
-    border-bottom: 3px solid #488aff;
-}
-
-.dashboard-tabs .tab-content {
-    border: none;
-    padding: 15px;
-    margin-top: 30px;
-    background-color: #fdfdfd;
-    border-radius: 3px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* These styles are just for demo purposes */
-
-.dashboard-tabs {
-    background-color: #f7f7f7;
-    padding: 20px;
-    margin-bottom: 50px;
-}
-
-.dashboard-tabs h2 {
-    margin-top: 0;
-}
-
-.tab-content p {
-    margin-top: 0;
-}
-
-.logout-btn {
-    font-size: 16px;
-    margin: 1vw;
-    position: absolute;
-    border: none;
-    right: 0;
-    top: 0;
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    background-color: rgb(179, 74, 83);
-}
-
-.logout-btn:hover {
-    background-color: #7e0307;
-  }
-
-@media screen and (max-width: 767px) {
-    .dashboard-tabs {
-        position: relative;
-    }
-
-    .logout-btn {
-        position: relative;
-        margin-top: 10px;
-        margin-left: 0;
-        padding: 0;
-        display: block;
-    }
-}
