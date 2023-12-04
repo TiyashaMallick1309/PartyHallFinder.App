@@ -5,10 +5,10 @@
     <i class="fa fa-search" aria-hidden="true"></i>
     <input [(ngModel)]="searchText" (input)="filterPartyHalls()" placeholder="Search party halls..." />
     <button (click)="sortPartyHalls(); sortDirection = sortDirection === 'asc' ? 'desc' : 'asc'">
-      Sort by Price {{ sortDirection === 'asc' ? '↑' : '↓' }}
+      <i class="fas fa-dollar-sign"></i> {{ sortDirection === 'asc' ? '↑' : '↓' }}
     </button>
     <button (click)="sortPartyHallsByCapacity(); capacitySortDirection = capacitySortDirection === 'asc' ? 'desc' : 'asc'">
-      Sort by Capacity {{ capacitySortDirection === 'asc' ? '↑' : '↓' }}
+      <i class="fas fa-user-friends"></i> {{ capacitySortDirection === 'asc' ? '↑' : '↓' }}
     </button>
   </div>
   <hr>
@@ -22,9 +22,9 @@
       alt="{{ partyHall.name }} image">
     <div class="party-hall-details">
       <h3><b>{{ partyHall.name}}</b></h3>
-      <p>{{ partyHall.address.city }}, {{ partyHall.address.state }}, {{ partyHall.address.country }}</p>
+      <p>{{ partyHall.address.city }}, {{ partyHall.address.state }}, {{ partyHall.address.country }}</p><br/>
       <div class="icons"><i class="fas fa-user-friends"></i>{{ partyHall.capacity }}   
-        <i class="fas fa-dollar-sign"></i>{{ partyHall.pricing.perDay }}</div>
+        <i class="fas fa-dollar-sign"></i>{{ partyHall.pricing.perDay }}</div><br/>
     </div>
   </div>
 </div>
