@@ -57,25 +57,32 @@ export class UserDashboardComponent {
   }
 
   showNotifications(userType: string): void {
+    this.showNotifList = !this.showNotifList; // toggle the showNotifList variable
     if (userType === 'user') {
-      this.showNotifList = true;
-      this.markAsReadAll(userType);
-  
-      // Check booking history for user's notifications
+      const lastProcessedBooking = localStorage.getItem('lastProcessedBooking');
+      let lastDateProcessed = lastProcessedBooking ? new Date(JSON.parse(lastProcessedBooking).booking.endDate) : new Date(0); // set initial value to Jan 1, 1970
       const relevantBookings = this.bookingHistory.filter((booking) => booking.user.id === this.user.id);
       relevantBookings.forEach((booking) => {
-        // Create notification message
-        const message = `Booking confirmed: ${booking.partyHallName} from ${new Date(booking.booking.startDate).toLocaleDateString()} to ${new Date(booking.booking.endDate).toLocaleDateString()}`;
-  
-        // Create new notification object and add to userNotifications array
-        const notification = {
-          message: message,
-          isRead: false,
-          dateCreated: new Date()
-        };
-        this.userNotifications.push(notification);
+        const startDate = new Date(booking.booking.startDate);
+        const endDate = new Date(booking.booking.endDate);
+        if (endDate > lastDateProcessed) {
+          // Create notification message
+          const message = `Booking confirmed: ${booking.partyHallName} from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`;
+          
+          // Create new notification object and add to userNotifications array
+          const notification = {
+            message: message,
+            isRead: false,
+            dateCreated: new Date()
+          };
+          this.userNotifications.push(notification);
+          
+          // Update lastProcessedBooking in local storage
+          localStorage.setItem('lastProcessedBooking', JSON.stringify(booking));
+          lastDateProcessed = endDate;
+        }
       });
-  
+      
       // Save notifications to local storage
       localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
     }
@@ -83,14 +90,9 @@ export class UserDashboardComponent {
 
   markAsRead(notif: { message: string, isRead: boolean, dateCreated: Date}): void {
     notif.isRead = true;
+    
+    // Update userNotifications array in localStorage after marking a notification as read
     localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
-  }
-
-  markAsReadAll(userType: string): void {
-    if (userType === 'user') {
-      this.userNotifications.forEach((notif) => { notif.isRead = true; });
-      localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
-    }
   }
 
 }
