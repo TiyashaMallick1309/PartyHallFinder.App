@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/models/user';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { PartyHallService } from 'src/app/services/party-hall.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -16,7 +17,7 @@ export class UserDashboardComponent {
   userNotifications: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }[] = [];
   showNotifList = false;
 
-  constructor(private router: Router, private auth: AuthorizationService, private partyHallService: PartyHallService) { }
+  constructor(private notificationService: NotificationService, private router: Router, private auth: AuthorizationService, private partyHallService: PartyHallService) { }
 
   ngOnInit() {
     // Navigate to party hall list
@@ -27,6 +28,8 @@ export class UserDashboardComponent {
     if (currentUser && currentUser.id) {
       this.user = currentUser;
       console.log('User data in UserDashboardComponent', this.user);
+      // Pass user data to notification service
+      this.notificationService.setUser(this.user);
     }
     this.getSavedHalls();
 
@@ -50,35 +53,35 @@ export class UserDashboardComponent {
     this.router.navigate(['/']);
   }
 
- savedList() {
-  // Navigate to the saved halls list component and pass the saved halls from the service
-  this.router.navigate(['user-dashboard/saved'], { state: { savedHalls: this.partyHallService.savedHalls } });
-}
-
-showNotifications(userType: string): void {
-  if (userType === 'user') {
-    this.showNotifList = true;
-    this.markAsReadAll(userType);
+  savedList() {
+    // Navigate to the saved halls list component and pass the saved halls from the service
+    this.router.navigate(['user-dashboard/saved'], { state: { savedHalls: this.partyHallService.savedHalls } });
   }
-}
 
-markAsRead(notif: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }): void {
-  notif.isRead = true;
-  localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
-}
+  showNotifications(userType: string): void {
+    if (userType === 'user') {
+      this.showNotifList = true;
+      this.markAsReadAll(userType);
+    }
+  }
 
-markAsReadAll(userType: string): void {
-  if (userType === 'user') {
-    this.userNotifications.forEach((notif) => { notif.isRead = true; });
+  markAsRead(notif: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }): void {
+    notif.isRead = true;
     localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
   }
-}
 
-clearAllNotifications(userType: string): void {
-  if (userType === 'user') {
-    this.userNotifications = [];
-    localStorage.setItem('userNotifications', JSON.stringify([]));
+  markAsReadAll(userType: string): void {
+    if (userType === 'user') {
+      this.userNotifications.forEach((notif) => { notif.isRead = true; });
+      localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
+    }
   }
-}
+
+  clearAllNotifications(userType: string): void {
+    if (userType === 'user') {
+      this.userNotifications = [];
+      localStorage.setItem('userNotifications', JSON.stringify([]));
+    }
+  }
 
 }

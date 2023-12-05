@@ -184,7 +184,10 @@ export class BookingComponent implements OnInit {
   }
 
   addNotification(): void {
+    // Retrieve existing user notifications from local storage
     const userNotifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
+      
+    // Push a new notification and store in local storage
     userNotifications.push({ message: 'Your party hall booking has been confirmed.', isRead: false, routerLink: '' });
     localStorage.setItem('userNotifications', JSON.stringify(userNotifications));
 
