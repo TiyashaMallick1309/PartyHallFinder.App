@@ -1,5 +1,5 @@
 <br/>
-<h2>  Personal Details: </h2>
+<h2>  Personal Details </h2>
 <div class="container d-flex justify-content-center ">
   <div class="card d-flex">
     <div class="upper">
@@ -19,7 +19,7 @@
     </div>
   </div>
 </div>
-<h2>Halls Owned: </h2>
+<h2>Halls Owned </h2>
   <!-- Party Hall Cards -->
   <div class="party-hall-card-grid">
     <div *ngFor="let currentPartyHall of currentPartyHalls" class="party-hall-card">
@@ -27,9 +27,10 @@
         [alt]="currentPartyHall.name + ' image'" />
       <div class="party-hall-details">
         <h3><b>{{ currentPartyHall.name }}</b></h3>
-        <h5><i class="fas fa-map-marker-alt"></i> {{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{
-          currentPartyHall.address.country }}</h5>
-        <p><i class="fas fa-user-friends"></i> {{ currentPartyHall.capacity }}<br /><br/> <i class="fas fa-dollar-sign"></i> {{ currentPartyHall.pricing.perDay }}</p>
+        <p><i class="fas fa-map-marker-alt"></i> {{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, 
+          {{currentPartyHall.address.country}}</p>
+          <div class="info"><div><i class="fas fa-user-friends"></i> {{ currentPartyHall.capacity }}</div>
+            <div><i class="fas fa-dollar-sign"></i> {{ currentPartyHall.pricing.perDay }}</div></div>
       </div>
       <span class="buttons">
       <button (click)="getHallId(currentPartyHall)"> Update </button>

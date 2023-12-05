@@ -12,24 +12,28 @@
       </div>
     </div>
     <h1><b>{{ partyHall?.name }}</b></h1>
-    <p> <i class="fas fa-map-marker-alt"></i> {{ partyHall?.address?.street }}, {{ partyHall?.address?.city }}, {{ partyHall?.address?.state
-      }},
+    <p> <i class="fas fa-map-marker-alt"></i> {{ partyHall?.address?.street }}, {{ partyHall?.address?.city }}, {{
+      partyHall?.address?.state}},
       {{ partyHall?.address?.country }}, {{ partyHall?.address?.postalcode }}</p> <br />
     <div class="map-frame">
       <div id="map"></div>
     </div>
-    <br/>
-    <p><i class="fas fa-user-friends"></i> {{ partyHall?.capacity }}  
-      <i class="fas fa-dollar-sign"></i>{{partyHall?.pricing?.perDay}}</p>
-      <p><i class="fas fa-list"></i> <b> Amenities</b></p>
-      <ul type="none">
-        <li *ngFor="let amenity of partyHall?.amenities">
-          <i class="fas fa-check"></i> {{ amenity }}
-        </li>
-      </ul>
+    <br />
+    <div class="info d-flex">
+      <div><i class="fas fa-user-friends"></i> {{ partyHall?.capacity }}</div>
+      <div><i class="fas fa-dollar-sign"></i>{{partyHall?.pricing?.perDay}}</div>
+      <div>
+        <i class="fas fa-list"></i> <b> Amenities</b>
+        <ul type="none">
+          <li *ngFor="let amenity of partyHall?.amenities">
+            <i class="fas fa-check"></i> {{ amenity }}
+          </li>
+        </ul>
+      </div>
+    </div>
 
-    <div class="button">
-      <button (click)="saveToSavedList()" class="add-to-wishlist-button">Save Hall</button><br />
+    <div class="button d-flex">
+      <button (click)="saveToSavedList()" class="add-to-wishlist-button">Save Hall</button>
       <button (click)="seeReview()" class="review">See Reviews</button>
       <button (click)="bookHall()" class="book">Book Hall</button>
     </div>
