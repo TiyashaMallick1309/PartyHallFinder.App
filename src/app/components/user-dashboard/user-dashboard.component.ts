@@ -13,6 +13,8 @@ export class UserDashboardComponent {
   partyHalls: any[] = [];
   user!: User;
   savedHalls: any[] = [];
+  userNotifications: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }[] = [];
+  showNotifList = false;
 
   constructor(private router: Router, private auth: AuthorizationService, private partyHallService: PartyHallService) { }
 
@@ -23,15 +25,15 @@ export class UserDashboardComponent {
     // Retrieve user data from local storage
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
     if (currentUser && currentUser.id) {
-      // Initialize component properties with user data
       this.user = currentUser;
-
-      // (optional) log the user data
       console.log('User data in UserDashboardComponent', this.user);
     }
-
-    // Call the method to get the saved halls
     this.getSavedHalls();
+
+    // Retrieve user notifications from local storage
+    const userNotifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
+    this.userNotifications = userNotifications;
+    console.log('User notifications:', this.userNotifications);
   }
 
   getSavedHalls() {
@@ -53,6 +55,30 @@ export class UserDashboardComponent {
   this.router.navigate(['user-dashboard/saved'], { state: { savedHalls: this.partyHallService.savedHalls } });
 }
 
+showNotifications(userType: string): void {
+  if (userType === 'user') {
+    this.showNotifList = true;
+    this.markAsReadAll(userType);
+  }
+}
 
+markAsRead(notif: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }): void {
+  notif.isRead = true;
+  localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
+}
+
+markAsReadAll(userType: string): void {
+  if (userType === 'user') {
+    this.userNotifications.forEach((notif) => { notif.isRead = true; });
+    localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
+  }
+}
+
+clearAllNotifications(userType: string): void {
+  if (userType === 'user') {
+    this.userNotifications = [];
+    localStorage.setItem('userNotifications', JSON.stringify([]));
+  }
+}
 
 }

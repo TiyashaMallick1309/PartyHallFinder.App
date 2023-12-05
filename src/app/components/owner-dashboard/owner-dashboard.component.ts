@@ -10,6 +10,8 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 export class OwnerDashboardComponent {
   partyHalls: any[] = [];
   owner: any = {};
+  ownerNotifications: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }[] = [];
+  showNotifList = false;
 
   constructor(private router:Router,private auth:AuthorizationService) { }
 
@@ -18,11 +20,13 @@ export class OwnerDashboardComponent {
      // Retrieve user data from local storage
      const currentOwner = JSON.parse(localStorage.getItem('currentOwner') || '{}');
      if (currentOwner && currentOwner.id) {
-       // Initialize component properties with user data
        this.owner = currentOwner;
- 
-       // (optional) log the user data
        console.log('Owner data in OwnerDashboardComponent', this.owner);
+
+       // Retrieve user notifications from local storage
+    const ownerNotifications = JSON.parse(localStorage.getItem('ownerNotifications') || '[]');
+    this.ownerNotifications = ownerNotifications;
+    console.log('Owner notifications:', this.ownerNotifications);
      }
  
   }
@@ -34,5 +38,31 @@ export class OwnerDashboardComponent {
     localStorage.removeItem('currentOwner');
     localStorage.setItem('isLoggedIn', 'false');
     this.router.navigate(['/']);
+  }
+
+  showNotifications(userType: string): void {
+    if (userType === 'user') {
+      this.showNotifList = true;
+      this.markAsReadAll(userType);
+    }
+  }
+  
+  markAsRead(notif: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }): void {
+    notif.isRead = true;
+    localStorage.setItem('ownerNotifications', JSON.stringify(this.ownerNotifications));
+  }
+  
+  markAsReadAll(userType: string): void {
+    if (userType === 'user') {
+      this.ownerNotifications.forEach((notif) => { notif.isRead = true; });
+      localStorage.setItem('ownerNotifications', JSON.stringify(this.ownerNotifications));
+    }
+  }
+  
+  clearAllNotifications(userType: string): void {
+    if (userType === 'user') {
+      this.ownerNotifications = [];
+      localStorage.setItem('ownerNotifications', JSON.stringify([]));
+    }
   }
 }

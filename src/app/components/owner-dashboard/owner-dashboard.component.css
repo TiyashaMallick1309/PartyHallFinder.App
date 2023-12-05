@@ -124,3 +124,60 @@ h2{
 .nav-link:hover {
     background-color: #7c6666;
 }
+
+.notifications {
+    position: absolute;
+    top: calc(10%);
+    right: 2rem;
+    background-color: #fff;
+    z-index: 999;
+    padding: 10px;
+    border: 1px solid #ddd;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  
+  .notifications.visible {
+    display: block;
+  }
+  
+  .notifications.hidden {
+    display: none;
+  }
+
+  .notifications h3 {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+  
+  .notifications ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .notifications li {
+    margin: 0;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .notifications li:last-child {
+    border-bottom: none;
+  }
+  
+  .notifications li a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .notifications li a:hover {
+    color: #666;
+  }
+  
+  .notifications li p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #999;
+  }

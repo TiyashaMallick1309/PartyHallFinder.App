@@ -150,7 +150,7 @@ export class BookingComponent implements OnInit {
 
         this.slotService.confirmBooking(booking).subscribe((response) => {
           console.log("Booking in progress:", response); // Handle success/failure here 
-          
+          this.addNotification();
         });
         window.alert("Payment Successful! Booking Confirmed!!!")
         this.router.navigate(['/user-dashboard/party-hall-list']);
@@ -181,5 +181,15 @@ export class BookingComponent implements OnInit {
     }
 
     Razorpay.open(razorpayOptions, successCallback, failureCallback)
+  }
+
+  addNotification(): void {
+    const userNotifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
+    userNotifications.push({ message: 'Your party hall booking has been confirmed.', isRead: false, routerLink: '' });
+    localStorage.setItem('userNotifications', JSON.stringify(userNotifications));
+
+    const ownerNotifications = JSON.parse(localStorage.getItem('ownerNotifications') || '[]');
+    ownerNotifications.push({ message: 'A new party hall booking has been confirmed.', isRead: false, routerLink: '' });
+    localStorage.setItem('ownerNotifications', JSON.stringify(ownerNotifications));
   }
 }
