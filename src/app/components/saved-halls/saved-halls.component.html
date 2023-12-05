@@ -12,10 +12,10 @@
     <img [src]="partyHallService.getImageUrl(item.images)" alt="{{ item.name }}" />
     <div class="card-details">
       <h3>{{ item.name }}</h3>
-      <p>{{ item.address.street }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }},
+      <p><i class="fas fa-map-marker-alt"></i> {{ item.address.street }}, {{ item.address.city }}, {{ item.address.state }}, {{ item.address.country }},
         {{ item.address.postalcode }}</p>
     </div>
-    <button (click)="removeSavedHall(item)">Remove from Wishlist</button>
+    <button (click)="removeSavedHall(item)">Remove</button>
   </div>
 </div>
 <div *ngIf="savedHalls.length===0" class="empty-wishlist">

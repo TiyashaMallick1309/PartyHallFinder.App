@@ -1,5 +1,5 @@
-<div class="container">
-  <br/><h2>Upload Form</h2><br/>
+<br/><div class="container">
+  <h2>Upload Form</h2>
   <form [formGroup]="uploadForm" (ngSubmit)="onUpload()">
     <br>
     <div class="form-group">
@@ -96,14 +96,15 @@
   
     <div class="terms-mailing">
       <div class="checkbox"> 
-        <input type="checkbox" name="checkbox"><span>I accept the <a
+        <input type="checkbox" name="checkbox"><span> I accept the <a
             href="https://www.partyhallsapp.com/privacy-policy">Privacy Policy for Party Halls App.</a></span>
       </div>
       <div class="checkbox">
-        <input type="checkbox" name="checkbox"><span>I have uploaded valid information.</span>
-      </div><br />
+        <input type="checkbox" name="checkbox"><span> I have uploaded valid information.</span>
+      </div>
     </div>
-    <button type="submit" class="btn btn-primary">Upload Party Hall</button>
-    <br/><br/>
-  </form><br/>
+    <button type="submit" class="btn btn-primary">Upload Hall</button>
+    <br/>
+  </form>
 </div>
+<br/>

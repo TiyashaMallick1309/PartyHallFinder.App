@@ -12,24 +12,22 @@
       </div>
     </div>
     <h1><b>{{ partyHall?.name }}</b></h1>
-    <p><b>Address:</b> {{ partyHall?.address?.street }}, {{ partyHall?.address?.city }}, {{ partyHall?.address?.state
+    <p> <i class="fas fa-map-marker-alt"></i> {{ partyHall?.address?.street }}, {{ partyHall?.address?.city }}, {{ partyHall?.address?.state
       }},
       {{ partyHall?.address?.country }}, {{ partyHall?.address?.postalcode }}</p> <br />
     <div class="map-frame">
       <div id="map"></div>
     </div>
     <br/>
-    <p><b>Capacity:</b> {{ partyHall?.capacity }}</p>
-    <p><b>Amenities:</b></p>
-    <ul>
-      <li *ngFor="let amenity of partyHall?.amenities">{{ amenity }}</li>
-    </ul>
+    <p><i class="fas fa-user-friends"></i> {{ partyHall?.capacity }}  
+      <i class="fas fa-dollar-sign"></i>{{partyHall?.pricing?.perDay}}</p>
+      <p><i class="fas fa-list"></i> <b> Amenities</b></p>
+      <ul type="none">
+        <li *ngFor="let amenity of partyHall?.amenities">
+          <i class="fas fa-check"></i> {{ amenity }}
+        </li>
+      </ul>
 
-    <div class="pricing">
-      <p><b>Price/hour:</b> ${{partyHall?.pricing?.perHour}}</p>
-      <p><b>Price/day:</b> ${{partyHall?.pricing?.perDay}}</p>
-      <p><b>Price/week:</b> ${{partyHall?.pricing?.perWeek}}</p>
-    </div>
     <div class="button">
       <button (click)="saveToSavedList()" class="add-to-wishlist-button">Save Hall</button><br />
       <button (click)="seeReview()" class="review">See Reviews</button>

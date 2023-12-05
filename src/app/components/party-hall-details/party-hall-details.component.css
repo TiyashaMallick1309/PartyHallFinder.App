@@ -22,11 +22,10 @@ ul li{
   margin-top: 20px;
   display: flex;
   flex-direction: column;
-  max-width: 650px;
+  max-width: 620vw;
   padding: 20px;
   border: 2px solid #ddd;
   border-radius: 5px;
-  /* background-image: linear-gradient(to top, rgb(209, 197, 197),rgb(211, 205, 211)); */
   box-shadow: 2px 2px 2px 2px rgba(0.3, 0.3, 0.3, 0.3);
   margin:5vw;
   text-align: left;
@@ -197,3 +196,13 @@ ul li{
 }
 
 .button { display: flex; justify-content: space-evenly; }
+
+.fa-dollar-sign{
+  margin-left:20%;
+  margin-right:0.3vw;
+}
+
+.fa-user-friends{
+  margin-left:25%;
+  margin-right:0.5vw;
+}

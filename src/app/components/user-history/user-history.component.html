@@ -11,17 +11,17 @@
       </div>
     </div>
     <div class="mt-5 text-center">
-      <h4 class="mb-0">{{ firstName }} {{ lastName }}</h4><br/>
-      <h4 class="mb-0">{{ userName}} </h4><br/>
-      Email: <span class="text-muted mb-2">{{ email }}</span><br/><br/>
-      Phn. No.: <span class="text-muted mb-2">{{ phonenumber }}</span><br/><br/>
-      Address: <span *ngFor="let addr of address">
-        <span class="text-muted mb-2">{{ addr.street }}, {{ addr.city }}, {{ addr.state }}</span><br/><br/>
-        <span class="text-muted mb-2">{{ addr.country }}, {{ addr.postalcode }}</span>
+      <h4 class="mb-0"><i class="fas fa-user"></i> {{ firstName }} {{ lastName }}</h4><br/>
+      <h4 class="mb-0"><i class="fas fa-user-circle"></i> {{ userName}} </h4><br/>
+      <i class="fas fa-envelope"></i> <span class="text-muted mb-2"> {{ email }}</span><br/><br/>
+      <i class="fas fa-phone"></i> <span class="text-muted mb-2"> {{ phonenumber }}</span><br/><br/>
+      <i class="fas fa-map-marker-alt"></i> <span *ngFor="let addr of address">
+        <span class="text-muted mb-2"> {{ addr.street }}, {{ addr.city }}, {{ addr.state }}</span><br/><br/>
+        <span class="text-muted mb-2"> {{ addr.country }}, {{ addr.postalcode }} </span>
       </span>
     </div>
   </div>
-</div>
+</div><br/>
 <br/>
 <h2>Halls Booked: </h2>
 <!-- Party Hall Cards -->
@@ -31,12 +31,14 @@
       [alt]="currentPartyHall.name + ' image'" />
     <div class="party-hall-details">
       <h3><b>{{ currentPartyHall.name }}</b></h3>
-      <h5>{{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{
+      <h5><i class="fas fa-map-marker-alt"></i> {{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, {{
         currentPartyHall.address.country
         }}</h5>
-      <p>Capacity: {{ currentPartyHall.capacity }}<br /><br />Pricing: {{ currentPartyHall.pricing.perDay }}/day</p>
+      <p><i class="fas fa-user-friends"></i> {{ currentPartyHall.capacity }}<br /><br /><i class="fas fa-dollar-sign"></i> {{ currentPartyHall.pricing.perDay }}</p>
     </div>
-    <button (click)="Rating()">Rate</button>
+    <div class="d-flex rate">
+      <button (click)="Rating()">Rate</button>
+    </div>
   </div>
 </div>
 <router-outlet></router-outlet>

@@ -112,8 +112,15 @@ button {
   margin:1rem;
   position: static;
   justify-content: space-evenly;
-  background-color: darkseagreen;
+  background-color: rgb(203, 114, 114);
   border-radius: 0.8rem;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+  border: none;
+  padding: 0.3rem;
+}
+
+button:hover{
+background-color: brown;
 }
 
 a{
@@ -174,4 +181,14 @@ a{
 
 h2{
   margin:1rem;
+}
+
+.fa-dollar-sign{
+  margin-left:1.5rem;
+  margin-right:0.3rem;
+}
+
+.fa-user-friends{
+  margin-left:1.5rem;
+  margin-right:0.3rem;
 }

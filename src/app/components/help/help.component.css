@@ -14,12 +14,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top:0.5rem;
 }
 
 form {
-  margin-top:8rem;
+  margin:2rem;
   box-sizing: border-box;
-  max-height: 400px;
+  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,7 +50,7 @@ label,
 }
 
 label i {
-  margin: 0 10px 0 0;
+  margin: 0 5px 0 0;
 }
 
 .field:focus-within label {
