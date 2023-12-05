@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { PartyHallService } from 'src/app/services/party-hall.service';
 import { PartyHall } from 'src/app/models/party-hall';
 import { Subscription } from 'rxjs';
+import { NotificationService } from 'src/app/services/notification.service';
 
 declare var Razorpay: any;
 
@@ -26,12 +27,16 @@ export class BookingComponent implements OnInit {
   partyHalls: PartyHall[] = [];
   partyHallsSubscription!: Subscription;
   perDayPrice!: number;
+  user: any;
+  hallName!:string;
 
-  constructor(private partyHallService: PartyHallService, private slotService: SlotService, private router: Router) {
+  constructor(private notificationService: NotificationService, private partyHallService: PartyHallService, private slotService: SlotService, private router: Router) {
     // Set the min and max dates for the datepicker
     const currentDate = new Date();
     this.minDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
     this.maxDate = new Date(currentDate.getFullYear() + 1, currentDate.getMonth(), currentDate.getDate());
+    this.user = notificationService.getUser();
+    console.log(this.user);
   }
 
   ngOnInit() {
@@ -40,6 +45,7 @@ export class BookingComponent implements OnInit {
       console.log(`ID: ${this.id}`);
       this.partyHallService.getPartyHall(this.id).subscribe((partyHall: PartyHall) => {
         this.perDayPrice = partyHall.pricing.perDay;
+        this.hallName = partyHall.name;
       });
 
       //userid
@@ -65,7 +71,6 @@ export class BookingComponent implements OnInit {
             const endDate = new Date(Date.parse(booking.endDate));
             const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
             this.diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            console.log("reached");
             console.log(`Start Date: ${startDate}, End Date: ${endDate}, Difference in Days: ${this.diffDays}`);
             const dates = [];
             for (let i = 0; i < this.diffDays; i++) {
@@ -147,10 +152,25 @@ export class BookingComponent implements OnInit {
         const startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()).toISOString();
         const endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate() + 1).toISOString();
         const booking = { userId, partyhallid: this.id, startDate, endDate, isconfirmed: true, bookingDate };
-
+        const user = this.notificationService.getUser();
+        const bookingData = { user, partyHallId: this.id, partyHallName: this.hallName, booking };
+      
+        // Check if bookingData exists in the bookingHistory
+        const bookingHistory = JSON.parse(localStorage.getItem('bookingHistory') || '[]');
+        const existingBooking = bookingHistory.find(
+          (booking: { partyHallId: string, booking: { startDate: string, endDate: string } }) =>
+            booking.partyHallId === this.id &&
+            booking.booking.startDate === startDate &&
+            booking.booking.endDate === endDate
+        );
+        
+        if (!existingBooking) {
+          bookingHistory.push(bookingData);
+          localStorage.setItem('bookingHistory', JSON.stringify(bookingHistory));
+        }
+      
         this.slotService.confirmBooking(booking).subscribe((response) => {
           console.log("Booking in progress:", response); // Handle success/failure here 
-          this.addNotification();
         });
         window.alert("Payment Successful! Booking Confirmed!!!")
         this.router.navigate(['/user-dashboard/party-hall-list']);
@@ -181,18 +201,5 @@ export class BookingComponent implements OnInit {
     }
 
     Razorpay.open(razorpayOptions, successCallback, failureCallback)
-  }
-
-  addNotification(): void {
-    // Retrieve existing user notifications from local storage
-    const userNotifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
-      
-    // Push a new notification and store in local storage
-    userNotifications.push({ message: 'Your party hall booking has been confirmed.', isRead: false, routerLink: '' });
-    localStorage.setItem('userNotifications', JSON.stringify(userNotifications));
-
-    const ownerNotifications = JSON.parse(localStorage.getItem('ownerNotifications') || '[]');
-    ownerNotifications.push({ message: 'A new party hall booking has been confirmed.', isRead: false, routerLink: '' });
-    localStorage.setItem('ownerNotifications', JSON.stringify(ownerNotifications));
   }
 }

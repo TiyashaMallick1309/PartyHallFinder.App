@@ -14,4 +14,14 @@ export class NotificationService {
   setUser(user: any): void {
     this.userSubject.next(user);
   }
+
+  getUser(): any {
+    return JSON.parse(localStorage.getItem('currentUser') || '{}');
+  }
+
+  // Function to get booking history from local storage
+  getBookingHistory(): any[] {
+    return JSON.parse(localStorage.getItem('bookingHistory') || '[]');
+  }
+
 }

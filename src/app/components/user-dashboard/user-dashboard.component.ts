@@ -14,8 +14,9 @@ export class UserDashboardComponent {
   partyHalls: any[] = [];
   user!: User;
   savedHalls: any[] = [];
-  userNotifications: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }[] = [];
+  userNotifications: { message: string, isRead: boolean, dateCreated: Date}[] = [];
   showNotifList = false;
+  bookingHistory: any[] = [];
 
   constructor(private notificationService: NotificationService, private router: Router, private auth: AuthorizationService, private partyHallService: PartyHallService) { }
 
@@ -30,13 +31,10 @@ export class UserDashboardComponent {
       console.log('User data in UserDashboardComponent', this.user);
       // Pass user data to notification service
       this.notificationService.setUser(this.user);
+      this.bookingHistory = this.notificationService.getBookingHistory();
+      console.log(this.bookingHistory)
     }
     this.getSavedHalls();
-
-    // Retrieve user notifications from local storage
-    const userNotifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
-    this.userNotifications = userNotifications;
-    console.log('User notifications:', this.userNotifications);
   }
 
   getSavedHalls() {
@@ -62,10 +60,28 @@ export class UserDashboardComponent {
     if (userType === 'user') {
       this.showNotifList = true;
       this.markAsReadAll(userType);
+  
+      // Check booking history for user's notifications
+      const relevantBookings = this.bookingHistory.filter((booking) => booking.user.id === this.user.id);
+      relevantBookings.forEach((booking) => {
+        // Create notification message
+        const message = `Booking confirmed: ${booking.partyHallName} from ${new Date(booking.booking.startDate).toLocaleDateString()} to ${new Date(booking.booking.endDate).toLocaleDateString()}`;
+  
+        // Create new notification object and add to userNotifications array
+        const notification = {
+          message: message,
+          isRead: false,
+          dateCreated: new Date()
+        };
+        this.userNotifications.push(notification);
+      });
+  
+      // Save notifications to local storage
+      localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
     }
   }
 
-  markAsRead(notif: { message: string, isRead: boolean, dateCreated: Date, routerLink: string }): void {
+  markAsRead(notif: { message: string, isRead: boolean, dateCreated: Date}): void {
     notif.isRead = true;
     localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
   }
@@ -74,13 +90,6 @@ export class UserDashboardComponent {
     if (userType === 'user') {
       this.userNotifications.forEach((notif) => { notif.isRead = true; });
       localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
-    }
-  }
-
-  clearAllNotifications(userType: string): void {
-    if (userType === 'user') {
-      this.userNotifications = [];
-      localStorage.setItem('userNotifications', JSON.stringify([]));
     }
   }
 

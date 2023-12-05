@@ -44,19 +44,16 @@
       <h3 class="text-center">Notifications</h3>
       <ul>
         <li *ngFor="let notif of userNotifications">
-          <a class="nav-link" [routerLink]="notif.routerLink" *ngIf="notif.isRead === false" (click)="markAsRead(notif)">
+          <a class="nav-link" *ngIf="notif.isRead === false" (click)="markAsRead(notif)">
             <strong>{{notif.message}}</strong>
             <p class="text-muted">{{notif.dateCreated | date:'MMM d, y, h:mm a'}}</p>
           </a>
-          <a class="nav-link" [routerLink]="notif.routerLink" *ngIf="notif.isRead === true">
+          <a class="nav-link" *ngIf="notif.isRead === true">
             <strong>{{notif.message}}</strong>
             <p class="text-muted">{{notif.dateCreated | date:'MMM d, y, h:mm a'}}</p>
           </a>
         </li>
       </ul>
-      <div class="d-flex justify-content-center mt-3">
-        <button class="btn btn-secondary" (click)="clearAllNotifications('user')">Clear All</button>
-      </div>
     </div>
   </div>
 </div>

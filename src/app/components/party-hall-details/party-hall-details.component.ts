@@ -114,6 +114,7 @@ export class PartyHallDetailsComponent implements OnInit {
     } else {
         alert('This party hall is already on your list.');
     }
+    window.location.reload();
 }
 
   bookHall() {

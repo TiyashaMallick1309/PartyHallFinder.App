@@ -43,6 +43,7 @@ removeSavedHall(savedHall: any) {
 
   // Display a success message
   alert('The party hall has been removed from your list.');
+  window.location.reload();
 }
 
   // Method to clear the entire saved list
@@ -54,6 +55,7 @@ clearSavedHalls() {
   // Update the savedHalls list in local storage
   localStorage.setItem('savedHalls', JSON.stringify(this.savedHalls));
   console.log('Saved halls updated in local storage:', JSON.parse(localStorage.getItem('savedHalls') || '[]'));
+  window.location.reload();
 }
 
   logout() {
