@@ -30,8 +30,7 @@ export class ReviewRatingComponent {
         this.reviews = response.filter((review: any) => review.partyHallId === this.id)
         .map((review: any) => ({
           rating: review.rating,
-          reviewText: review.reviewText,
-          ownerReply: review.reply
+          reviewText: review.reviewText
         }));
         console.log(this.reviews);
       },

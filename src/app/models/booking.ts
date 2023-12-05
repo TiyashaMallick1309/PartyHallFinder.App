@@ -5,4 +5,5 @@ export interface Booking{
     startDate:Date;
     endDate:Date;
     isConfirmed:boolean;
+    bookingDate: Date;
 }

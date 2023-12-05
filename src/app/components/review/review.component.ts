@@ -57,8 +57,7 @@ export class ReviewComponent {
       partyhallid: this.partyHallId,
       reviewtext: form.value.review,
       rating: form.value.rating,
-      date: new Date(),
-      reply:''
+      date: new Date()
     };
     this.reviewRatingService.submitReview(review).subscribe(res => {
       console.log(res);

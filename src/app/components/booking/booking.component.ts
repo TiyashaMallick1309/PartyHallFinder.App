@@ -21,6 +21,7 @@ export class BookingComponent implements OnInit {
   datesToDisable: Date[] = [];
   startDate!: Date;
   endDate!: Date;
+  bookingDate: Date = new Date();
   diffDays!: number;
   partyHalls: PartyHall[] = [];
   partyHallsSubscription!: Subscription;
@@ -40,18 +41,23 @@ export class BookingComponent implements OnInit {
       this.partyHallService.getPartyHall(this.id).subscribe((partyHall: PartyHall) => {
         this.perDayPrice = partyHall.pricing.perDay;
       });
+
       //userid
       const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
       const initialUserId = currentUser['id'];
       console.log(initialUserId)
+
       // Store the user ID in the slot service
       this.slotService.setUserId(initialUserId);
+
       // Fetch all the booking data
       this.slotService.getSlots().subscribe((bookings) => {
         console.log(`All Bookings:`, bookings);
+
         // Filter out the bookings for the party hall with the specified id
         const filteredBookings = bookings.filter((booking) => booking.partyHallId == this.id);
         console.log(`Filtered Bookings:`, filteredBookings);
+
         // Populate the bookedDateRanges array with the start and end dates of the filtered bookings
         if (filteredBookings.length > 0) {
           const bookedDateRanges = filteredBookings.map((booking) => {
@@ -73,9 +79,9 @@ export class BookingComponent implements OnInit {
         } else {
           this.diffDays = 1;
         }
+      });
     });
-  });
-}
+  }
 
   // Merge overlapping date ranges
   mergeDateRanges(ranges: any[]): any[] {
@@ -137,12 +143,14 @@ export class BookingComponent implements OnInit {
       image: 'https://th.bing.com/th/id/OIP.PqeeWcgP2vqyNHU_zE0AmQAAAA?w=396&h=396&rs=1&pid=ImgDetMain',
       handler: (response: { razorpay_payment_id: any }) => {
         const userId = this.slotService.userId;
+        const bookingDate = new Date().toISOString();
         const startDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate()).toISOString();
         const endDate = new Date(this.endDate.getFullYear(), this.endDate.getMonth(), this.endDate.getDate() + 1).toISOString();
-        const booking = { userId, partyhallid: this.id, startDate, endDate, isconfirmed: true };
+        const booking = { userId, partyhallid: this.id, startDate, endDate, isconfirmed: true, bookingDate };
 
         this.slotService.confirmBooking(booking).subscribe((response) => {
           console.log("Booking in progress:", response); // Handle success/failure here 
+          
         });
         window.alert("Payment Successful! Booking Confirmed!!!")
         this.router.navigate(['/user-dashboard/party-hall-list']);

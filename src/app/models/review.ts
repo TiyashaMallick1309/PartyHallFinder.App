@@ -5,5 +5,4 @@ export interface Review{
     reviewtext: string;
     rating: number;
     date: Date;
-    reply:string;
 }
