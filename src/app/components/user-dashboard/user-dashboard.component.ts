@@ -33,6 +33,7 @@ export class UserDashboardComponent {
       this.notificationService.setUser(this.user);
       this.bookingHistory = this.notificationService.getBookingHistory();
       console.log(this.bookingHistory)
+      this.userNotifications = [];
     }
     this.getSavedHalls();
   }
@@ -52,34 +53,40 @@ export class UserDashboardComponent {
   }
 
   savedList() {
+    // Navigate to the saved halls list component and pass the saved halls from the service
     this.router.navigate(['user-dashboard/saved'], { state: { savedHalls: this.partyHallService.savedHalls } });
   }
 
   showNotifications(userType: string): void {
-    this.showNotifList = !this.showNotifList; // toggle the showNotifList variable
+    this.showNotifList = !this.showNotifList;
+    // toggle the showNotifList variable 
     if (userType === 'user') {
       const lastProcessedBooking = localStorage.getItem('lastProcessedBooking');
-      let lastDateProcessed = lastProcessedBooking ? new Date(JSON.parse(lastProcessedBooking).booking.endDate) : new Date(0);
+      let lastDateProcessed = lastProcessedBooking ?
+        new Date(JSON.parse(lastProcessedBooking).booking.endDate) : new Date(0);
       const relevantBookings = this.bookingHistory.filter((booking) => booking.user.id === this.user.id);
+
+      // Clear userNotifications array before adding new notifications
+      this.userNotifications = [];
+
       relevantBookings.forEach((booking) => {
         const startDate = new Date(booking.booking.startDate);
         const endDate = new Date(booking.booking.endDate);
-        if (endDate > lastDateProcessed) {
-          // Create notification message
-          const message = `Booking confirmed: ${booking.partyHallName} from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`;
+        console.log("reached")
+        // Create notification message
+        const message = `Booking confirmed: ${booking.partyHallName} from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`;
 
-          // Create new notification object and add to userNotifications array
-          const notification = {
-            message: message,
-            isRead: false,
-            dateCreated: new Date()
-          };
-          this.userNotifications.push(notification);
+        // Create new notification object and add to userNotifications array
+        const notification = {
+          message: message,
+          isRead: false,
+          dateCreated: new Date()
+        };
+        this.userNotifications.push(notification);
 
-          // Update lastProcessedBooking in local storage
-          localStorage.setItem('lastProcessedBooking', JSON.stringify(booking));
-          lastDateProcessed = endDate;
-        }
+        // Update lastProcessedBooking in local storage
+        localStorage.setItem('lastProcessedBooking', JSON.stringify(booking));
+        lastDateProcessed = endDate;
       });
 
       // Save notifications to local storage
