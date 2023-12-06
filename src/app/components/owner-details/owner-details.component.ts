@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { filter } from 'rxjs';
 import { PartyHall } from 'src/app/models/party-hall';
-import { ApiService } from 'src/app/services/api.service';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { PartyHallService } from 'src/app/services/party-hall.service';
 
@@ -20,7 +18,7 @@ export class OwnerDetailsComponent implements OnInit {
   id: string = '';
   partyHalls: PartyHall[] = [];
   selectedPartyHall: PartyHall | undefined;
-  private currentOwner: any;
+  currentOwner: any;
   confirmDelete: boolean = false;
   deleteHallId: string = '';
 
@@ -50,15 +48,12 @@ export class OwnerDetailsComponent implements OnInit {
       if (isAuthenticated) {
         this.authService.firstNameSubject.subscribe(firstName => {
           this.firstName = firstName;
-          console.log("first: ", firstName)
         });
         this.authService.nameSubject.subscribe(username => {
           this.username = username;
-          console.log(username, " username")
         });
         this.authService.lastNameSubject.subscribe(lastName => {
           this.lastName = lastName;
-          console.log("lastName: ", lastName)
         });
         this.authService.EmailSubject.subscribe(email => {
           this.email = email;

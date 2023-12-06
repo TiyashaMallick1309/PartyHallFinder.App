@@ -61,7 +61,7 @@
 
 /* Control the hall card styles */
 .party-hall-card {
-  width: 18rem;
+  width: 16rem;
   margin: 2rem;
   padding:0.3rem;
   border: 0.2rem solid #ccc;
@@ -74,7 +74,7 @@
 /* Control the size of the hall card image */
 .party-hall-card img {
   width: 100%;
-  height: 20rem;
+  height: 18rem;
 }
 
 /* Control the dhall card details */

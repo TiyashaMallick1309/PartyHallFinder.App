@@ -52,7 +52,6 @@ export class UserDashboardComponent {
   }
 
   savedList() {
-    // Navigate to the saved halls list component and pass the saved halls from the service
     this.router.navigate(['user-dashboard/saved'], { state: { savedHalls: this.partyHallService.savedHalls } });
   }
 
