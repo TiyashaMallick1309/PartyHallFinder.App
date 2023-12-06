@@ -1,7 +1,7 @@
-<div class="dashboard-container  navbar-expand navbar-light navbar-bg d-flex">
+<div class="dashboard-container navbar-expand navbar-light navbar-bg d-flex">
+
   <div class="dashboard-nav">
-    <br/><br/><br/><br/>
-    <h2>Owner Dashboard</h2>
+    <h2>Dashboard</h2>
     
     <ul class="nav-list">
       <li class="nav-item">
@@ -10,14 +10,37 @@
       <li class="nav-item border-bottom">
         <a class="nav-link" routerLink="owner-details">Details</a>
       </li>
-      <button class="logout-btn" (click)="logout()">Logout</button>
     </ul>
   </div>
   <div class="dashboard-content">
-    <div class="dashboard-tabs">
+    <div class="dashboard-tabs d-flex">
+      <div class="topbar d-flex justify-content-end align-items-center">
+        <button class="notif-btn" (click)="showNotifications()">
+          <i class="fas fa-bell" *ngIf="ownerNotifications.length > 0"></i>
+          <i class="far fa-bell" *ngIf="ownerNotifications.length == 0"></i>
+        </button>
+        <button class="logout-btn" (click)="logout()"><i class="fas fa-sign-out-alt"></i></button>
+      </div>
+
       <div class="tab-content">
         <router-outlet></router-outlet>
       </div>
+    
+
+    <div class="notifications" *ngIf="showNotifList">
+      <ul>
+        <li *ngFor="let notif of ownerNotifications">
+          <a class="nav-link" *ngIf="notif.isRead === false" (click)="markAsRead(notif)">
+            <strong>{{notif.message}}</strong>
+            <p class="text-muted">{{notif.dateCreated | date:'MMM d, y, h:mm a'}}</p>
+          </a>
+          <a class="nav-link" *ngIf="notif.isRead === true">
+            <strong>{{notif.message}}</strong>
+            <p class="text-muted">{{notif.dateCreated | date:'MMM d, y, h:mm a'}}</p>
+          </a>
+        </li>
+      </ul>
     </div>
   </div>
+</div>
 </div>

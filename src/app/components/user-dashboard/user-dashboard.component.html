@@ -41,7 +41,6 @@
     
 
     <div class="notifications" *ngIf="showNotifList">
-      <h3 class="text-center">Notifications</h3>
       <ul>
         <li *ngFor="let notif of userNotifications">
           <a class="nav-link" *ngIf="notif.isRead === false" (click)="markAsRead(notif)">
