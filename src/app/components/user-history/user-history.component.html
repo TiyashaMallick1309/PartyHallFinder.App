@@ -6,8 +6,7 @@
     </div>
     <div class="user text-center">
       <div class="profile">
-        <img src="https://th.bing.com/th/id/OIP.TvQr31f2ewCZIvzqS5n65AHaHa?rs=1&pid=ImgDetMain" class="rounded-circle"
-          width="80">
+        <img src="https://th.bing.com/th/id/OIP.TvQr31f2ewCZIvzqS5n65AHaHa?rs=1&pid=ImgDetMain" class="rounded-circle" width="80">
       </div>
     </div>
     <div class="mt-5 text-center">
@@ -21,24 +20,33 @@
       </span>
     </div>
   </div>
-</div><br/>
-<br/>
-<h2>Halls Booked </h2>
-<!-- Party Hall Cards -->
-<div class="party-hall-card-grid">
-  <div *ngFor="let currentPartyHall of matchingHalls" class="party-hall-card">
-    <img [src]="partyHallService.getImageUrl(currentPartyHall.images)" (error)="handleImageError($event)"
-      [alt]="currentPartyHall.name + ' image'" />
-    <div class="party-hall-details">
-      <h3><b>{{ currentPartyHall.name }}</b></h3>
-      <p><i class="fas fa-map-marker-alt"></i> {{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }}, 
-      {{currentPartyHall.address.country}}</p>
-      <div class="info"><div><i class="fas fa-user-friends"></i> {{ currentPartyHall.capacity }}</div>
-        <div><i class="fas fa-dollar-sign"></i> {{ currentPartyHall.pricing.perDay }}</div></div>
-    </div>
-    <div class="d-flex rate">
-      <button (click)="Rating()">Rate</button>
+</div>
+<br/><br/>
+<ng-container *ngIf="matchingHalls.length > 0">
+  <h2>Halls Booked</h2>
+  <!-- Party Hall Cards -->
+  <div class="party-hall-card-grid">
+    <div *ngFor="let currentPartyHall of matchingHalls" class="party-hall-card">
+      <img [src]="partyHallService.getImageUrl(currentPartyHall.images)" (error)="handleImageError($event)"
+        [alt]="currentPartyHall.name + ' image'" />
+      <div class="party-hall-details">
+        <h3><b>{{ currentPartyHall.name }}</b></h3>
+        <p><i class="fas fa-map-marker-alt"></i> {{ currentPartyHall.address.city }}, {{ currentPartyHall.address.state }},
+        {{currentPartyHall.address.country}}</p>
+        <div class="info">
+          <div><i class="fas fa-user-friends"></i> {{ currentPartyHall.capacity }}</div>
+          <div><i class="fas fa-dollar-sign"></i> {{ currentPartyHall.pricing.perDay }}</div>
+        </div>
+      </div>
+      <div class="d-flex rate">
+        <button (click)="Rating()">Rate</button>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+<ng-container *ngIf="matchingHalls.length === 0">
+  <div class="text-center">
+    <h2>No halls booked yet!</h2>
+  </div>
+</ng-container>
 <router-outlet></router-outlet>

@@ -1,113 +1,171 @@
-<form [formGroup]="registrationForm" (ngSubmit)="onRegistration()">
-  <br>
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" class="form-control" formControlName="username" id="username" placeholder="Username" required>
-    <div *ngIf="registrationForm.controls?.['username']?.errors?.['required']" class="invalid-feedback d-block">Username
-      is required.</div>
-  </div>
-  Name
-  <div class="form-group name">
-    <label for="firstName"></label>
-    <input type="text" class="form-control" formControlName="firstName" id="firstName" placeholder="First Name"
-      required>
-    <div *ngIf="registrationForm.controls?.['firstName']?.errors?.['required']" class="invalid-feedback d-block">First
-      Name is required.</div>
-    <label for="lastName"></label>
-    <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name" required>
-    <div *ngIf="registrationForm.controls?.['lastName']?.errors?.['required']" class="invalid-feedback d-block">Last
-      Name is required.</div>
-  </div>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" required>
-    <div *ngIf="registrationForm.controls?.['email']?.errors?.['emailNotUnique']" class="invalid-feedback d-block">Email
-      already exists, please login or use a different email.</div>
-    <div *ngIf="registrationForm.controls?.['email']?.errors?.['required']" class="invalid-feedback d-block">Email is
-      required.</div>
-    <div *ngIf="registrationForm.controls?.['email']?.errors?.['email']" class="invalid-feedback d-block">Email is
-      invalid.</div>
-  </div>
-  Password
-  <div class="form-group password">
-    <label for="password"></label>
-    <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password"
-      required>
-    <div *ngIf="registrationForm.controls?.['password']?.errors?.['required']" class="invalid-feedback d-block">Password
-      is required.</div>
-    <div *ngIf="registrationForm.controls?.['password']?.errors?.['minlength']" class="invalid-feedback d-block">
-      Password should be at least 8 characters long.</div>
-    <div *ngIf="registrationForm.controls?.['password']?.errors?.['pattern']" class="invalid-feedback d-block">Password
-      must contain at least one uppercase letter, one lowercase letter, one number, and one special character.</div>
-
-    <label for="confirmPassword"></label>
-    <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword"
-      placeholder="Confirm Password" required>
-    <div *ngIf="registrationForm.controls?.['confirmPassword']?.errors?.['required']" class="invalid-feedback d-block">
-      Confirm Password is required.</div>
-    <div *ngIf="registrationForm.errors?.['passwordMatch']" class="invalid-feedback d-block">Passwords don't match.
+<div class="card" *ngIf="!showForm">
+  <div class="card-header">Choose Your Role</div>
+  <div class="card-body">
+    <div class="form-group">
+      <label>Select Role:</label>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="roleSelection" id="user" [value]="'user'"
+          [(ngModel)]="selectedRole" required>
+        <label class="form-check-label" for="user">
+          User
+        </label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="roleSelection" id="owner" [value]="'owner'"
+          [(ngModel)]="selectedRole" required>
+        <label class="form-check-label" for="owner">
+          Owner
+        </label>
+      </div>
+      <div *ngIf="!selectedRole" class="invalid-feedback d-block">Please select a role.</div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="phonenumber">Phone Number</label>
-    <input type="text" class="form-control" formControlName="phonenumber" id="phonenumber" placeholder="Phone Number"
-      required>
-    <div *ngIf="registrationForm.controls?.['phonenumber']?.errors?.['required']" class="invalid-feedback d-block">Phone
-      Number is required.</div>
-    <div *ngIf="registrationForm.controls?.['phonenumber']?.errors?.['pattern']" class="invalid-feedback d-block">Please
-      enter a valid phone number.</div>
-  </div>
-Address
-  <div class="form-group" formGroupName="address">
-    <label for="address.street"></label>
-    <input type="text" class="form-control" formControlName="street" id="address.street" placeholder="Street Address"
-      required>
-    <div *ngIf="registrationForm.get('address.street')?.errors?.['required']" class="invalid-feedback d-block">Street
-      Address is required.</div>
-    <div class="city-state">
-      <label for="address.city"></label>
-      <input type="text" class="form-control" formControlName="city" id="address.city" placeholder="City" required>
-      <div *ngIf="registrationForm.get('address.city')?.errors?.['required']" class="invalid-feedback d-block">City is
-        required.</div>
-
-      <label for="address.state"></label>
-      <input type="text" class="form-control" formControlName="state" id="address.state" placeholder="State" required>
-      <div *ngIf="registrationForm.get('address.state')?.errors?.['required']" class="invalid-feedback d-block">State is
-        required.</div>
-    </div>
-
-    <div class="coun-post">
-    <label for="address.country"></label>
-    <input type="text" class="form-control" formControlName="country" id="address.country" placeholder="Country"
-      required>
-    <div *ngIf="registrationForm.get('address.country')?.errors?.['required']" class="invalid-feedback d-block">Country
-      is required.</div>
-
-    <label for="address.postalcode"></label>
-    <input type="text" class="form-control" formControlName="postalcode" id="address.postalcode"
-      placeholder="Postal Code" required>
-    <div *ngIf="registrationForm.get('address.postalcode')?.errors?.['required']" class="invalid-feedback d-block">
-      Postal Code is required.</div>
+    <br/>
+    <button class="btn btn-primary" (click)="showRegistrationForm()" [disabled]="!selectedRole">Next</button>
   </div>
 </div>
 
-  <div class="form-group">
-    <label for="role">Role</label>
-    <select class="form-control" formControlName="role" id="role" required>
-      <option value="" disabled selected hidden>Choose a role</option>
-      <option value="user">User</option>
-    </select>
+<div class="card" *ngIf="showForm && selectedRole== 'user'">
+  <div class="card-header">Create Your Account</div>
+  <div class="card-body">
+    <form [formGroup]="registrationForm" (ngSubmit)="onRegistration()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" formControlName="username" id="username" placeholder="Username"
+          required>
+        <div *ngIf="registrationForm.controls?.['username']?.errors?.['required']" class="invalid-feedback d-block">
+          Username is required.
+        </div>
+      </div>
+
+      <div class="form-group name">
+        <label for="firstName">First Name:</label>
+        <input type="text" class="form-control" formControlName="firstName" id="firstName" placeholder="First Name"
+          required>
+        <div *ngIf="registrationForm.controls?.['firstName']?.errors?.['required']" class="invalid-feedback d-block">
+          First Name is required.
+        </div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name"
+          required>
+        <div *ngIf="registrationForm.controls?.['lastName']?.errors?.['required']" class="invalid-feedback d-block">
+          Last Name is required.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" required>
+        <div *ngIf="registrationForm.controls?.['email']?.errors?.['emailNotUnique']" class="invalid-feedback d-block">
+          Email already exists, please login or use a different email.
+        </div>
+        <div *ngIf="registrationForm.controls?.['email']?.errors?.['required']" class="invalid-feedback d-block">
+          Email is required.
+        </div>
+        <div *ngIf="registrationForm.controls?.['email']?.errors?.['email']" class="invalid-feedback d-block">
+          Email is invalid.
+        </div>
+      </div>
+
+      <div class="form-group password">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password"
+          required>
+        <div *ngIf="registrationForm.controls?.['password']?.errors?.['required']" class="invalid-feedback d-block">
+          Password is required.
+        </div>
+        <div *ngIf="registrationForm.controls?.['password']?.errors?.['minlength']" class="invalid-feedback d-block">
+          Password should be at least 8 characters long.
+        </div>
+        <div *ngIf="registrationForm.controls?.['password']?.errors?.['pattern']" class="invalid-feedback d-block">
+          Password must contain at least one uppercase letter, one lowercase letter, one number, and one special
+          character.
+        </div>
+
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword"
+          placeholder="Confirm Password" required>
+        <div *ngIf="registrationForm.controls?.['confirmPassword']?.errors?.['required']"
+          class="invalid-feedback d-block">
+          Confirm Password is required.
+        </div>
+        <div *ngIf="registrationForm.errors?.['passwordMatch']" class="invalid-feedback d-block">Passwords don't
+          match.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="phonenumber">Phone Number:</label>
+        <input type="text" class="form-control" formControlName="phonenumber" id="phonenumber"
+          placeholder="Phone Number" required>
+        <div *ngIf="registrationForm.controls?.['phonenumber']?.errors?.['required']" class="invalid-feedback d-block">
+          Phone Number is required.
+        </div>
+        <div *ngIf="registrationForm.controls?.['phonenumber']?.errors?.['pattern']" class="invalid-feedback d-block">
+          Please enter a valid phone number.
+        </div>
+      </div>
+
+      <div class="form-group" formGroupName="address">
+        <label for="address.street">Street Address:</label>
+        <input type="text" class="form-control" formControlName="street" id="address.street"
+          placeholder="Street Address" required>
+        <div *ngIf="registrationForm.get('address.street')?.errors?.['required']" class="invalid-feedback d-block">
+          Street Address is required.</div>
+
+        <div class="city-state">
+          <label for="address.city">City:</label>
+          <input type="text" class="form-control" formControlName="city" id="address.city" placeholder="City" required>
+          <div *ngIf="registrationForm.get('address.city')?.errors?.['required']" class="invalid-feedback d-block">City
+            is required.</div>
+
+          <label for="address.state">State:</label>
+          <input type="text" class="form-control" formControlName="state" id="address.state" placeholder="State"
+            required>
+          <div *ngIf="registrationForm.get('address.state')?.errors?.['required']" class="invalid-feedback d-block">
+            State is required.</div>
+        </div>
+
+        <div class="coun-post">
+          <label for="address.country">Country:</label>
+          <input type="text" class="form-control" formControlName="country" id="address.country" placeholder="Country"
+            required>
+          <div *ngIf="registrationForm.get('address.country')?.errors?.['required']" class="invalid-feedback d-block">
+            Country is required.</div>
+
+          <label for="address.postalcode">Postal Code:</label>
+          <input type="text" class="form-control" formControlName="postalcode" id="address.postalcode"
+            placeholder="Postal Code" required>
+          <div *ngIf="registrationForm.get('address.postalcode')?.errors?.['required']"
+            class="invalid-feedback d-block">Postal Code is required.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="role">Role:</label>
+        <select id="role" class="form-control" formControlName="role">
+          <option value="user">User</option>
+        </select>
+      </div>
+
+      <div class="terms-mailing">
+        <div class="checkbox">
+          <input type="checkbox" name="checkbox"><span> I accept the <a
+              href="https://www.partyhallsapp.com/privacy-policy">Privacy Policy for Party Halls App.</a></span>
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" name="checkbox"><span> I want to receive personalized offers by your site</span>
+        </div>
+      </div>
+      <br />
+      <button type="submit" class="btn" [disabled]="registrationForm.invalid" routerLink="login">Create
+        Account</button>
+    </form>
   </div>
-  <br />
-  <div class="terms-mailing">
-    <div class="checkbox">
-      <input type="checkbox" name="checkbox"><span> I accept the <a
-          href="https://www.partyhallsapp.com/privacy-policy">Privacy Policy for Party Halls App.</a></span>
-    </div>
-    <div class="checkbox">
-      <input type="checkbox" name="checkbox"><span> I want to recelve personalized offers by your site</span>
-    </div>
+</div>
+
+<div class="card" *ngIf="showForm && selectedRole== 'owner'">
+  <div class="card-header">Create Your Account</div>
+  <div class="card-body">
+    <app-owner-register></app-owner-register>
   </div>
-  <br />
-  <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid">Create Account</button>
-</form>
+</div>

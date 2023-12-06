@@ -1,5 +1,10 @@
 .card {
-  margin-top: 10px;
+  max-width: 400px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
 }
 
 .form-group {
@@ -24,7 +29,7 @@ input[type="text"] {
 
 button[type="submit"] {
   display: inline-block;
-  background-color: rgb(74, 93, 179);
+  background-color: rgb(179, 74, 74);
   border: none;
   color: #fff;
   padding: 10px 20px;
@@ -36,21 +41,12 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #033f7e;
+  background-color: #7e0303;
 }
 
 .text-danger {
   font-size: 12px;
   color: red;
-}
-
-.nav-tabs {
-  cursor: pointer;
-}
-
-.nav-tabs .nav-link.active {
-  color: #fff;
-  background-color: rgb(74, 93, 179);
 }
 
 .invalid-feedback {
@@ -73,32 +69,12 @@ button[type="submit"]:hover {
   }
 }
 
-.nav-link {
-  transition: 0.3s ease-out;
-}
-
-.social-container {
-  margin: 20px 0;
-}
-
-.social-container a {
-  border: 1px solid #DDDDDD;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 5px;
-  height: 40px;
-  width: 40px;
-}
-
 .social-media {
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-top: auto;
   font-size: 14px;
-  margin-left:20%;
 }
 
 .social-media span {
@@ -148,25 +124,21 @@ button[type="submit"]:hover {
 }
 
 .content .checkbox label {
-  color: #ffffff;
+  color: #000000;
   user-select: none;
   padding-left: 5px;
   padding-top: 0.5rem;
 }
 
-.content .pass-link {
-  color: "";
-}
-
 .signup-link {
-  color: #ffffff;
+  color: #000000;
   margin-top: 20px;
   text-align: center;
 }
 
 form .pass-link a,
 form .signup-link a {
-  color: #4158d0;
+  color: #4146d0;
   text-decoration: none;
 }
 

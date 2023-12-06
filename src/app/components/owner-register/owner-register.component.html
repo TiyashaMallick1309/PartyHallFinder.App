@@ -1,76 +1,80 @@
-<form [formGroup]="registrationForm" (ngSubmit)="onRegistration()" >
-    <br>
-    <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" formControlName="username" id="username" placeholder="Username">
-      <div *ngIf="registrationForm.controls?.['username']?.errors?.['required']" class="invalid-feedback d-block">Username
-        is required.</div>
+<form [formGroup]="registrationForm" (ngSubmit)="onRegistration()">
+  <br>
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" formControlName="username" id="username" placeholder="Username">
+    <div *ngIf="registrationForm.controls?.['username']?.errors?.['required']" class="invalid-feedback d-block">Username
+      is required.</div>
+  </div>
+  Name
+  <div class="form-group name">
+    <label for="firstName"></label>
+    <input type="text" class="form-control" formControlName="firstName" id="firstName" placeholder="First Name"
+      required>
+    <div *ngIf="registrationForm.controls?.['firstName']?.errors?.['required']" class="invalid-feedback d-block">First
+      Name is required.</div>
+    <label for="lastName"></label>
+    <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name" required>
+    <div *ngIf="registrationForm.controls?.['lastName']?.errors?.['required']" class="invalid-feedback d-block">Last
+      Name is required.</div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" required>
+    <div *ngIf="registrationForm.controls?.['email']?.errors?.['emailNotUnique']" class="invalid-feedback d-block">Email
+      already exists, please login or use a different email.</div>
+    <div *ngIf="registrationForm.controls?.['email']?.errors?.['required']" class="invalid-feedback d-block">Email is
+      required.</div>
+    <div *ngIf="registrationForm.controls?.['email']?.errors?.['email']" class="invalid-feedback d-block">Email is
+      invalid.</div>
+  </div>
+  Password
+  <div class="form-group password">
+    <label for="password"></label>
+    <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password"
+      required>
+    <div *ngIf="registrationForm.controls?.['password']?.errors?.['required']" class="invalid-feedback d-block">Password
+      is required.</div>
+    <div *ngIf="registrationForm.controls?.['password']?.errors?.['minlength']" class="invalid-feedback d-block">
+      Password should be at least 8 characters long.</div>
+    <div *ngIf="registrationForm.controls?.['password']?.errors?.['pattern']" class="invalid-feedback d-block">Password
+      must contain at least one uppercase letter, one lowercase letter, one number, and one special character.</div>
+
+    <label for="confirmPassword"></label>
+    <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword"
+      placeholder="Confirm Password" required>
+    <div *ngIf="registrationForm.controls?.['confirmPassword']?.errors?.['required']" class="invalid-feedback d-block">
+      Confirm Password is required.</div>
+    <div *ngIf="registrationForm.errors?.['passwordMatch']" class="invalid-feedback d-block">Passwords don't match.
     </div>
-    Name
-    <div class="form-group name">
-      <label for="firstName"></label>
-      <input type="text" class="form-control" formControlName="firstName" id="firstName" placeholder="First Name" required>
-      <div *ngIf="registrationForm.controls?.['firstName']?.errors?.['required']" class="invalid-feedback d-block">First
-        Name is required.</div>
-      <label for="lastName"></label>
-      <input type="text" class="form-control" formControlName="lastName" id="lastName" placeholder="Last Name" required>
-      <div *ngIf="registrationForm.controls?.['lastName']?.errors?.['required']" class="invalid-feedback d-block">Last
-        Name is required.</div>
+  </div>
+  <div class="form-group">
+    <label for="phonenumber">Phone Number</label>
+    <input type="text" class="form-control" formControlName="phonenumber" id="phonenumber" placeholder="Phone Number"
+      required>
+    <div *ngIf="registrationForm.controls?.['phonenumber']?.errors?.['required']" class="invalid-feedback d-block">Phone
+      Number is required.</div>
+    <div *ngIf="registrationForm.controls?.['phonenumber']?.errors?.['pattern']" class="invalid-feedback d-block">Please
+      enter a valid phone number.</div>
+  </div>
+
+  <div class="form-group">
+    <label for="role">Role</label>
+    <select class="form-control" formControlName="role" id="role" required>
+      <option value="" disabled selected hidden>Choose a role</option>
+      <option value="owner">Owner</option>
+    </select>
+  </div>
+  <br />
+  <div class="terms-mailing">
+    <div class="checkbox">
+      <input type="checkbox" name="checkbox"><span> I accept the <a href="https://www.partyhallsapp.com/privacy-policy">
+          Privacy Policy for Party Halls App.</a></span>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" required>
-      <div *ngIf="registrationForm.controls?.['email']?.errors?.['emailNotUnique']" class="invalid-feedback d-block">Email
-        already exists, please login or use a different email.</div>
-      <div *ngIf="registrationForm.controls?.['email']?.errors?.['required']" class="invalid-feedback d-block">Email is
-        required.</div>
-      <div *ngIf="registrationForm.controls?.['email']?.errors?.['email']" class="invalid-feedback d-block">Email is
-        invalid.</div>
+    <div class="checkbox">
+      <input type="checkbox" name="checkbox"><span> I want to recelve personalized offers by your site</span>
     </div>
-    Password
-    <div class="form-group password">
-      <label for="password"></label>
-      <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password" required>
-      <div *ngIf="registrationForm.controls?.['password']?.errors?.['required']" class="invalid-feedback d-block">Password
-        is required.</div>
-      <div *ngIf="registrationForm.controls?.['password']?.errors?.['minlength']" class="invalid-feedback d-block">
-        Password should be at least 8 characters long.</div>
-      <div *ngIf="registrationForm.controls?.['password']?.errors?.['pattern']" class="invalid-feedback d-block">Password
-        must contain at least one uppercase letter, one lowercase letter, one number, and one special character.</div>
- 
-      <label for="confirmPassword"></label>
-      <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
-      <div *ngIf="registrationForm.controls?.['confirmPassword']?.errors?.['required']" class="invalid-feedback d-block">
-        Confirm Password is required.</div>
-      <div *ngIf="registrationForm.errors?.['passwordMatch']" class="invalid-feedback d-block">Passwords don't match.
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="phonenumber">Phone Number</label>
-      <input type="text" class="form-control" formControlName="phonenumber" id="phonenumber" placeholder="Phone Number" required>
-      <div *ngIf="registrationForm.controls?.['phonenumber']?.errors?.['required']" class="invalid-feedback d-block">Phone
-        Number is required.</div>
-      <div *ngIf="registrationForm.controls?.['phonenumber']?.errors?.['pattern']" class="invalid-feedback d-block">Please
-        enter a valid phone number.</div>
-    </div>
-  
-    <div class="form-group">
-      <label for="role">Role</label>
-      <select class="form-control" formControlName="role" id="role" required>
-        <option value="" disabled selected hidden>Choose a role</option>
-        <option value="owner" >Owner</option>
-      </select>
-    </div>
-    <br/>
-    <div class="terms-mailing">
-      <div class="checkbox">
-        <input type="checkbox" name="checkbox"><span> I accept the <a
-            href="https://www.partyhallsapp.com/privacy-policy"> Privacy Policy for Party Halls App.</a></span>
-      </div>
-      <div class="checkbox">
-        <input type="checkbox" name="checkbox"><span> I want to recelve personalized offers by your site</span>
-      </div>
-    </div>
-    <br/>  
-    <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid">Create Account</button>
-  </form>
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary" [disabled]="registrationForm.invalid">Create Account</button>
+</form>

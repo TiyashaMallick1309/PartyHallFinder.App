@@ -7,6 +7,6 @@ export interface Owner {
     password: string;
     role: string;
     phonenumber: string;
-    ownedHall: string;
+    ownedHall: [];
 }
 

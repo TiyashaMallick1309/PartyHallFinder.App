@@ -1,177 +1,136 @@
-.carousel-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: -1;
-}
-
-img {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
 @media screen and (max-width: 768px) {
   .img {
     height: 50vh;
   }
 }
 
-.card {
+.icons .fa-dollar-sign {
+  margin-left: 1.5rem;
+  margin-right: 0.3rem;
+}
+
+.icons .fa-user-friends {
+  margin-left: 2rem;
+  margin-right: 0.5rem;
+}
+
+.party-hall-details {
+  margin: 0.5rem;
+}
+
+/* Control the font and margin for the details */
+p {
+  margin: 0.5rem;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+/* Set width of the cards to 100% for smaller devices */
+@media (max-width: 767px) {
+  .card {
+    width: 100%;
+  }
+}
+
+/* Control the look of hyperlink elements */
+a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Style the pagination container */
+.pagination-container {
+  position: relative;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.pagination .active a.page-link {
+  background-color: rgb(180, 17, 17);
+  border-color: #960c10;
+}
+
+/* Top Navigation Bar */
+.navbar {
   background-color: #fff;
-  background-image: linear-gradient(to top, #403939, #3b3636);
-  color:white;
+  box-shadow: 0px 3px 12px -8px rgba(0, 0, 0, 0.75);
 }
 
-h1{
-  color: white;
-  padding: 1rem;
-  margin: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 10px;
-  color: linear-gradient(to right, #ff9a9e, #fecfef);
-  font-family: Georgia, 'Times New Roman', Times, serif;
-  text-shadow: 3px 2px black;
-  text-align: justify;
-  font-size: 3rem;
+.navbar-brand {
   font-weight: bold;
+  font-size: 1.3rem;
 }
 
-h4{
-  color: white;
-  padding: 1rem;
-  margin: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border-radius: 10px;
-  color: linear-gradient(to right, #ff9a9e, #fecfef);
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  text-shadow: 1px 0.5px black;
-  text-align: justify;
+.navbar-nav .nav-link {
+  font-size: 1.1rem;
 }
 
-.card {
-  margin-top: 10px;
+/* Carousel */
+.carousel-container {
+  width: 100%;
+  height: 400px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.carousel-container img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Party Hall Cards */
+.card-body {
+  text-align: center;
+  color: #3b3636;
+  border: none;
+}
+
+.party-hall-card-grid {
+  margin: 0 -15px;
+}
+
+.party-hall-card {
   margin-bottom: 30px;
 }
 
-.form-group {
-  margin-bottom: 8px;
+.party-hall-card:hover{
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  cursor: pointer;
 }
 
-label {
-  display: block;
+.party-hall-card img {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+
+.party-hall-details h3 {
+  font-size: 1.3rem;
   margin-bottom: 0.5rem;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"] {
-  width: 100%;
-  border: 1px solid #ccc;
-  padding: 8px;
-  border-radius: 5px;
-  
-}
-
-.button-group {
-  text-align: center;
-}
-
-button[type="submit"] {
-  display: inline-block;
-  background-color: rgb(74, 93, 179);
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button[type="submit"]:hover {
-  background-color: #033f7e;
-}
-
-.text-danger {
-  font-size: 12px;
-  color: red;
-}
-
-.nav-tabs{
-  cursor: pointer;
-}
-
-.nav-tabs .nav-link.active {
-  color: #fff;
-  background-color: rgb(74, 93, 179);
-}
-
-.invalid-feedback {
-  animation: fade-in-out 0.5s ease-in-out;
-  animation-iteration-count: 1;
-  opacity: 1;
-}
-
-@keyframes fade-in-out {
-  0% {
-    opacity: 1;
-  }
-  75% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.nav-link {
-  transition: 0.3s ease-out;
-}
-
-.btn-primary {
-  display: inline-block;
+.party-hall-details p {
+  font-size: 1.1rem;
   margin: 0;
-  padding: .5rem 1rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #fff;
-  text-align: center;
-  background-color: #5282ca;
-  border-color: #6936f4;
-  /* border-radius: .25rem; */
-  transition: background-color .3s ease-out, border-color .3s ease-out, box-shadow .3s ease-out;
-  border-radius: 2rem;
-
 }
 
-.btn-primary:hover, .btn-primary:focus {
-  color: #fff;
-  background-color: #8735e5;
-  border-color: #e53935;
-  box-shadow: 0 0 0 .2rem rgba(244, 67, 54, .25);
+.icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 1.1rem;
+  justify-content: center;
 }
 
-.btn-primary:active, .btn-primary.active {
-  color: #fff;
-  background-color: #c62828;
-  border-color: #c62828;
-  box-shadow: inset 0 .2rem .4rem rgba(0, 0, 0, .15);
-}
-
-.btn-primary[disabled], .btn-primary.disabled {
-  opacity: .65;
-  background-color: #ccc;
-  border-color: #ccc;
-  color: #888;
-}
-
-.form-select{
-  border-radius: 2rem;
+.icons i {
+  margin-right: 0.5rem;
 }

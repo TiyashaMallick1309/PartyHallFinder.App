@@ -1,25 +1,15 @@
 .card {
-  margin-top: 10px;
+  max-width: 500px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
 }
 
 .form-group {
   margin-bottom: 8px;
 }
-
-/* .name,
-.password,
-.coun-post,
-.city-state {
-  display: flex;
-  flex-direction: row;
-}
-
-.name,
-.city-state,
-.coun-post,
-.password input::placeholder {
-  font-size: smaller;
-} */
 
 label {
   display: block;
@@ -46,7 +36,7 @@ input[type="text"] {
 
 button[type="submit"] {
   display: inline-block;
-  background-color: rgb(74, 93, 179);
+  background-color: rgb(179, 74, 74);
   border: none;
   color: #fff;
   padding: 10px 20px;
@@ -56,7 +46,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #033f7e;
+  background-color: #7e0303;
 
 }
 
@@ -71,7 +61,7 @@ button[type="submit"]:hover {
 
 .nav-tabs .nav-link.active {
   color: #fff;
-  background-color: rgb(74, 93, 179);
+  background-color: rgb(179, 74, 74);
 }
 
 .invalid-feedback {
@@ -96,4 +86,20 @@ button[type="submit"]:hover {
 
 .nav-link {
   transition: 0.3s ease-out;
+}
+
+.btn-primary {
+  background-color: #c02323;
+  border: white;
+}
+
+.btn-primary:hover {
+  background-color: #710c0c;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  border: white;
+}
+
+.form-check-input:checked {
+  background-color: rgb(144, 6, 6);
+  border:#710c0c
 }

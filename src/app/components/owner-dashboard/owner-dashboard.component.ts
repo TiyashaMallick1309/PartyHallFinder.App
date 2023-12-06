@@ -33,17 +33,19 @@ export class OwnerDashboardComponent {
         const booking = bookingObj.booking;
         console.log(bookingObj);
         console.log(this.owner.ownedHall);
-        if (booking.partyhallid === this.owner.ownedHall) {
-          const startDate = new Date(booking.startDate);
-          const endDate = new Date(booking.endDate);
-          const message = `Your party hall (${bookingObj.partyHallName}) has been booked from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}.`;
-          const notification = {
-            message: message,
-            isRead: false,
-            dateCreated: new Date()
-          };
-          this.ownerNotifications.push(notification);
-        }
+        this.owner.ownedHall.forEach((hallId: any) => {
+          if (booking.partyhallid === hallId) {
+            const startDate = new Date(booking.startDate);
+            const endDate = new Date(booking.endDate);
+            const message = `Your party hall (${bookingObj.partyHallName}) has been booked from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}.`;
+            const notification = {
+              message: message,
+              isRead: false,
+              dateCreated: new Date()
+            };
+            this.ownerNotifications.push(notification);
+          }
+        });
       });
     }
   }

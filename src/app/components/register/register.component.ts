@@ -10,17 +10,32 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  selectedAccountType = 'user';
+  showForm = false;
+  selectedRole!: string;
   registrationForm!: FormGroup;
   registrationFailed = false;
   submitted = false;
 
-  constructor(private authService: AuthorizationService, private fb: FormBuilder, private router: Router, private apiService: ApiService) { }
+  constructor(
+    private authService: AuthorizationService,
+    private fb: FormBuilder,
+    private router: Router,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit() {
     this.registrationForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/
+          )
+        ]
+      ],
       confirmPassword: ['', Validators.required],
       username: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -30,10 +45,16 @@ export class RegisterComponent implements OnInit {
         city: ['', Validators.required],
         state: ['', Validators.required],
         country: ['', Validators.required],
-        postalcode: ['', Validators.required],
+        postalcode: ['', Validators.required]
       }),
-      phonenumber: ['', [Validators.required, Validators.pattern(/^\(?([0-9]{3})\)?[- ]?([0-9]{3})[- ]?([0-9]{4})$/)]],
-      role: ['', Validators.required],
+      phonenumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^\(?([0-9]{3})\)?[- ]?([0-9]{3})[- ]?([0-9]{4})$/)
+        ]
+      ],
+      role: ['', Validators.required]
     }, {
       validators: this.passwordMatchValidator
     });
@@ -42,9 +63,12 @@ export class RegisterComponent implements OnInit {
   passwordMatchValidator(form: FormGroup) {
     const password = form.get('password')?.value;
     const confirmPassword = form.get('confirmPassword')?.value;
-    console.log(password, confirmPassword);
 
     return password === confirmPassword ? null : { passwordMatch: true };
+  }
+
+  showRegistrationForm() {
+    this.showForm = true;
   }
 
   onRegistration() {
@@ -54,7 +78,7 @@ export class RegisterComponent implements OnInit {
       this.apiService.addUser(userData).subscribe({
         next: response => {
           console.log('Registration successful!');
-          window.location.reload();
+          this.router.navigate(['/login']);
         },
         error: error => {
           console.error(error);
@@ -63,4 +87,6 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
+
+  
 }

@@ -47,7 +47,7 @@ export class OwnerRegisterComponent {
       this.apiService.addOwner(ownerData).subscribe({
         next: response => {
           console.log('Registration successful!');
-          window.location.reload();
+          this.router.navigate(['/login']);
         },
         error: error => {
           console.error(error);
@@ -56,4 +56,6 @@ export class OwnerRegisterComponent {
       });
     }
   }
+
+  
 }

@@ -19,9 +19,15 @@ import { ReviewComponent } from './components/review/review.component';
 import { ReviewRatingComponent } from './components/review-rating/review-rating.component';
 import { AdminBookingComponent } from './components/admin-booking/admin-booking.component';
 import { authGuard } from './Guard/auth.guard';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
 
 const routes: Routes = [
-  { path: "", component: RegisterLoginComponent },
+  { path: "", component: RegisterLoginComponent,
+children:[
+  { path: 'login', component: LoginComponent},
+  { path:'register', component: RegisterComponent}
+] },
   //User
   {
     path: 'user-dashboard', component: UserDashboardComponent, canActivate:[authGuard],
