@@ -18,7 +18,8 @@ body {
   
   button[type="button"] {
     margin: 0.5rem;
-    background-color: #577fab;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    background-color: #ab5757;
     color: white;
     border: none;
     border-radius: 0.25rem;
@@ -26,21 +27,23 @@ body {
   }
   
   button[type="button"]:hover {
-    background-color: #044992;
+    background-color: #920404;
   }
   
   button[type="submit"] {
     margin-top: 1rem;
-    background-color: #28a745;
+    background-color: #a72828;
     color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
     border: none;
     border-radius: 0.25rem;
     padding: 0.375rem 0.75rem;
-    width: 100%;
+    width: 50%;
+    justify-content: center;
   }
   
   button[type="submit"]:hover {
-    background-color: #1e7e34;
+    background-color: #541212;
   }
   
   .terms-mailing .checkbox {

@@ -18,10 +18,10 @@ export class UploadHallsComponent {
   constructor(private route: ActivatedRoute, private formBuilder: FormBuilder, private partyHallService: PartyHallService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() {
-    const owner=JSON.parse(localStorage.getItem('currentOwner') || '{}');
+    const owner = JSON.parse(localStorage.getItem('currentOwner') || '{}');
     this.partyHallService.ownerId$.subscribe(id => {
-      this.ownerId = id|| owner['id'];
-        console.log(this.ownerId)
+      this.ownerId = id || owner['id'];
+      console.log(this.ownerId)
     });
 
     this.uploadForm = this.fb.group({
@@ -122,6 +122,19 @@ export class UploadHallsComponent {
     } catch (error: any) {
       console.error('UPLOAD ERROR:', error);
       this.uploadFailed = true;
+    }
+  }
+
+  onFileSelected(event: any, index: number) {
+    if (event.target.files && event.target.files.length) {
+      const reader = new FileReader();
+
+      reader.onload = (event: any) => {
+        const fileData = event.target.result.split(',')[1];
+        this.images.controls[index].setValue(fileData);
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
     }
   }
 }
