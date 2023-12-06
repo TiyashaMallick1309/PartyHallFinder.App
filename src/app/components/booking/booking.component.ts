@@ -174,6 +174,7 @@ export class BookingComponent implements OnInit {
         });
         window.alert("Payment Successful! Booking Confirmed!!!")
         this.router.navigate(['/user-dashboard/party-hall-list']);
+        window.location.reload();
       },
       prefill: {
         name: 'User',

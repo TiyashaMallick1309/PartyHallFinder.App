@@ -19,30 +19,27 @@ import { ReviewComponent } from './components/review/review.component';
 import { ReviewRatingComponent } from './components/review-rating/review-rating.component';
 import { AdminBookingComponent } from './components/admin-booking/admin-booking.component';
 import { authGuard } from './Guard/auth.guard';
-import { CanActivateFn } from '@angular/router';
-
 
 const routes: Routes = [
   { path: "", component: RegisterLoginComponent },
   //User
   {
-    path: 'user-dashboard', component: UserDashboardComponent,
-    // canActivate:[authGuard],
+    path: 'user-dashboard', component: UserDashboardComponent, canActivate:[authGuard],
     children: [
       {
-        path: 'user-history', component: UserHistoryComponent,
+        path: 'user-history', component: UserHistoryComponent,canActivate: [authGuard],
         children: [
-          { path: 'review', component: ReviewComponent }
+          { path: 'review', component: ReviewComponent,canActivate: [authGuard] }
         ]
       },
-      { path: 'help', component: HelpComponent },
+      { path: 'help', component: HelpComponent ,canActivate: [authGuard]},
       { path: 'party-hall-list', component: PartyHallListingComponent,canActivate: [authGuard] },
-      { path: 'saved', component: SavedHallsComponent },
+      { path: 'saved', component: SavedHallsComponent,canActivate: [authGuard] },
       {
-        path: 'party-hall-list/:id', component: PartyHallDetailsComponent,
+        path: 'party-hall-list/:id', component: PartyHallDetailsComponent,canActivate: [authGuard],
         children: [
-          { path: 'book', component: BookingComponent },
-          {path:'rating',component:ReviewRatingComponent}
+          { path: 'book', component: BookingComponent ,canActivate: [authGuard]},
+          {path:'rating',component:ReviewRatingComponent,canActivate: [authGuard]}
         ]
       },
     ]
@@ -55,10 +52,10 @@ const routes: Routes = [
       {
         path: 'owner-details', component: OwnerDetailsComponent,canActivate: [authGuard],
         children: [
-          { path: 'update', component: UpdateHallsComponent }
+          { path: 'update', component: UpdateHallsComponent ,canActivate: [authGuard]}
         ]
       },
-      { path: 'upload', component: UploadHallsComponent }
+      { path: 'upload', component: UploadHallsComponent,canActivate: [authGuard] }
 
     ]
   },
@@ -67,10 +64,9 @@ const routes: Routes = [
     path: 'admin-dashboard', component: AdminDashboardComponent,
     canActivate:[authGuard],
     children: [
-      { path: 'admin-owners', component: AdminOwnersComponent },
+      { path: 'admin-owners', component: AdminOwnersComponent ,canActivate: [authGuard]},
       { path: 'admin-booking', component: AdminBookingComponent,canActivate: [authGuard] },
-      { path: 'admin-users', component: AdminUsersComponent },
-      //bookings
+      { path: 'admin-users', component: AdminUsersComponent ,canActivate: [authGuard]},
     ]
   },
 ];
