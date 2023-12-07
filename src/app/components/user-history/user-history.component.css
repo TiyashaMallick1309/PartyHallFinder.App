@@ -7,15 +7,13 @@
 
   /* Control the hall card styles */
   .party-hall-card {
-    width: 18rem;
+    width: 19rem;
     margin: 1rem;
-    border: 0.2rem solid #ccc;
     border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    background-color: rgb(237, 234, 234);
-    padding:0.3rem;
+    padding: 0.7rem;
   }
 
   h2 {

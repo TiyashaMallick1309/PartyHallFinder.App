@@ -1,72 +1,3 @@
-<!-- <div class="container">
-  <h1 class="text-center mt-5">Welcome to Party Hall Finder</h1>
-  <hr>
-  <h4 class="text-center mb-4">Find the perfect party hall for any occasion with our charming app!
-    Browse through a wide variety of venues, filter by location, capacity, and amenities,
-    and book in just a few taps. Make your next big bash unforgettable with ease!</h4> -->
-
-  <!-- Account Selection -->
-  <!-- <div id="accountBox" class="row justify-content-center mt-4" *ngIf="!showLoginForm">
-    <div class="col-md-4">
-      <div class="card bg-light">
-        <div class="card-body">
-          <h5 class="card-title text-center">Please choose your account type</h5>
-          <div class="form-group">
-            <label for="accountType">I am:</label>
-            <select class="form-select" id="accountType" (change)="selectAccountType($event)">
-              <option value="user">A User</option>
-              <option value="owner">An Owner</option>
-              <option value="admin">An Admin</option>
-            </select>
-          </div>
-          <div class="text-center mt-4">
-            <button class="btn btn-primary" (click)="proceed()">Proceed</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-  <!-- Registration/Login Forms -->
-  <!-- <div id="loginBox" class="row justify-content-center mt-4">
-    <div class="col-md-6">
-      <div *ngIf="showLoginForm" class="card">
-        <div class="card-body">
-          <h5 class="card-title text-center">
-            <ng-container *ngIf="selectedAccountType === 'user'">User Login/Register</ng-container>
-            <ng-container *ngIf="selectedAccountType === 'owner'">Owner Login/Register</ng-container>
-            <ng-container *ngIf="selectedAccountType === 'admin'">Admin Login/Register</ng-container>
-          </h5>
-          <button type="button" class="btn btn-light mb-3" (click)="goBack()">
-            <i class="fa fa-arrow-left"></i> Back
-          </button>
-          <ul class="nav nav-tabs">
-            <li class="nav-item">
-              <a [class.active]="loginActive" (click)="loginActive = true; registrationActive = false"
-                class="nav-link">Login</a>
-            </li>
-            <li class="nav-item" *ngIf="selectedAccountType !== 'admin'">
-              <a [class.active]="registrationActive" (click)="registrationActive = true; loginActive = false"
-                class="nav-link">Register</a>
-            </li>
-          </ul>
-          <div *ngIf="loginActive && selectedAccountType == 'user'"><app-login></app-login></div>
-          <div *ngIf="registrationActive && selectedAccountType == 'user'"> <app-register></app-register></div>
-          <div *ngIf="loginActive && selectedAccountType === 'owner'"><app-owner-login></app-owner-login></div>
-          <div *ngIf="registrationActive && selectedAccountType === 'owner'"> <app-owner-register></app-owner-register></div>
-          <div *ngIf="loginActive && selectedAccountType === 'admin'"><app-admin-login></app-admin-login></div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-  <!-- Carousel -->
-  <!-- <div class="carousel-container">
-    <img [src]="src" alt="" />
-  </div>
-</div> -->
-
-
 <!-- Top Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <div class="container">
@@ -116,7 +47,9 @@
             <div class="party-hall-details">
               <h3><b>{{ partyHall.name}}</b></h3>
               <p><i class="fas fa-map-marker-alt"></i> {{ partyHall.address.city }}, {{ partyHall.address.state }}, {{ partyHall.address.country }}</p><br />
-              <div class="icons"><i class="fas fa-user-friends"></i>{{ partyHall.capacity }}<i class="fas fa-dollar-sign"></i>{{ partyHall.pricing.perDay }}</div><br />
+              <div class="icons">
+                <i class="fas fa-user-friends"></i>{{ partyHall.capacity }}
+                <i class="fas fa-dollar-sign"></i>{{ partyHall.pricing.perDay }}</div><br />
             </div>
           </div>
         </div>

@@ -1,0 +1,31 @@
+<div class="container">
+    <br/>
+    <h2>My Booking List</h2>
+    <br/>
+    <table class="table">
+      <tr>
+        <th class="equal-width">Party Hall Name</th>
+        <th class="equal-width">Start Date</th>
+        <th class="equal-width">End Date</th>
+        <th class="equal-width">Confirmed</th>
+        <th> </th>
+      </tr>
+      <tr *ngFor="let booking of userBookings">
+        <td>{{ getHallName(booking.partyHallId) }}</td>
+        <td>{{ booking.startDate | date: 'short' }}</td>
+        <td>{{ booking.endDate | date: 'short' }}</td>
+        <td>{{ booking.isConfirmed ? 'Yes' : 'No' }}</td>
+        <td>
+          <button class="delete" (click)="setDeleteBooking(booking.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  
+    <div *ngIf="confirmDelete" class="confirmation-dialog">
+      <p>Are you sure you want to cancel this booking?</p>
+      <div class="button-container">
+        <button class="confirm" (click)="deleteBooking()">Delete</button>
+        <button class="cancel" (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>

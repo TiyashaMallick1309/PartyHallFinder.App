@@ -17,6 +17,11 @@
           <i class="fas fa-star"></i> My Saved
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="MyBookings()">
+          <i class="fas fa-book"></i> My Bookings
+        </a>
+      </li>
       <li class="nav-item border-bottom">
         <a class="nav-link" routerLink="help">
           <i class="fas fa-envelope"></i> Contact Us
@@ -38,22 +43,22 @@
       <div class="tab-content">
         <router-outlet></router-outlet>
       </div>
-    
 
-    <div class="notifications" *ngIf="showNotifList">
-      <ul>
-        <li *ngFor="let notif of userNotifications">
-          <a class="nav-link" *ngIf="notif.isRead === false" (click)="markAsRead(notif)">
-            <strong>{{notif.message}}</strong>
-            <p class="text-muted">{{notif.dateCreated | date:'MMM d, y, h:mm a'}}</p>
-          </a>
-          <a class="nav-link" *ngIf="notif.isRead === true">
-            <strong>{{notif.message}}</strong>
-            <p class="text-muted">{{notif.dateCreated | date:'MMM d, y, h:mm a'}}</p>
-          </a>
-        </li>
-      </ul>
+
+      <div class="notifications" *ngIf="showNotifList">
+        <ul>
+          <li *ngFor="let notif of userNotifications">
+            <a class="nav-link" *ngIf="!notif.isRead" (click)="markAsRead(notif)">
+              <strong>{{notif.message}}</strong>
+              <p class="text-muted">{{notif.dateCreated | date:'MMM d, y, h:mm a'}}</p>
+            </a>
+            <a class="nav-link" *ngIf="!!notif.isRead">
+              <strong>{{notif.message}}</strong>
+              <p class="text-muted">{{notif.dateCreated | date:'MMM d, y, h:mm a'}}</p>
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 </div>

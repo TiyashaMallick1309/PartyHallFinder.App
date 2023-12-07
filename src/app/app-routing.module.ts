@@ -21,6 +21,7 @@ import { AdminBookingComponent } from './components/admin-booking/admin-booking.
 import { authGuard } from './Guard/auth.guard';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
+import { MybookingComponent } from './components/mybooking/mybooking.component';
 
 const routes: Routes = [
   { path: "", component: RegisterLoginComponent,
@@ -41,6 +42,7 @@ children:[
       { path: 'help', component: HelpComponent ,canActivate: [authGuard]},
       { path: 'party-hall-list', component: PartyHallListingComponent,canActivate: [authGuard] },
       { path: 'saved', component: SavedHallsComponent,canActivate: [authGuard] },
+      { path: 'mybooking', component: MybookingComponent, canActivate: [authGuard] },
       {
         path: 'party-hall-list/:id', component: PartyHallDetailsComponent,canActivate: [authGuard],
         children: [

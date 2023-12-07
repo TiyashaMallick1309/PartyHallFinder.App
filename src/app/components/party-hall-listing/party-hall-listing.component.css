@@ -59,15 +59,13 @@ input {
 
 /* Control the card styles */
 .party-hall-card {
-  width: 15rem;
-  margin: 2rem;
-  border: 0.2rem solid #ccc;
+  width: 19rem;
+  margin: 1rem;
   border-radius: 0.5rem;
   overflow: hidden;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-  background-image: linear-gradient(to bottom, #ffffff, #ba9595);
-  padding: 0.3rem;
+  padding: 0.7rem;
 }
 
 /* Style the card on hover state */
@@ -121,21 +119,13 @@ h3{
 }
 
 .icons{
-  margin-bottom: 1rem;
-}
-
-.icons .fa-dollar-sign{
-  margin-left:1.5rem;
-  margin-right:0.3rem;
-}
-
-.icons .fa-user-friends{
-  margin-left:2rem;
-  margin-right:0.5rem;
+  margin-bottom: 0.1rem;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .party-hall-details{
-margin: 0.5rem;
+margin: 0.1rem;
 }
 
 /* Control the font and margin for the details */

@@ -32,8 +32,9 @@ export class UserDashboardComponent {
       // Pass user data to notification service
       this.notificationService.setUser(this.user);
       this.bookingHistory = this.notificationService.getBookingHistory();
-      console.log(this.bookingHistory)
-      this.userNotifications = [];
+      console.log(this.bookingHistory);
+      // Retrieve user notifications array from localStorage and set it as the value of the userNotifications property
+      this.userNotifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
     }
     this.getSavedHalls();
   }
@@ -72,7 +73,6 @@ export class UserDashboardComponent {
       relevantBookings.forEach((booking) => {
         const startDate = new Date(booking.booking.startDate);
         const endDate = new Date(booking.booking.endDate);
-        console.log("reached")
         // Create notification message
         const message = `Booking successful: ${booking.partyHallName} from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`;
 
@@ -95,10 +95,25 @@ export class UserDashboardComponent {
   }
 
   markAsRead(notif: { message: string, isRead: boolean, dateCreated: Date }): void {
+    console.log('Marking notification as read', notif);
     notif.isRead = true;
 
-    // Update userNotifications array in localStorage after marking a notification as read
-    localStorage.setItem('userNotifications', JSON.stringify(this.userNotifications));
+    // Update the userNotifications array in localStorage to mark the notification as read
+    const userNotifications = JSON.parse(localStorage.getItem('userNotifications') || '[]');
+    const updatedNotifications = userNotifications.map((n: any) => {
+      if (n.message === notif.message) {
+        n.isRead = true;
+      }
+      return n;
+    });
+    localStorage.setItem('userNotifications', JSON.stringify(updatedNotifications));
+
+    // Update the userNotifications array in the component to remove the read notification
+    this.userNotifications = updatedNotifications.filter((n: any) => !n.isRead);
+  }
+
+  MyBookings() {
+    this.router.navigate(['user-dashboard/mybooking'])
   }
 
 }
