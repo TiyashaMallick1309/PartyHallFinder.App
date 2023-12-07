@@ -74,7 +74,7 @@ export class UserDashboardComponent {
         const endDate = new Date(booking.booking.endDate);
         console.log("reached")
         // Create notification message
-        const message = `Booking confirmed: ${booking.partyHallName} from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`;
+        const message = `Booking successful: ${booking.partyHallName} from ${startDate.toLocaleDateString()} to ${endDate.toLocaleDateString()}`;
 
         // Create new notification object and add to userNotifications array
         const notification = {
